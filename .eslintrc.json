@@ -20,7 +20,12 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "no-console": "off",
+    "no-async-promise-executor": "off",
+    "no-misleading-character-class": "off",
+    "no-useless-catch": "off",
+    "import/no-anonymous-default-export": "off"
   },
   "settings": {
     "import/resolver": {
