@@ -7,10 +7,7 @@
     "plugin:cypress/recommended"
   ],
   "rules": {
-    "react/jsx-filename-extension": [
-      "error",
-      { "extensions": [".jsx", ".tsx"] }
-    ],
+    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -25,7 +22,8 @@
     "no-async-promise-executor": "off",
     "no-misleading-character-class": "off",
     "no-useless-catch": "off",
-    "import/no-anonymous-default-export": "off"
+    "import/no-anonymous-default-export": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   },
   "settings": {
     "import/resolver": {
