@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from 'src/redux/store';
 
 interface AlertsState {
   siteAuditReportAlert: any;
@@ -19,9 +18,5 @@ export const alertsSlice = createSlice({
 });
 
 export const {} = alertsSlice.actions;
-
-export const selectAlertsDomain = (state: RootState) => state.alerts;
-export const selectAlerts = () => (state: RootState) => state.alerts.data;
-export const selectSiteAuditReportReadyAlerts = () => (state: RootState) => state.alerts.siteAuditReportAlert;
 
 export default alertsSlice.reducer;

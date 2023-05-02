@@ -1,14 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { rootReducer } from 'store/reducers';
-import { aiWriterApi } from './ai-writer/ai-writer.api';
+// import { aiWriterApi } from './ai-writer/ai-writer.api';
 
 export const store = configureStore({
   reducer: {
     ...rootReducer,
-    [aiWriterApi.reducerPath]: aiWriterApi.reducer,
+    // [aiWriterApi.reducerPath]: aiWriterApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(aiWriterApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });
 
 setupListeners(store.dispatch);
