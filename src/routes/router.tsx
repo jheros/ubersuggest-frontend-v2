@@ -1,11 +1,9 @@
 import { Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Link, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
 import loadable from '@loadable/component';
 
 import { useAppContext } from 'context';
 const Dashboard = loadable(() => import('components/Dashboard'));
-const Loading = loadable(() => import('components/Loading'));
-const ErrorBoundary = loadable(() => import('components/ErrorBoundary'));
 
 const AuthRoute = ({ user, role = 'user', redirectTo, children, ...rest }: any) => {
   const { languageCode } = useAppContext();
@@ -27,7 +25,7 @@ const AuthRoute = ({ user, role = 'user', redirectTo, children, ...rest }: any) 
 };
 
 const ROUTES = {
-  MAIN: ':languageCode',
+  MAIN: ':languageCode?',
   LOGIN: 'login',
   REGISTER: 'register',
   FORGOT_PASSWORD: 'forgot-password',
@@ -85,7 +83,7 @@ function UberRouter(props: any) {
   const { user } = props;
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div>Loading</div>}>
       <Routes>
         <Route path={ROUTES.MAIN}>
           {/* Auth */}
