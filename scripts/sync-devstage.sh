@@ -10,7 +10,6 @@ if [ "x$DEVSTAGE_INFO" = "x" ]; then
   exit 1
 fi
 export REACT_APP_API_URL=$(echo $DEVSTAGE_INFO | jq .Item.api_url.S | sed s/\"//g)/api
-export REACT_APP_OPA_API_URL=$(echo $DEVSTAGE_INFO | jq .Item.api_opa_url.S | sed s/\"//g)
 export REACT_APP_KW_RELEVANCY_API_URL=$(echo $DEVSTAGE_INFO | jq .Item.kw_relevancy_api_url.S | sed s/\"//g)
 export RECAPTCHA_SITE_KEY_PARAM=$(echo $DEVSTAGE_INFO | jq .Item.recaptcha_site_key_param.S | sed s/\"//g)
 export REACT_APP_RECAPTCHA_SITE_KEY="$(aws ssm get-parameter --name $RECAPTCHA_SITE_KEY_PARAM --with-decryption | jq .Parameter.Value | sed s/\"//g)"

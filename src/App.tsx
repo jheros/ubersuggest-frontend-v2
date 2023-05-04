@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import UberRouter from './routes';
-import useLocalStorageKeyObserver from 'hooks/useCustomEvent';
-
-import { AppProvider } from './context';
 import { Button, Typography } from '@mui/material';
+
+import useLocalStorageKeyObserver from 'hooks/useCustomEvent';
+import UberRouter from 'routes';
+import { AppProvider } from 'context';
 import { MainBar, MainSidebar } from 'components';
+
 import './App.css';
 
 const navHeight = 58;

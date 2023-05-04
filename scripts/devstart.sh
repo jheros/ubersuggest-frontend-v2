@@ -43,7 +43,6 @@ echo "DEVSTART: Setting REACT_APP_API_URL for stage ${STAGE}"
 export GENERATE_SOURCEMAP=false
 export REACT_APP_RECAPTCHA_SITE_KEY=6Lf3knkUAAAAADePIrLQJgVU2j4yv1w3YZ6n-pMB
 export REACT_APP_API_URL=${URL}/api
-export REACT_APP_OPA_API_URL=https://ha5q9rt9w8.execute-api.us-east-1.amazonaws.com/Dev
 export REACT_APP_KW_RELEVANCY_API_URL=https://kwrelevancy-dev-api.neilpatelapi.com
 export REACT_APP_AMPLITUDE_API_KEY=53d49a8ddad461186d349e85d9197338
 export REACT_APP_KISSMETRICS_KEY=e1cfa7afc6347058fabed23b4ff566b6a2da0953
@@ -52,7 +51,6 @@ export REACT_APP_RECURLY_PUBLIC_KEY=ewr1-Yq7tkEPWTzyxSB3vz5JPV2
 export REACT_APP_DISABLE_LIMIT_FEATURE=false
 export REACT_APP_DISABLE_RECAPTCHA=${DISABLE_RECAPTCHA}
 export REACT_APP_MOZ_BACKLINKS_HISTORY_FLAG=true
-export REACT_APP_ENABLE_SD_ACCURACY_FEATURE=false
 
 # check if location/languages assets exist
 if [ ! -e src/constants/languages.json ] || [ ! -e src/constants/locations.json ] || [ ! -e src/constants/configLocLangs.json ]; then
