@@ -126,7 +126,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 };
 
 export const ubersuggestApi = createApi({
-  reducerPath: 'ai-writer/api',
+  reducerPath: 'ubersuggest/api',
   baseQuery: baseQueryWithReauth,
   // refetchOnFocus: true,
   endpoints: () => ({}),
