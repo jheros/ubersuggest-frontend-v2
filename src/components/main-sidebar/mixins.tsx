@@ -1,6 +1,4 @@
-// MUI System
 import { CSSObject } from '@mui/system';
-// MUI Styles
 import { Theme } from '@mui/material/styles';
 
 export const openedMixin = (theme: Theme, navHeight?: number): CSSObject => ({

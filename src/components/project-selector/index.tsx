@@ -1,26 +1,10 @@
-/* eslint-disable no-nested-ternary */
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  Divider,
-  Menu,
-  MenuItem,
-  ListItemButton,
-  ListItemIcon,
-  Stack,
-  Typography,
-  useTheme,
-  Skeleton,
-} from '@mui/material';
+import { Divider, Menu, MenuItem, ListItemButton, ListItemIcon, Stack, Typography, useTheme } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import useLocalStorageKeyObserver from 'hooks/useCustomEvent';
-// Utils
 import textCrop from 'utils/textCrop';
-import { SELECTED_PROJECT } from 'utils/constants/local-storage';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 export const ProjectSelector = () => {
   const {
@@ -29,27 +13,16 @@ export const ProjectSelector = () => {
       common: { gray, osloGray, lightestGray },
     },
   } = useTheme();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
 
   const { value: userTier } = useLocalStorageKeyObserver('user');
 
-  const [activeProjectSetting, setActiveProjectSetting] = useState(localStorage.getItem(SELECTED_PROJECT) || '');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent) => {
-    setAnchorEl(event.currentTarget as HTMLElement);
-  };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const createProject = () => {
-    window.location.href = `${process.env.REACT_APP_UBS_OAUTH_URL}/${i18n.language}/dashboard?action=add_project&next=${window.location.href}&from=ai_writer`;
-  };
-
-  const setActiveProject = (domain: string) => {
-    setActiveProjectSetting(domain);
-    localStorage.setItem(SELECTED_PROJECT, domain);
-  };
+  const createProject = () => {};
 
   return userTier === 'unlogged' ? null : (
     <>

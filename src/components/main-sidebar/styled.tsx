@@ -1,12 +1,9 @@
-// MUI Components
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-// MUI System
 import { styled } from '@mui/system';
-// MUI Styles
 import { Theme, alpha } from '@mui/material/styles';
-// Mixins
+
 import { openedMixin, closedMixin } from './mixins';
 
 type IDrawerProps = {

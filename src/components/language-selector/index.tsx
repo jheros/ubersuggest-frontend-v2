@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-// MUI Components
+import { useTranslation } from 'react-i18next';
 import { MenuItem, Box, Stack, MenuList, Typography, useTheme } from '@mui/material';
 import HoverPopover from 'material-ui-popup-state/HoverPopover';
 import { usePopupState, bindHover, bindPopover } from 'material-ui-popup-state/hooks';
-// MUI Icons
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// Utils
 import textCrop from 'utils/textCrop';
 import { pathWithLang } from 'utils/translation';
 

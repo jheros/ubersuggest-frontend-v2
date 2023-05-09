@@ -1,29 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-// MUI Components
-import {
-  IconButton,
-  Avatar,
-  Stack,
-  Menu,
-  Box,
-  MenuItem,
-  Typography,
-  Divider,
-  useTheme,
-  Link,
-  Button,
-} from '@mui/material';
-// Icons
+import { IconButton, Avatar, Stack, Menu, Box, MenuItem, Typography, Divider, useTheme, Button } from '@mui/material';
 import Logout from '@mui/icons-material/Logout';
 import CreditCard from '@mui/icons-material/CreditCard';
-// Context
-import { useAppContext } from 'context';
-// Images
+import { TOKEN } from 'utils/constants/local-storage';
 import AvartarImg from 'assets/svg/avatar.svg';
-// Constants
-import { TOKEN, TOKEN_TTL } from 'utils/constants/local-storage';
-import { composeOauthUrl } from 'utils/oauth';
 
 interface IAccountMenu {
   userTier: string;
@@ -52,27 +33,26 @@ export const AccountMenu: React.FC<IAccountMenu> = ({ userTier, setIsSignIn }) =
     setAnchorEl(null);
   };
 
+  const handleSignIn = () => {
+    setIsSignIn(true);
+    localStorage.removeItem(TOKEN);
+  };
+
   useEffect(() => {
     setIsSignIn(!userTier || isLogoutLoading);
   }, [isLogoutLoading, setIsSignIn, userTier]);
 
   if (userTier === 'unlogged' || !localStorage.getItem(TOKEN))
     return (
-      <Link href={composeOauthUrl('login', i18n.language)} sx={{ textDecoration: 'none' }}>
-        <Button
-          disabled={!userTier || isLogoutLoading}
-          onClick={() => {
-            setIsSignIn(true);
-            localStorage.removeItem(TOKEN);
-            localStorage.removeItem(TOKEN_TTL);
-          }}
-          variant='contained'
-          color='secondary'
-          sx={{ textTransform: 'capitalize', p: '10px' }}
-        >
-          <Typography variant='text14Book'>{t('sign_in')}</Typography>
-        </Button>
-      </Link>
+      <Button
+        disabled={!userTier || isLogoutLoading}
+        onClick={handleSignIn}
+        variant='contained'
+        color='secondary'
+        sx={{ textTransform: 'capitalize', p: '10px' }}
+      >
+        <Typography variant='text14Book'>{t('sign_in')}</Typography>
+      </Button>
     );
 
   return (
@@ -140,7 +120,6 @@ export const AccountMenu: React.FC<IAccountMenu> = ({ userTier, setIsSignIn }) =
             logout();
             setIsSignIn(true);
             localStorage.removeItem(TOKEN);
-            localStorage.removeItem(TOKEN_TTL);
             handleClose();
           }}
         >

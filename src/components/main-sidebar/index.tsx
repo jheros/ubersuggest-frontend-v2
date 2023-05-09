@@ -1,18 +1,13 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Box, List, ListItem, ListItemIcon, ListItemText, Typography, Stack, Backdrop, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-// MUI Icons
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-// Constants
-// Components
-import { ProjectSelector } from 'components';
-// Utils
-import textCrop from 'utils/textCrop';
-// Styled
+import { Box, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
+
 import { text16Medium } from 'theme/typography';
-import { MembershipSvg, MyProjectsSvg, LandingPageSvg } from 'components/svg';
-import { DrawerStyled, AccountInfoBox, BorderLinearProgress } from './styled';
+import { ProjectSelector } from 'components';
+import textCrop from 'utils/textCrop';
+
+import { DrawerStyled } from './styled';
 
 interface IMainSidebar {
   open: boolean;
