@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import './languages/i18n';
 import './index.css';
 import App from './App';
@@ -17,9 +16,7 @@ root.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <App />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

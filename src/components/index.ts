@@ -4,3 +4,4 @@ export * from './account-menu';
 export * from './main-bar';
 export * from './main-sidebar';
 export * from './project-selector';
+export * from './main-template';

@@ -1,9 +1,10 @@
+import { RouterProvider } from 'react-router-dom';
 import UberRouter from 'routes';
 
 import './App.css';
 
 function App() {
-  return <UberRouter />;
+  return <RouterProvider router={UberRouter} fallbackElement={<p>Loading...</p>} />;
 }
 
 export default App;
