@@ -20,7 +20,6 @@ export REACT_APP_DISABLE_LIMIT_FEATURE="$(aws ssm get-parameter --name /ubersugg
 export REACT_APP_DISABLE_RECAPTCHA="$(aws ssm get-parameter --name /ubersuggest-constants/dev/DISABLE_RECAPTCHA | jq .Parameter.Value | sed s/\"//g)"
 export REACT_APP_KISSMETRICS_KEY="$(aws ssm get-parameter --name /ubersuggest-constants/dev/KISSMETRICS_API_KEY --with-decryption | jq .Parameter.Value | sed s/\"//g)"
 export REACT_APP_MOZ_BACKLINKS_HISTORY_FLAG="$(aws ssm get-parameter --name /ubersuggest-constants/dev/MOZ_BACKLINKS_HISTORY_FLAG | jq .Parameter.Value | sed s/\"//g)"
-export REACT_APP_ENABLE_SD_ACCURACY_FEATURE="$(aws ssm get-parameter --name /ubersuggest-constants/dev/ENABLE_SD_ACCURACY_FEATURE | jq .Parameter.Value | sed s/\"//g)"
 
 
 # get assets from s3

@@ -7,7 +7,7 @@ import {
   retry,
 } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
-import { TOKEN, TOKEN_TTL } from 'utils/constants/local-storage';
+import { TOKEN } from 'utils/constants/local-storage';
 import { GET_TOKEN_URL, USER_URL } from './constants';
 import { retryCondition } from './utils';
 
@@ -17,8 +17,7 @@ type GetTokenResponse = {
 };
 
 function saveToken(data: GetTokenResponse): void {
-  localStorage.setItem(TOKEN, data.token);
-  localStorage.setItem(TOKEN_TTL, data.ttl);
+  localStorage.setItem(TOKEN, JSON.stringify(data));
 }
 
 export function saveUser(data: string): void {
@@ -41,7 +40,6 @@ export function removeUser(): void {
 
 function clearToken(): void {
   localStorage.removeItem(TOKEN);
-  localStorage.removeItem(TOKEN_TTL);
 }
 
 const mutex = new Mutex();
@@ -50,7 +48,7 @@ const baseQuery = retry(
   fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_URL}/`,
     prepareHeaders: (headers: Headers) => {
-      const token = localStorage.getItem(TOKEN);
+      const { token } = JSON.parse(localStorage.getItem(TOKEN) || "{ token: '', token_ttl: '' }");
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -64,7 +62,7 @@ const baseQuery = retry(
 const userQuery = fetchBaseQuery({
   baseUrl: `${process.env.REACT_APP_API_URL}/`,
   prepareHeaders: (headers: Headers) => {
-    const token = localStorage.getItem(TOKEN);
+    const { token } = JSON.parse(localStorage.getItem(TOKEN) || "{ token: '', token_ttl: '' }");
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }

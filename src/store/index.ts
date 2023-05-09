@@ -1,12 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+
 import { rootReducer } from 'store/reducers';
-// import { aiWriterApi } from './ai-writer/ai-writer.api';
+import { ubersuggestApi } from './ubersuggest/ubersuggest.api';
 
 export const store = configureStore({
   reducer: {
     ...rootReducer,
-    // [aiWriterApi.reducerPath]: aiWriterApi.reducer,
+    [ubersuggestApi.reducerPath]: ubersuggestApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });
