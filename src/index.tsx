@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Provider } from 'react-redux';
 import './languages/i18n';
-import './index.css';
+import 'styles/index.scss';
 import App from './App';
 import { store } from './store';
 import reportWebVitals from './reportWebVitals';
