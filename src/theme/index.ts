@@ -1,17 +1,17 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+
 import palette from './palette';
-// eslint-disable-next-line import/no-named-as-default
 import typography from './typography';
-import components from './mui-components';
-import custom from './custom';
-import breakpoints from './breakpoints';
+import { shadows } from './variables/shadows';
+
+const a = Array(25).fill('');
+type b = typeof a;
 
 const theme = createTheme({
   palette,
   typography,
-  components,
-  custom,
-  breakpoints,
-}) as ThemeOptions;
+  shadows,
+});
 
 export default theme;
+export type ITheme = typeof theme;

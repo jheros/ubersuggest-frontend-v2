@@ -4,3 +4,8 @@ export const fonts = {
   geomanistBook: 'Geomanist Book',
   geomanistUltra: 'Geomanist Ultra',
 };
+
+export type IFontsVariants = keyof typeof fonts;
+export type IFonts = {
+  [variant in IFontsVariants]: string;
+};
