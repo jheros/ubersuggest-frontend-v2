@@ -1,8 +1,8 @@
 export const fonts = {
-  geomanist: 'Geomanist',
-  geomanistMedium: 'Geomanist Medium',
-  geomanistBook: 'Geomanist Book',
-  geomanistUltra: 'Geomanist Ultra',
+  regular: 'Geomanist',
+  medium: 'Geomanist Medium',
+  book: 'Geomanist Book',
+  ultra: 'Geomanist Ultra',
 };
 
 export type IFontsVariants = keyof typeof fonts;

@@ -15,7 +15,7 @@ const palette = {
   success: colors.green,
 
   common: {
-    // ...shadows,
+    ...shadows,
     ...fonts,
   },
 };
@@ -41,7 +41,7 @@ declare module '@mui/material/styles' {
 }
 
 declare module '@mui/material/styles/createPalette' {
-  interface CommonColors extends IFonts {}
+  interface CommonColors extends IFonts, IShadows {}
 }
 
 export default palette;
