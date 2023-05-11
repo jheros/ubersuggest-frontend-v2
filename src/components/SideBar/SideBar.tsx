@@ -1,123 +1,88 @@
-import { useState } from 'react';
-import { Toolbar, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
-import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import type { ITheme } from 'theme';
+import { useState, SyntheticEvent } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material/styles';
 
-import { SIDEBAR_MENUS } from './constants';
-
-const drawerWidth = 240;
-
-const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
-  ({ theme }) => ({
-    border: `1px solid ${theme.palette.divider}`,
-    '&:not(:last-child)': {
-      borderBottom: 0,
-    },
-    '&:before': {
-      display: 'none',
-    },
-  }),
-);
-
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-  <MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />} {...props} />
-))(({ theme }: { theme: ITheme }) => {
-  console.log('palette >>', theme);
-  return {
-    backgroundColor: theme.palette.grey[500],
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-      transform: 'rotate(90deg)',
-    },
-    '& .MuiAccordionSummary-content': {
-      marginLeft: theme.spacing(1),
-    },
-  };
-});
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: '1px solid rgba(0, 0, 0, .125)',
-}));
+import { ProjectSelector, Typography } from 'components';
+import { SIDEBAR_MENUS, ISidebarMenuItem, ISidebarMenu } from './constants';
+import { SideBarMenu, SideBarMenuSummary, SideBarMenuContent } from './SideBarMenu';
+import { SideBarMenuItemWrapper, SideBarMenuItem } from './SideBarMenuItem';
+import { SideBarWrapper } from './SideBarWrapper';
 
 export const SideBar = () => {
-  const [mobileOpen, setMobileOpen] = useState(true);
-  const [expanded, setExpanded] = React.useState<number | false>(false);
+  const { t } = useTranslation();
+  const {
+    palette: {
+      primary: { main: activeColor },
+    },
+  } = useTheme();
 
-  const handleChange = (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    setExpanded(newExpanded ? panel : false);
+  const [mobileOpen, setMobileOpen] = useState(true);
+  const [expanded, setExpanded] = useState<number | false>(false);
+  const [activeMenuItem, selectMenuItem] = useState('');
+
+  const handleChange = (panel: number, shouldToggle: boolean) => (_: SyntheticEvent, newExpanded: boolean) => {
+    const newPanel = shouldToggle && !newExpanded ? false : panel;
+    setExpanded(newPanel);
   };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  // const drawer = (
-  //   <div>
-  //     <List>
-  //       {SIDEBAR_MENUS.map((sidebarMenu, index) => (
-  //         <ListItem key={index} disablePadding>
-  //           <ListItemButton>{sidebarMenu.name && <ListItemText primary={sidebarMenu.name} />}</ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-
-  //     <Divider />
-  //   </div>
-  // );
-
-  const drawer = (
-    <div>
-      {SIDEBAR_MENUS.map((sidebarMenu, index) => (
-        <Accordion expanded={expanded === index} onChange={handleChange(index)} key={index}>
-          <AccordionSummary>
-            <Typography>{sidebarMenu.name}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>Lorem ipsum dolor sit amet, consectetur</Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </div>
-  );
+  const handleClickMenuItem = (index: string) => () => {
+    selectMenuItem(index);
+  };
 
   return (
-    <>
-      <Drawer
-        variant='temporary'
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
+    <SideBarWrapper open={mobileOpen} toggle={handleDrawerToggle}>
+      <div>
+        <ProjectSelector />
+        {SIDEBAR_MENUS.map((menu: ISidebarMenu, menuIndex: number) => (
+          <SideBarMenu
+            expanded={menu.name ? expanded === menuIndex : true}
+            onChange={handleChange(menuIndex, !!menu.children)}
+            key={menuIndex}
+          >
+            {menu.name && (
+              <SideBarMenuSummary hasChildren={!!menu.children}>
+                <Typography variant='body1' font='medium' color={expanded === menuIndex ? activeColor : ''}>
+                  {t(menu.name)}
+                </Typography>
+                {menu.isNew && (
+                  <Typography variant='body3' color={activeColor} sx={{ mt: 0, textTransform: 'uppercase' }}>
+                    &nbsp; {t('tab_new')}!
+                  </Typography>
+                )}
+              </SideBarMenuSummary>
+            )}
+            <SideBarMenuContent>
+              {menu.children?.map((content: ISidebarMenuItem[], contentIndex: number) => (
+                <SideBarMenuItemWrapper key={contentIndex}>
+                  {content.map((item: ISidebarMenuItem, itemIndex: number) => {
+                    const menuItemKey = `${menuIndex}-${contentIndex}-${itemIndex}`;
 
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-      >
-        <Toolbar />
-        {drawer}
-      </Drawer>
-
-      <Drawer
-        variant='permanent'
-        sx={{
-          display: { xs: 'none', sm: 'block' },
-
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-        open
-      >
-        <Toolbar />
-        {drawer}
-      </Drawer>
-    </>
+                    return (
+                      <SideBarMenuItem
+                        active={activeMenuItem === menuItemKey}
+                        key={itemIndex}
+                        disablePadding
+                        onClick={handleClickMenuItem(menuItemKey)}
+                      >
+                        <Typography variant='body2'>{t(item.name!)}</Typography>
+                        {item.isNew && (
+                          <Typography variant='body3' color={activeColor} sx={{ textTransform: 'uppercase' }}>
+                            &nbsp; {t('tab_new')}!
+                          </Typography>
+                        )}
+                      </SideBarMenuItem>
+                    );
+                  })}
+                </SideBarMenuItemWrapper>
+              ))}
+            </SideBarMenuContent>
+          </SideBarMenu>
+        ))}
+      </div>
+    </SideBarWrapper>
   );
 };

@@ -1,9 +1,9 @@
-interface ISidebarMenuItem {
+export interface ISidebarMenuItem {
   name?: string;
   isNew?: boolean;
 }
 
-interface ISidebarMenu extends ISidebarMenuItem {
+export interface ISidebarMenu extends ISidebarMenuItem {
   children?: ISidebarMenuItem[][];
 }
 
@@ -11,41 +11,42 @@ export const SIDEBAR_MENUS: ISidebarMenu[] = [
   {
     children: [
       [
-        { name: 'Dashboard' },
-        { name: 'Rank Tracking' },
-        { name: 'SEO Opportunities' },
-        { name: 'My Workspace' },
-        { name: 'Chrome Extension' },
+        { name: 'dashboard' },
+        { name: 'rank_tracking' },
+        { name: 'seo_opportunities' },
+        { name: 'menu_workspace', isNew: true },
+        { name: 'menu_extension' },
       ],
     ],
   },
   {
-    name: 'Site Audit',
+    name: 'menu_seo_analyzer',
   },
   {
-    name: 'Keyword Research',
+    name: 'menu_keyword_research',
     children: [
       [
-        { name: 'Keyword Overview' },
-        { name: 'Keyword Ideas' },
-        { name: 'Keyword VIsualization' },
-        { name: 'Keywords by Traffic' },
-        { name: 'Similar Websites' },
-        { name: 'Content Ideas' },
+        { name: 'menu_keyword_overview' },
+        { name: 'menu_keyword_ideas' },
+        { name: 'menu_keyword_visualization', isNew: true },
+        { name: 'menu_keywords_traffic' },
+        { name: 'menu_similar_websites' },
+        { name: 'menu_content_ideas' },
       ],
-      [{ name: 'Keyword Lists' }],
+      [{ name: 'menu_keyword_lists', isNew: true }],
     ],
   },
   {
-    name: 'Traffic Estimation',
-    children: [[{ name: 'Traffic Overview' }, { name: 'Top Pages by Traffic' }]],
+    name: 'menu_traffic_estimation',
+    children: [[{ name: 'menu_traffic_overview' }, { name: 'menu_top_pages_traffic' }]],
   },
   {
-    name: 'Backlinks',
-    children: [[{ name: 'Backlinks Overview' }, { name: 'Backlinks Opportunity' }]],
+    name: 'menu_backlinks',
+    children: [[{ name: 'menu_backlinks_overview' }, { name: 'menu_backlinks_opportunity' }]],
   },
   {
-    name: 'Labs',
-    children: [[{ name: 'Labs' }, { name: 'Keywords Generator' }, { name: 'AI Writer' }]],
+    name: 'menu_labs',
+    isNew: true,
+    children: [[{ name: 'menu_labs' }, { name: 'keywords_generator' }, { name: 'ai_writer' }]],
   },
 ];
