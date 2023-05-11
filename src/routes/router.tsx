@@ -70,14 +70,8 @@ const ROUTES = {
 };
 
 const UberRouter = createBrowserRouter([
-  // const { user } = props;
-
   {
     path: ROUTES.MAIN,
-    async lazy() {
-      const { MainTemplate } = await import('components');
-      return { Component: MainTemplate };
-    },
     children: [
       /* Auth */
       {
@@ -88,6 +82,15 @@ const UberRouter = createBrowserRouter([
       { path: ROUTES.FORGOT_PASSWORD, element: <div>Forgot Password</div> },
       { path: ROUTES.CHANGE_PASSWORD, element: <div>Change Password</div> },
       { path: ROUTES.VERIFY_EMAIL, element: <div>Email Verification Page</div> },
+    ],
+  },
+  {
+    path: ROUTES.MAIN,
+    async lazy() {
+      const { MainTemplate } = await import('components');
+      return { Component: MainTemplate };
+    },
+    children: [
       { path: ROUTES.POSITION_TRACKING, element: <div>Rank Tracking Container</div> },
       { path: ROUTES.WORKSPACE, element: <div>Workspace Container</div> },
       { path: ROUTES.SEO_OPPORTUNITIES, element: <div>SEO Opportunities Container</div> },
@@ -99,12 +102,19 @@ const UberRouter = createBrowserRouter([
       { path: ROUTES.DOC, element: <div>Content Integration Container</div> },
       /* Dashboard */
       {
+        index: true,
+        async lazy() {
+          const { Dashboard } = await import('components');
+          return { Component: Dashboard };
+        },
+      },
+      {
         path: ROUTES.DASHBOARD.MAIN,
         children: [
           {
             index: true,
             async lazy() {
-              const { Dashboard } = await import('components/Dashboard');
+              const { Dashboard } = await import('components');
               return { Component: Dashboard };
             },
           },
