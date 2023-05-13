@@ -3536,7 +3536,7 @@
   "start_button": "Start",
   "start_free_trial_button": "Start {0}-day free trial",
   "start_free_trial_to_save": "Start 7-day free trial to save your project & to start growing your traffic!",
-  "start_free_trial_to_unlock": "Start {0}-day free trial to unlock all data",
+  "start_free_trial_to_unlock": "Start {{0}}-day free trial to unlock all data",
   "start_guide_button": "Start guide",
   "start_my_trial": "Start My Free Trial",
   "start_over": "Start Over",

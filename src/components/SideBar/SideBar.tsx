@@ -7,6 +7,7 @@ import { SIDEBAR_MENUS, ISidebarMenuItem, ISidebarMenu } from './constants';
 import { SideBarMenu, SideBarMenuSummary, SideBarMenuContent } from './SideBarMenu';
 import { SideBarMenuItemWrapper, SideBarMenuItem } from './SideBarMenuItem';
 import { SideBarWrapper } from './SideBarWrapper';
+import { TrialNotification } from './TrialNotification';
 
 export const SideBar = () => {
   const { t } = useTranslation();
@@ -83,6 +84,7 @@ export const SideBar = () => {
           </SideBarMenu>
         ))}
       </div>
+      <TrialNotification />
     </SideBarWrapper>
   );
 };
