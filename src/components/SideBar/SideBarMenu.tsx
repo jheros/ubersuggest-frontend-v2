@@ -31,7 +31,7 @@ export const SideBarMenuSummary = styled((props: ISideBarMenuSummary) => (
   paddingRight: 20,
   height: 45,
   minHeight: 45,
-  backgroundColor: theme.palette.grey[50],
+  backgroundColor: theme.palette.gray[10],
 
   '&.MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded': {
     minHeight: 45,

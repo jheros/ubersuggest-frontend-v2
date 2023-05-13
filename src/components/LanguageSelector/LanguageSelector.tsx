@@ -27,8 +27,8 @@ export const LanguageSelector = ({ language = 'en' }: ILanguageSelector) => {
   const { i18n } = useTranslation();
   const {
     palette: {
-      dark: { main: normalColor },
-      grey: { '500': selectedColor },
+      darkGray: { main: normalColor },
+      gray: { main: selectedColor },
     },
   } = useTheme();
 

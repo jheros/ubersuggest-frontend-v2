@@ -11,7 +11,7 @@ export const SideBarMenuItemWrapper = styled((props: ListProps) => <MuiList sx={
   ({ theme }) => ({
     borderBottomWidth: 1,
     borderBottomStyle: 'solid',
-    borderBottomColor: theme.palette.light[300],
+    borderBottomColor: theme.palette.lightGray[50],
 
     '&:last-child': {
       borderBottom: 'none',

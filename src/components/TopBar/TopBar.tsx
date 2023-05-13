@@ -22,8 +22,8 @@ export const TopBar = () => {
         height: 59,
         borderBottomWidth: 1,
         borderBottomStyle: 'solid',
-        borderBottomColor: theme.palette.light[400],
-        color: theme.palette.dark.main,
+        borderBottomColor: theme.palette.lightGray[70],
+        color: theme.palette.darkGray.main,
       }}
       elevation={0}
     >

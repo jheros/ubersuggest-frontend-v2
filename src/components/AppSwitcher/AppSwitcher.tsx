@@ -47,8 +47,8 @@ const appType = 'ubersuggest';
 export const AppSwitcher = () => {
   const {
     palette: {
-      grey: { '50': switcherBackground },
-      dark: { '300': descriptionColor },
+      gray: { '10': switcherBackground },
+      darkGray: { '50': descriptionColor },
     },
   } = useTheme();
   const { t } = useTranslation();

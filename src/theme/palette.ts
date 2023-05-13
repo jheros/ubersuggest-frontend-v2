@@ -6,9 +6,9 @@ import type { IPaletteColors, IFonts, IShadows } from './variables';
 const palette = {
   primary: colors.orange,
   secondary: colors.blue,
-  dark: colors.dark,
-  grey: colors.grey,
-  light: colors.light,
+  darkGray: colors.darkGray,
+  gray: colors.gray,
+  lightGray: colors.lightGray,
 
   error: colors.red,
   warning: colors.yellow,

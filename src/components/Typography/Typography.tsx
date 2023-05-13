@@ -13,5 +13,5 @@ interface ITypography extends TypographyProps {
 export const Typography = styled(MuiTypography)(({ color, font, fontWeight = 400, theme, ...rest }: ITypography) => ({
   fontFamily: font ? fonts[font] : 'inherit',
   fontWeight,
-  color: color || theme?.palette.dark.main,
+  color: color || theme?.palette.darkGray.main,
 }));
