@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Toolbar, Drawer } from '@mui/material';
 
-const SIDEBAR_WIDTH = 220;
+const SIDEBAR_WIDTH = 221;
 
 interface ISideBarWrapper {
   open: boolean;

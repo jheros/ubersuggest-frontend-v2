@@ -9,6 +9,8 @@ interface ISideBarMenuSummary extends AccordionSummaryProps {
 }
 
 export const SideBarMenu = styled((props: AccordionProps) => <MuiAccordion elevation={0} {...props} />)(() => ({
+  marginTop: 8,
+
   '&.Mui-expanded': {
     marginTop: 8,
     marginBottom: 8,
