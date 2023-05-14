@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Chrome Copy</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="SideNav-Revised" transform="translate(-28.000000, -934.000000)" fill="#F16334"
+      fill-rule="nonzero">
+      <g id="Group" transform="translate(26.000000, 933.000000)">
+        <g id="Group" transform="translate(2.400000, 1.200000)">
+          <path
+            d="M9.6,0.3 C14.6374742,0.3 18.739496,4.30514737 18.8954031,9.30477964 L18.9,9.6 L18.9,17.86 L17.1,17.86 L17.1,9.6 C17.1,5.45786438 13.7421356,2.1 9.6,2.1 C5.54991183,2.1 2.24962571,5.31028416 2.10494637,9.32504775 L2.1,9.6 L2.1,17.86 L0.3,17.86 L0.3,9.6 C0.3,4.46375183 4.46375183,0.3 9.6,0.3 Z"
+            id="Oval"></path>
+          <polygon id="Oval-Copy-3" points="14.7 11.28 14.7 19.54 12.9 19.54 12.9 11.28"></polygon>
+          <polygon id="Oval-Copy-4" points="6.3 11.28 6.3 19.54 4.5 19.54 4.5 11.28"></polygon>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

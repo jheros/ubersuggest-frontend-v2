@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="20px" viewBox="0 0 18 20" version="1.1" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Chrome Copy 2</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="SideNav-Revised" transform="translate(-29.000000, -983.000000)" fill="#F16334"
+      fill-rule="nonzero">
+      <g id="Group" transform="translate(26.000000, 981.000000)">
+        <g id="Group-30" transform="translate(4.800000, 3.600000)">
+          <path
+            d="M15.3,-0.9 L-0.9,-0.9 L-0.9,17.5153846 L15.3,17.5153846 L15.3,-0.9 Z M13.5,0.9 L13.5,15.7152 L0.9,15.7152 L0.9,0.9 L13.5,0.9 Z"
+            id="Rectangle"></path>
+          <g id="Group-29" transform="translate(3.068052, 4.302791)">
+            <polygon id="Path-20"
+              points="6.18478347 -0.346153846 6.18478347 1.45384615 1.25766064e-13 1.45384615 1.25766064e-13 -0.346153846"></polygon>
+            <polygon id="Path-20-Copy"
+              points="3.96939886 4.08461538 3.96939886 5.88461538 1.77191595e-13 5.88461538 1.77191595e-13 4.08461538"></polygon>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
