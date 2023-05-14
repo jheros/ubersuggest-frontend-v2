@@ -1,4 +1,5 @@
 export * from './AppSwitcher';
+export * from './Button';
 export * from './Dashboard';
 export * from './LanguageSelector';
 export * from './MainTemplate';
