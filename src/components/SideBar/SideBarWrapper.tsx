@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { Toolbar, Drawer } from '@mui/material';
+import { Toolbar, Drawer, useTheme, useMediaQuery } from '@mui/material';
+import SmoothScrollbar from 'react-perfect-scrollbar';
 
 const SIDEBAR_WIDTH = 221;
 
@@ -10,41 +11,27 @@ interface ISideBarWrapper {
 }
 
 export const SideBarWrapper = ({ open, toggle, children }: ISideBarWrapper) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.up('xs'));
+
   return (
-    <>
-      <Drawer
-        variant='temporary'
-        open={open}
-        onClose={toggle}
-        ModalProps={{ keepMounted: true }}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: SIDEBAR_WIDTH,
-          },
-        }}
-      >
+    <Drawer
+      variant={isDesktop ? 'permanent' : 'temporary'}
+      open={isDesktop ? true : open}
+      onClose={toggle}
+      ModalProps={{ keepMounted: true }}
+      sx={{
+        '& .MuiDrawer-paper': {
+          boxSizing: 'border-box',
+          width: isDesktop ? SIDEBAR_WIDTH : isSmallMobile ? '70%' : '80%',
+        },
+      }}
+    >
+      <SmoothScrollbar>
         <Toolbar />
         {children}
-      </Drawer>
-
-      <Drawer
-        variant='permanent'
-        sx={{
-          display: { xs: 'none', sm: 'block' },
-
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: SIDEBAR_WIDTH,
-          },
-        }}
-        open
-      >
-        <Toolbar />
-        {children}
-      </Drawer>
-    </>
+      </SmoothScrollbar>
+    </Drawer>
   );
 };

@@ -25,7 +25,7 @@ export const SideBarMenu = styled((props: AccordionProps) => <MuiAccordion eleva
 
 export const SideBarMenuSummary = styled((props: ISideBarMenuSummary) => (
   <MuiAccordionSummary
-    expandIcon={props.hasChildren && <ArrowForwardIosSharpIcon sx={{ fontSize: 10 }} />}
+    expandIcon={props.hasChildren && <ArrowForwardIosSharpIcon sx={{ fontSize: 12 }} />}
     {...props}
   />
 ))(({ theme }) => ({

@@ -102,6 +102,7 @@ export const AppSwitcher = () => {
             textTransform: 'none',
             justifyContent: 'space-between',
             minWidth: isDesktop ? 228 : 'auto',
+            flex: 1,
             py: 0.5,
             px: 1.5,
             mx: isDesktop ? 3.75 : 1.75,

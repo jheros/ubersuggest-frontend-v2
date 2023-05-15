@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Provider } from 'react-redux';
-import './languages/i18n';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
+import 'languages/i18n';
 import 'styles/index.scss';
+
 import App from './App';
 import { store } from './store';
 import reportWebVitals from './reportWebVitals';

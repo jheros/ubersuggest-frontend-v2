@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Toolbar, Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
+
 import { TopBar, SideBar } from 'components';
 
 const drawerWidth = 240;
