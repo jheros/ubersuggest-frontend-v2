@@ -1,5 +1,5 @@
 export interface ISidebarMenuItem {
-  name?: string;
+  name: string;
   isNew?: boolean;
 }
 
@@ -9,6 +9,7 @@ export interface ISidebarMenu extends ISidebarMenuItem {
 
 export const SIDEBAR_MENUS: ISidebarMenu[] = [
   {
+    name: 'menu_general',
     children: [
       [
         { name: 'dashboard' },

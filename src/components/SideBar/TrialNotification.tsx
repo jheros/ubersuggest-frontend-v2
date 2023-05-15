@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { Button, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { Typography } from 'components';
+import { Button, Typography } from 'components';
 import checkOrangeSvg from 'assets/svg/check-orange.svg';
 import { ReactComponent as UpdateIcon } from 'assets/svg/update-icon.svg';
 
-const CTAWrapper = styled('div')(({ theme }) => ({
+const TrialNotificationWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
   margin: 12,
   marginTop: 48,
@@ -71,7 +71,7 @@ export const TrialNotification = () => {
 
   return (
     <>
-      <CTAWrapper>
+      <TrialNotificationWrapper>
         <UpdateIconWrapper>
           <UpdateIconContent>
             <UpdateIcon />
@@ -89,28 +89,21 @@ export const TrialNotification = () => {
             </Item>
           ))}
         </List>
-        <Button variant='contained' sx={{ borderRadius: '2px', height: 34 }}>
-          <Typography variant='body2' font='medium' sx={{ textTransform: 'none', color: 'white' }}>
-            {t('sign_in')}
+        <Button
+          variant='contained'
+          size='large'
+          sx={{
+            boxShadow: '0px 4px 8px 0px rgba(241, 100, 52, 0.3)',
+            width: '100%',
+            textTransform: 'uppercase',
+            marginTop: 1.5,
+          }}
+        >
+          <Typography variant='body3' font='medium' sx={{ color: 'white', letterSpacing: 2 }}>
+            {t('get_started')}
           </Typography>
         </Button>
-        {/* <PrimaryButton
-          theme='orange'
-          tag={translate('get_started')}
-          width='100%'
-          mobileWidth='100%'
-          style={{
-            marginTop: '8px',
-            minHeight: '36px',
-            lineHeight: '14px',
-            boxShadow: '0px 4px 8px 0px rgba(241, 100, 52, 0.3)',
-          }}
-          onClick={() => {
-
-          }}
-        /> */}
-        PrimaryButton
-      </CTAWrapper>
+      </TrialNotificationWrapper>
     </>
   );
 };
