@@ -1,5 +1,6 @@
 export interface ISidebarMenuItem {
   name: string;
+  expanded?: boolean;
   isNew?: boolean;
 }
 
@@ -10,6 +11,7 @@ export interface ISidebarMenu extends ISidebarMenuItem {
 export const SIDEBAR_MENUS: ISidebarMenu[] = [
   {
     name: 'menu_general',
+    expanded: true,
     children: [
       [
         { name: 'dashboard' },

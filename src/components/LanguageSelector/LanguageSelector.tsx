@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { styled, MenuItem, Box, Stack, MenuList, useTheme } from '@mui/material';
+import { styled, MenuItem, Box, Stack, MenuList } from '@mui/material';
 import MuiMenu from '@mui/material/Menu';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -25,12 +25,6 @@ const Menu = styled(MuiMenu)(({ theme }) => ({
 export const LanguageSelector = ({ language = 'en' }: ILanguageSelector) => {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
-  const {
-    palette: {
-      darkGray: { main: normalColor },
-      gray: { main: selectedColor },
-    },
-  } = useTheme();
 
   const popupState = usePopupState({
     variant: 'popover',
@@ -69,7 +63,7 @@ export const LanguageSelector = ({ language = 'en' }: ILanguageSelector) => {
               sx={{
                 px: 3.75,
                 py: 1.25,
-                color: lang.code === language ? selectedColor : normalColor,
+                color: (theme) => (lang.code === language ? theme.palette.gray.main : theme.palette.darkGray.main),
               }}
               onClick={handleChangeLanguage(lang.code)}
             >

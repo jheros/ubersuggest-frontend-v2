@@ -14,6 +14,7 @@ import {
   useTheme,
   Backdrop,
   CircularProgress,
+  useMediaQuery,
 } from '@mui/material';
 import { get } from 'lodash';
 import { ExpandMore as ExpandMoreIcon, KeyboardArrowRight as KeyboardArrowRightIcon } from '@mui/icons-material';
@@ -45,13 +46,10 @@ const appOptions = {
 const appType = 'ubersuggest';
 
 export const AppSwitcher = () => {
-  const {
-    palette: {
-      gray: { '10': switcherBackground },
-      darkGray: { '50': descriptionColor },
-    },
-  } = useTheme();
+  const theme = useTheme();
   const { t } = useTranslation();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
@@ -100,13 +98,14 @@ export const AppSwitcher = () => {
         <Button
           ref={anchorRef}
           sx={{
-            background: switcherBackground,
+            background: (theme) => theme.palette.gray[10],
             textTransform: 'none',
             justifyContent: 'space-between',
-            minWidth: 228,
+            minWidth: isDesktop ? 228 : 'auto',
             py: 0.5,
             px: 1.5,
-            mx: 3.75,
+            mx: isDesktop ? 3.75 : 1.75,
+            my: isDesktop ? 0 : 1.5,
           }}
           startIcon={get(appOptions, `${appType}.icon`)}
           endIcon={open ? <ExpandMoreIcon sx={{ fontSize: 16 }} /> : <KeyboardArrowRightIcon sx={{ fontSize: 16 }} />}
@@ -131,6 +130,9 @@ export const AppSwitcher = () => {
           placement='bottom-start'
           transition
           disablePortal
+          sx={{
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
         >
           {({ TransitionProps, placement }) => (
             <Grow
@@ -163,7 +165,7 @@ export const AppSwitcher = () => {
                               <Typography
                                 variant='body3'
                                 sx={{
-                                  color: descriptionColor,
+                                  color: (theme) => theme.palette.darkGray[50],
                                   whiteSpace: 'normal',
                                 }}
                               >

@@ -1,16 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { Divider, ListItemButton, ListItemIcon, Stack, useTheme } from '@mui/material';
+import { Divider, ListItemButton, ListItemIcon, Stack } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { Typography } from 'components';
 
 export const ProjectSelector = () => {
   const { t } = useTranslation();
-  const {
-    palette: {
-      primary: { main: mainColor },
-    },
-  } = useTheme();
 
   return (
     <>
@@ -20,7 +15,7 @@ export const ProjectSelector = () => {
             {t('add_project_button')}
           </Typography>
           <ListItemIcon sx={{ minWidth: 'auto' }}>
-            <AddCircleOutlineIcon sx={{ color: mainColor, fontSize: 18 }} />
+            <AddCircleOutlineIcon sx={{ color: (theme) => theme.palette.primary.main, fontSize: 18 }} />
           </ListItemIcon>
         </Stack>
       </ListItemButton>

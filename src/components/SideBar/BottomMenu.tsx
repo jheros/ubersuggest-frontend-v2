@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Stack } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 import { Typography } from 'components';
 import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg';
@@ -39,6 +39,24 @@ const BOTTOM_MENUS: IBottomMenuItem[] = [
   },
 ];
 
+const BottomMenuWrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    paddingBottom: 80,
+    paddingLeft: 20,
+    borderTop: `1px solid ${theme.palette.lightGray[50]}`,
+    backgroundColor: theme.palette.gray[10],
+  },
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: 16,
+    marginLeft: 12,
+    marginRight: 12,
+    paddingBottom: 16,
+    borderTop: `1px solid ${theme.palette.lightGray[50]}`,
+    borderBottom: `1px solid ${theme.palette.lightGray[50]}`,
+  },
+  paddingTop: 16,
+}));
+
 const BottomMenuItem = styled(Stack)(({ theme }) => ({
   minHeight: 32,
   cursor: 'pointer',
@@ -50,18 +68,15 @@ const BottomMenuItem = styled(Stack)(({ theme }) => ({
 
 export const BottomMenu = () => {
   const { t } = useTranslation();
-  const {
-    palette: { gray, lightGray },
-  } = useTheme();
 
   return (
-    <Box pt={2} pb={10} sx={{ backgroundColor: gray[10], border: `1px solid ${lightGray[50]}` }}>
+    <BottomMenuWrapper>
       {BOTTOM_MENUS.map((subsection) => (
-        <BottomMenuItem key={subsection.name} direction='row' alignItems='center' onClick={() => {}} pl={2.5}>
+        <BottomMenuItem key={subsection.name} direction='row' alignItems='center' onClick={() => {}}>
           <Stack sx={{ width: 20, marginRight: 1.75 }}>{subsection.icon}</Stack>
           <Typography variant='body2'>{t(subsection.name)}</Typography>
         </BottomMenuItem>
       ))}
-    </Box>
+    </BottomMenuWrapper>
   );
 };
