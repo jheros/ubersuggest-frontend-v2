@@ -1,11 +1,11 @@
-import { CSSProperties } from 'react';
+import { CSSProperties } from 'react'
 
 interface ICssPropertiesObject {
-  [variant: string]: CSSProperties;
+  [variant: string]: CSSProperties
 }
 
 interface IFontFamilyCssProperty {
-  fontFamily: CSSProperties['fontFamily'];
+  fontFamily: CSSProperties['fontFamily']
 }
 
 const typography: ICssPropertiesObject | IFontFamilyCssProperty = {
@@ -78,31 +78,31 @@ const typography: ICssPropertiesObject | IFontFamilyCssProperty = {
     fontSize: '0.75rem', // 12px,
     lineHeight: '1.125rem', // 18px
   },
-};
+}
 
-type ITypographyVariants = keyof typeof typography;
+type ITypographyVariants = keyof typeof typography
 
 type ITypography = {
-  [variant in ITypographyVariants]: CSSProperties;
-};
+  [variant in ITypographyVariants]: CSSProperties
+}
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    h1: true;
-    h2: true;
-    h3: true;
-    h4: true;
-    stats: true;
-    caption1: true;
-    caption2: true;
-    caption3: true;
-    caption4: true;
-    button: true;
-    body1: true;
-    body2: true;
-    body3: true;
-    body4: true;
-    body5: true;
+    h1: true
+    h2: true
+    h3: true
+    h4: true
+    stats: true
+    caption1: true
+    caption2: true
+    caption3: true
+    caption4: true
+    button: true
+    body1: true
+    body2: true
+    body3: true
+    body4: true
+    body5: true
   }
 }
 
@@ -112,4 +112,4 @@ declare module '@mui/material/styles' {
   interface TypographyVariantsOptions extends Partial<ITypography> {}
 }
 
-export default typography;
+export default typography

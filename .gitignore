@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#language files
+src/locations/locations.json
+src/locations/languages.json
+src/locations/configLocLangs.json
+src/locations/countriesConfig.json

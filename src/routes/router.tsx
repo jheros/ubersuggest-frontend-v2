@@ -1,18 +1,18 @@
-import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom';
+import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom'
 
 interface IAuthRoute {
-  children?: JSX.Element;
+  children?: JSX.Element
 }
 
 const AuthRoute = ({ children }: IAuthRoute) => {
-  const isAllowed = true;
+  const isAllowed = true
 
   if (!isAllowed) {
-    return <Navigate to={ROUTES.LOGIN} />;
+    return <Navigate to={ROUTES.LOGIN} />
   }
 
-  return children ? children : <Outlet />;
-};
+  return children ? children : <Outlet />
+}
 
 const ROUTES = {
   MAIN: ':languageCode?',
@@ -67,7 +67,7 @@ const ROUTES = {
   CHECKOUT: 'checkout',
   SETTINGS: 'settings/:page',
   ADMIN: 'admin/:page',
-};
+}
 
 const UberRouter = createBrowserRouter([
   {
@@ -87,8 +87,8 @@ const UberRouter = createBrowserRouter([
   {
     path: ROUTES.MAIN,
     async lazy() {
-      const { MainTemplate } = await import('components');
-      return { Component: MainTemplate };
+      const { MainTemplate } = await import('components')
+      return { Component: MainTemplate }
     },
     children: [
       { path: ROUTES.POSITION_TRACKING, element: <div>Rank Tracking Container</div> },
@@ -104,8 +104,8 @@ const UberRouter = createBrowserRouter([
       {
         index: true,
         async lazy() {
-          const { Dashboard } = await import('components');
-          return { Component: Dashboard };
+          const { Dashboard } = await import('components')
+          return { Component: Dashboard }
         },
       },
       {
@@ -114,8 +114,8 @@ const UberRouter = createBrowserRouter([
           {
             index: true,
             async lazy() {
-              const { Dashboard } = await import('components');
-              return { Component: Dashboard };
+              const { Dashboard } = await import('components')
+              return { Component: Dashboard }
             },
           },
           {
@@ -189,6 +189,6 @@ const UberRouter = createBrowserRouter([
       { path: '*', element: <div>Not Found</div> },
     ],
   },
-]);
+])
 
-export default UberRouter;
+export default UberRouter

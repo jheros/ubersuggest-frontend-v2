@@ -1,7 +1,7 @@
-import { PaletteColorOptions, PaletteColor } from '@mui/material/styles';
+import { PaletteColorOptions, PaletteColor } from '@mui/material/styles'
 
-import { colors, fonts, shadows } from './variables';
-import type { IPaletteColors, IFonts, IShadows } from './variables';
+import { colors, fonts, shadows } from './variables'
+import type { IPaletteColors, IFonts, IShadows } from './variables'
 
 const palette = {
   primary: colors.orange,
@@ -18,17 +18,17 @@ const palette = {
     ...shadows,
     ...fonts,
   },
-};
+}
 
-type IPaletteVariants = keyof typeof palette;
-type IPaletteColorVariants = Exclude<IPaletteVariants, 'common'>;
+type IPaletteVariants = keyof typeof palette
+type IPaletteColorVariants = Exclude<IPaletteVariants, 'common'>
 
 type IPalette = {
-  [variant in IPaletteColorVariants]: PaletteColor;
-};
+  [variant in IPaletteColorVariants]: PaletteColor
+}
 type IPaletteOptions = {
-  [variant in IPaletteColorVariants]?: PaletteColorOptions;
-};
+  [variant in IPaletteColorVariants]?: PaletteColorOptions
+}
 
 declare module '@mui/material/styles' {
   interface PaletteColor extends IPaletteColors {}
@@ -44,4 +44,4 @@ declare module '@mui/material/styles/createPalette' {
   interface CommonColors extends IFonts, IShadows {}
 }
 
-export default palette;
+export default palette
