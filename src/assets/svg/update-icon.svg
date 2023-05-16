@@ -1,0 +1,8 @@
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
+    fill="#F16434" />
+  <path fill-rule="evenodd" clip-rule="evenodd"
+    d="M18.9558 13.1752L13.9334 6.3623L8.91016 13.1752H11.5959V21.2524H16.2708V13.1752H18.9558Z"
+    fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
+</svg>

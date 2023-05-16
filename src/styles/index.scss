@@ -1,0 +1,12 @@
+@import 'fonts.scss';
+@import 'mixins.scss';
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+
+.MuiButton-root {
+  @include cropLineHeight(2);
+}
