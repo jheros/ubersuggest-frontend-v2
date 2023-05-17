@@ -1,43 +1,43 @@
-import { useState, SyntheticEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Divider, Stack, useTheme, useMediaQuery } from '@mui/material';
-import { Box } from '@mui/material';
+import { useState, SyntheticEvent } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Divider, Stack, useTheme, useMediaQuery } from '@mui/material'
+import { Box } from '@mui/material'
 
-import { Button, AppSwitcher, ProjectSelector, Typography } from 'components';
-import { ReactComponent as PriceIcon } from 'assets/svg/price.svg';
-import { SIDEBAR_MENUS, ISidebarMenuItem, ISidebarMenu } from './constants';
-import { SideBarMenu, SideBarMenuSummary, SideBarMenuContent } from './SideBarMenu';
-import { SideBarMenuItemWrapper, SideBarMenuItem } from './SideBarMenuItem';
-import { SideBarWrapper } from './SideBarWrapper';
-import { TrialNotification } from './TrialNotification';
-import { BottomMenu } from './BottomMenu';
+import { Button, AppSwitcher, ProjectSelector, Typography } from 'components'
+import { ReactComponent as PriceIcon } from 'assets/svg/price.svg'
+import { SIDEBAR_MENUS, ISidebarMenuItem, ISidebarMenu } from './constants'
+import { SideBarMenu, SideBarMenuSummary, SideBarMenuContent } from './SideBarMenu'
+import { SideBarMenuItemWrapper, SideBarMenuItem } from './SideBarMenuItem'
+import { SideBarWrapper } from './SideBarWrapper'
+import { TrialNotification } from './TrialNotification'
+import { BottomMenu } from './BottomMenu'
 
 interface ISideBar {
-  mobileOpen: boolean;
-  toggleMobile: () => void;
+  mobileOpen: boolean
+  toggleMobile: () => void
 }
 
 export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
-  const { t } = useTranslation();
-  const theme = useTheme();
+  const { t } = useTranslation()
+  const theme = useTheme()
   const {
     palette: {
       primary: { main: activeColor },
     },
-  } = theme;
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  } = theme
+  const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
 
-  const [expanded, setExpanded] = useState<string | false>(false);
-  const [activeMenuItem, selectMenuItem] = useState('');
+  const [expanded, setExpanded] = useState<string | false>(false)
+  const [activeMenuItem, selectMenuItem] = useState('')
 
   const handleChange = (panel: string, shouldToggle: boolean) => (_: SyntheticEvent, newExpanded: boolean) => {
-    const newPanel = shouldToggle && !newExpanded ? false : panel;
-    setExpanded(newPanel);
-  };
+    const newPanel = shouldToggle && !newExpanded ? false : panel
+    setExpanded(newPanel)
+  }
 
   const handleClickMenuItem = (index: string) => () => {
-    selectMenuItem(index);
-  };
+    selectMenuItem(index)
+  }
 
   return (
     <SideBarWrapper open={mobileOpen} toggle={toggleMobile}>
@@ -93,7 +93,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
                           </Typography>
                         )}
                       </SideBarMenuItem>
-                    );
+                    )
                   })}
                 </SideBarMenuItemWrapper>
               ))}
@@ -132,5 +132,5 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
         </Box>
       )}
     </SideBarWrapper>
-  );
-};
+  )
+}

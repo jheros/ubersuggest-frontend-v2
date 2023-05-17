@@ -1,18 +1,18 @@
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Box, Stack } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Box, Stack } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-import { Typography } from 'components';
-import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg';
-import { ReactComponent as ConsultSvg } from 'assets/svg/consult.svg';
-import { ReactComponent as SupportSvg } from 'assets/svg/support.svg';
-import { ReactComponent as KnowledgeBaseSvg } from 'assets/svg/knowledge-base.svg';
+import { Typography } from 'components'
+import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg'
+import { ReactComponent as ConsultSvg } from 'assets/svg/consult.svg'
+import { ReactComponent as SupportSvg } from 'assets/svg/support.svg'
+import { ReactComponent as KnowledgeBaseSvg } from 'assets/svg/knowledge-base.svg'
 
 interface IBottomMenuItem {
-  name: string;
-  baseUrl: string;
-  icon: ReactNode;
+  name: string
+  baseUrl: string
+  icon: ReactNode
 }
 
 const BOTTOM_MENUS: IBottomMenuItem[] = [
@@ -37,16 +37,16 @@ const BOTTOM_MENUS: IBottomMenuItem[] = [
     baseUrl: 'https://knowledgebase.neilpatel.com/',
     icon: <KnowledgeBaseSvg />,
   },
-];
+]
 
 const BottomMenuWrapper = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up('tb')]: {
     paddingBottom: 80,
     paddingLeft: 20,
     borderTop: `1px solid ${theme.palette.lightGray[50]}`,
     backgroundColor: theme.palette.gray[10],
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('tb')]: {
     marginBottom: 16,
     marginLeft: 12,
     marginRight: 12,
@@ -55,7 +55,7 @@ const BottomMenuWrapper = styled(Box)(({ theme }) => ({
     borderBottom: `1px solid ${theme.palette.lightGray[50]}`,
   },
   paddingTop: 16,
-}));
+}))
 
 const BottomMenuItem = styled(Stack)(({ theme }) => ({
   minHeight: 32,
@@ -64,10 +64,10 @@ const BottomMenuItem = styled(Stack)(({ theme }) => ({
   '&:hover': {
     fontFamily: theme?.palette.common.medium,
   },
-}));
+}))
 
 export const BottomMenu = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <BottomMenuWrapper>
@@ -78,5 +78,5 @@ export const BottomMenu = () => {
         </BottomMenuItem>
       ))}
     </BottomMenuWrapper>
-  );
-};
+  )
+}

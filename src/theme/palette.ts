@@ -1,22 +1,22 @@
 import { PaletteColorOptions, PaletteColor } from '@mui/material/styles'
 
-import { colors, fonts, shadows } from './variables'
+import { IStatusColors, colors, fonts, shadows } from './variables'
 import type { IPaletteColors, IFonts, IShadows } from './variables'
 
 const palette = {
   primary: colors.orange,
   secondary: colors.blue,
-  darkGray: colors.darkGray,
   gray: colors.gray,
   lightGray: colors.lightGray,
-
-  error: colors.red,
-  warning: colors.yellow,
-  success: colors.green,
+  darkGray: colors.darkGray,
+  red: colors.red,
+  green: colors.green,
+  yellow: colors.yellow,
 
   common: {
     ...shadows,
     ...fonts,
+    ...colors.status,
   },
 }
 
@@ -41,7 +41,7 @@ declare module '@mui/material/styles' {
 }
 
 declare module '@mui/material/styles/createPalette' {
-  interface CommonColors extends IFonts, IShadows {}
+  interface CommonColors extends IFonts, IShadows, IStatusColors {}
 }
 
 export default palette

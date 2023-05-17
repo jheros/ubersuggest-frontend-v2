@@ -6,6 +6,9 @@ export const colors = {
     '30': '#FBD0C2',
     '20': '#FCE0D6',
     '10': '#FEEFEB',
+    bright: '#FFAD7E',
+    dull: '#F3AF86',
+    light: '#F5C299',
   },
   blue: {
     main: '#4285F4',
@@ -14,6 +17,10 @@ export const colors = {
     '30': '#C6DAFC',
     '20': '#D9E7FD',
     '10': '#ECF3FE',
+    light: '#86B7EC',
+    dark: '#1A0DAB',
+    dim: '#FBFCFE',
+    magenta: '#BBB6FF',
   },
   darkGray: {
     main: '#202020',
@@ -60,17 +67,34 @@ export const colors = {
     lime: '#F4E26C',
     dull: '#FFEAC5',
   },
-  lightOrange: {
-    bright: '#FFAD7E',
-    dull: '#F3AF86',
-    light: '#F5C299',
+  status: {
+    success: '#85ECC1',
+    danger: '#FE8485',
+    warning: '#F8BC54',
+    good: '#FFAD7E',
+    info: '#71DEEF',
   },
-  lightBlue: {
-    main: '#86B7EC',
-  },
-};
+}
 
-export type IColorLevels = 'main' | '70' | '50' | '30' | '20' | '10';
+export type IColorLevels =
+  | 'main'
+  | '70'
+  | '50'
+  | '30'
+  | '20'
+  | '10'
+  | 'dull'
+  | 'dark'
+  | 'light'
+  | 'bright'
+  | 'dim'
+  | 'magenta'
+  | 'lime'
 export type IPaletteColors = {
-  [color in IColorLevels]?: string;
-};
+  [color in IColorLevels]?: string
+}
+
+export type IStatusColorsVariants = keyof typeof colors.status
+export type IStatusColors = {
+  [variant in IStatusColorsVariants]: string
+}

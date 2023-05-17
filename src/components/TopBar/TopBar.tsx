@@ -1,24 +1,24 @@
-import { useTranslation } from 'react-i18next';
-import { AppBar, Toolbar, Stack, Divider, Button, useTheme, useMediaQuery } from '@mui/material';
-import { Close as CloseIcon, Notifications as NotificationsIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next'
+import { AppBar, Toolbar, Stack, Divider, Button, useTheme, useMediaQuery } from '@mui/material'
+import { Close as CloseIcon, Notifications as NotificationsIcon, Menu as MenuIcon } from '@mui/icons-material'
 
-import { LanguageSelector, Typography, AppSwitcher } from 'components';
-import UberLogo from 'assets/svg/logo.svg';
+import { LanguageSelector, Typography, AppSwitcher } from 'components'
+import UberLogo from 'assets/svg/logo.svg'
 
 interface ITopBarMenu {
-  name: string;
+  name: string
 }
-const TOPBAR_MENUS: ITopBarMenu[] = [{ name: 'consulting' }, { name: 'plans_pricing' }];
+const TOPBAR_MENUS: ITopBarMenu[] = [{ name: 'consulting' }, { name: 'plans_pricing' }]
 
 interface ITopBar {
-  mobileSideBarOpen: boolean;
-  toggleMobileSideBar: () => void;
+  mobileSideBarOpen: boolean
+  toggleMobileSideBar: () => void
 }
 
 export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
-  const { t } = useTranslation();
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
+  const { t } = useTranslation()
 
   return (
     <AppBar
@@ -70,5 +70,5 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
         </Stack>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}

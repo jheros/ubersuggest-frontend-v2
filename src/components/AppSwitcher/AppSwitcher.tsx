@@ -1,5 +1,5 @@
-import { useState, useRef, SyntheticEvent, KeyboardEvent, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useRef, SyntheticEvent, KeyboardEvent, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   ClickAwayListener,
   Grow,
@@ -15,14 +15,14 @@ import {
   Backdrop,
   CircularProgress,
   useMediaQuery,
-} from '@mui/material';
-import { get } from 'lodash';
-import { ExpandMore as ExpandMoreIcon, KeyboardArrowRight as KeyboardArrowRightIcon } from '@mui/icons-material';
+} from '@mui/material'
+import { get } from 'lodash'
+import { ExpandMore as ExpandMoreIcon, KeyboardArrowRight as KeyboardArrowRightIcon } from '@mui/icons-material'
 
-import { Typography } from 'components';
-import { ReactComponent as AIWriterThumbSvg } from 'assets/svg/ai-writer-thumb.svg';
-import { ReactComponent as UbersuggestThumbSvg } from 'assets/svg/ubersuggest-thumb.svg';
-import { ReactComponent as AppSelectedSvg } from 'assets/svg/app-selector.svg';
+import { Typography } from 'components'
+import { ReactComponent as AIWriterThumbSvg } from 'assets/svg/ai-writer-thumb.svg'
+import { ReactComponent as UbersuggestThumbSvg } from 'assets/svg/ubersuggest-thumb.svg'
+import { ReactComponent as AppSelectedSvg } from 'assets/svg/app-selector.svg'
 
 const appOptions = {
   ubersuggest: {
@@ -41,53 +41,53 @@ const appOptions = {
     icon: <AIWriterThumbSvg />,
     color: 'blue',
   },
-};
+}
 
-const appType = 'ubersuggest';
+const appType = 'ubersuggest'
 
 export const AppSwitcher = () => {
-  const theme = useTheme();
-  const { t } = useTranslation();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const theme = useTheme()
+  const { t } = useTranslation()
+  const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const anchorRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const anchorRef = useRef<HTMLButtonElement>(null)
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+    setOpen((prevOpen) => !prevOpen)
+  }
 
   const handleClose = (event: Event | SyntheticEvent) => {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-      return;
+      return
     }
 
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleSelectApp = () => {
-    setLoading(true);
-    setOpen(false);
-  };
+    setLoading(true)
+    setOpen(false)
+  }
 
   const handleListKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
+      event.preventDefault()
+      setOpen(false)
     } else if (event.key === 'Escape') {
-      setOpen(false);
+      setOpen(false)
     }
-  };
+  }
 
-  const prevOpen = useRef(open);
+  const prevOpen = useRef(open)
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
-      anchorRef.current!.focus();
+      anchorRef.current!.focus()
     }
 
-    prevOpen.current = open;
-  }, [open]);
+    prevOpen.current = open
+  }, [open])
 
   return (
     <>
@@ -185,5 +185,5 @@ export const AppSwitcher = () => {
         </Popper>
       </Stack>
     </>
-  );
-};
+  )
+}
