@@ -1,23 +1,38 @@
-import MuiButton, { ButtonProps } from '@mui/material/Button';
-import { styled, Theme } from '@mui/material/styles';
-
-const SIZE = {
-  large: 48,
-  medium: 40,
-  small: 36,
-};
-type ISize = keyof typeof SIZE;
+import MuiButton, { ButtonProps } from '@mui/material/Button'
+import { Theme } from '@mui/material/styles'
+import { Box, CircularProgress } from '@mui/material'
 
 interface IButton extends ButtonProps {
-  size?: ISize;
-  theme?: Theme;
+  loading: boolean
+  theme?: Theme
 }
 
-export const Button = styled((props: IButton) => <MuiButton disableElevation {...props} />)(
-  ({ size = 'large' }: IButton) => ({
-    borderRadius: 2,
-    textTransform: 'none',
-    fontWeight: 400,
-    height: SIZE[size],
-  }),
-);
+export const Button = ({ children, color = 'primary', size = 'medium', loading = false, ...props }: IButton) => {
+  const PROGRESS_SIZES = {
+    small: 8,
+    medium: 16,
+    large: 24,
+    xlarge: 32,
+  }
+
+  return (
+    <Box sx={{ position: 'relative' }}>
+      <MuiButton {...props} disabled={loading} color={color} size={size}>
+        {children}
+      </MuiButton>
+      {loading && (
+        <CircularProgress
+          size={PROGRESS_SIZES[size]}
+          color={color}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginTop: `-${PROGRESS_SIZES[size] / 2}px`,
+            marginLeft: `-${PROGRESS_SIZES[size] / 2}px`,
+          }}
+        />
+      )}
+    </Box>
+  )
+}

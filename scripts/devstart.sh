@@ -78,7 +78,7 @@ printf "                REACT_APP_KISSMETRICS_KEY: ${WHITE}${REACT_APP_KISSMETRI
 printf "     REACT_APP_MOZ_BACKLINKS_HISTORY_FLAG: ${WHITE}${REACT_APP_MOZ_BACKLINKS_HISTORY_FLAG}${NC}\n"
 printf "             REACT_APP_RECURLY_PUBLIC_KEY: ${WHITE}${REACT_APP_RECURLY_PUBLIC_KEY}${NC}\n\n"
 
-if [ ! -e src/utils/languages.json ] || [ ! -e src/utils/locations.json ] || [ ! -e src/utils/configLocLangs.json ]; then
+if [ ! -e src/constants/languages.json ] || [ ! -e src/constants/locations.json ] || [ ! -e src/constants/configLocLangs.json ]; then
     printf "${GREEN}>>>${NC} Dowloading assets...\n"
     bash scripts/get-assets-from-s3.sh
 fi

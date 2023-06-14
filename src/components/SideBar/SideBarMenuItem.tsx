@@ -4,14 +4,14 @@ import MuiListItem, { ListItemProps } from '@mui/material/ListItem';
 
 interface ISideBarMenuItem extends ListItemProps {
   active: boolean;
-  theme?: Theme;
+  theme: Theme;
 }
 
 export const SideBarMenuItemWrapper = styled((props: ListProps) => <MuiList sx={{ py: 1.5 }} {...props} />)(
   ({ theme }) => ({
     borderBottomWidth: 1,
     borderBottomStyle: 'solid',
-    borderBottomColor: theme.palette.lightGray[50],
+    borderBottomColor: theme.palette.common.lightGray[50],
 
     '&:last-child': {
       borderBottom: 'none',
@@ -23,14 +23,14 @@ export const SideBarMenuItemWrapper = styled((props: ListProps) => <MuiList sx={
 export const SideBarMenuItem = styled(MuiListItem)(({ active, theme }: ISideBarMenuItem) => ({
   borderRightWidth: active ? 3 : 0,
   borderRightStyle: 'solid',
-  borderRightColor: theme?.palette.primary.main,
+  borderRightColor: theme.palette.primary.main,
   paddingLeft: 20,
   paddingRight: 20,
   minHeight: 32,
   cursor: 'pointer',
-  fontFamily: active ? theme?.palette.common.medium : theme?.palette.common.regular,
+  fontFamily: active ? theme.palette.common.geomanistMedium : theme.palette.common.geomanist,
 
   '&:hover': {
-    fontFamily: theme?.palette.common.medium,
+    fontFamily: theme.palette.common.geomanistMedium,
   },
 }));

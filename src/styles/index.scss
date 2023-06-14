@@ -1,4 +1,3 @@
-@import 'fonts.scss';
 @import 'mixins.scss';
 
 * {
@@ -10,3 +9,6 @@
 .MuiButton-root {
   @include cropLineHeight(2);
 }
+
+// Hide google recaptcha badge
+.grecaptcha-badge { visibility: hidden; }

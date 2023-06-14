@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { AppBar, Toolbar, Stack, Divider, Button, useTheme, useMediaQuery } from '@mui/material'
 import { Close as CloseIcon, Notifications as NotificationsIcon, Menu as MenuIcon } from '@mui/icons-material'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { LanguageSelector, Typography, AppSwitcher } from 'components'
-import UberLogo from 'assets/svg/logo.svg'
+import { useNavigateWithLang } from 'hooks'
+import UberLogo from 'assets/svg/logos/logo-orange.svg'
+import { isSignedInSelector, logout } from 'store/reducers/auth'
 
 interface ITopBarMenu {
   name: string
@@ -19,6 +22,14 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
   const { t } = useTranslation()
+  const navigateWithLang = useNavigateWithLang()
+  const isSignedIn = useSelector(isSignedInSelector)
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    navigateWithLang('/dashboard')
+  }
 
   return (
     <AppBar
@@ -29,8 +40,8 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
         height: 59,
         borderBottomWidth: 1,
         borderBottomStyle: 'solid',
-        borderBottomColor: (theme) => theme.palette.lightGray[70],
-        color: (theme) => theme.palette.darkGray.main,
+        borderBottomColor: (theme) => theme.palette.common.lightGray[70],
+        color: (theme) => theme.palette.common.darkGray.main,
       }}
       elevation={0}
     >
@@ -50,15 +61,36 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
                     {t(item.name)}
                   </Typography>
                 ))}
-                <Button variant='contained' color='secondary' disableElevation sx={{ borderRadius: '2px', height: 34 }}>
-                  <Typography variant='body2' font='medium' sx={{ textTransform: 'none', color: 'white' }}>
-                    {t('sign_in')}
-                  </Typography>
-                </Button>
+                {!isSignedIn && (
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    disableElevation
+                    sx={{ borderRadius: '2px', height: 34 }}
+                    onClick={() => navigateWithLang('/login')}
+                  >
+                    <Typography variant='body2' font='medium' sx={{ textTransform: 'none', color: 'white' }}>
+                      {t('sign_in')}
+                    </Typography>
+                  </Button>
+                )}
+                {isSignedIn && (
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    disableElevation
+                    sx={{ borderRadius: '2px', height: 34 }}
+                    onClick={handleLogout}
+                  >
+                    <Typography variant='body2' font='medium' sx={{ textTransform: 'none', color: 'white' }}>
+                      {t('sign_out')}
+                    </Typography>
+                  </Button>
+                )}
               </>
             )}
             {!isDesktop && (
-              <Stack direction='row' sx={{ color: (theme) => theme.palette.darkGray[30] }} mr={-2.5}>
+              <Stack direction='row' sx={{ color: (theme) => theme.palette.common.darkGray[30] }} mr={-2.5}>
                 <NotificationsIcon sx={{ fontSize: 38 }} />
                 <Stack onClick={toggleMobileSideBar} sx={{ cursor: 'pointer' }}>
                   {mobileSideBarOpen && <CloseIcon sx={{ fontSize: 38 }} />}

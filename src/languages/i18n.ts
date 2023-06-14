@@ -74,6 +74,12 @@ const resources = {
   },
 }
 
+declare module 'i18next' {
+  interface CustomTypeOptions {
+    returnNull: false
+  }
+}
+
 i18n.use(initReactI18next).init({
   resources,
   lng: 'en',
@@ -81,6 +87,7 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false,
   },
+  returnNull: false,
 })
 
 export default i18n

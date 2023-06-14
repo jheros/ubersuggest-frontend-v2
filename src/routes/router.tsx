@@ -14,7 +14,7 @@ const AuthRoute = ({ children }: IAuthRoute) => {
   return children ? children : <Outlet />
 }
 
-const ROUTES = {
+export const ROUTES = {
   MAIN: ':languageCode?',
   LOGIN: 'login',
   REGISTER: 'register',
@@ -69,16 +69,25 @@ const ROUTES = {
   ADMIN: 'admin/:page',
 }
 
-const UberRouter = createBrowserRouter([
+export const UberRouter = createBrowserRouter([
   {
     path: ROUTES.MAIN,
     children: [
       /* Auth */
       {
         path: ROUTES.LOGIN,
-        element: <div>Login</div>,
+        async lazy() {
+          const { Login } = await import('containers')
+          return { Component: Login }
+        },
       },
-      { path: ROUTES.REGISTER, element: <div>Register</div> },
+      {
+        path: ROUTES.REGISTER,
+        async lazy() {
+          const { Register } = await import('containers')
+          return { Component: Register }
+        },
+      },
       { path: ROUTES.FORGOT_PASSWORD, element: <div>Forgot Password</div> },
       { path: ROUTES.CHANGE_PASSWORD, element: <div>Change Password</div> },
       { path: ROUTES.VERIFY_EMAIL, element: <div>Email Verification Page</div> },
@@ -190,5 +199,3 @@ const UberRouter = createBrowserRouter([
     ],
   },
 ])
-
-export default UberRouter

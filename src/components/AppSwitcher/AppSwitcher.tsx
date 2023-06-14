@@ -98,7 +98,7 @@ export const AppSwitcher = () => {
         <Button
           ref={anchorRef}
           sx={{
-            background: (theme) => theme.palette.gray[10],
+            background: (theme) => theme.palette.common.gray[10],
             textTransform: 'none',
             justifyContent: 'space-between',
             minWidth: isDesktop ? 228 : 'auto',
@@ -164,9 +164,9 @@ export const AppSwitcher = () => {
                                 {appType === app.title && <AppSelectedSvg />}
                               </Stack>
                               <Typography
-                                variant='body3'
+                                variant='text12'
                                 sx={{
-                                  color: (theme) => theme.palette.darkGray[50],
+                                  color: (theme) => theme.palette.common.darkGray[50],
                                   whiteSpace: 'normal',
                                 }}
                               >

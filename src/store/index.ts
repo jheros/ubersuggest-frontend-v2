@@ -1,19 +1,22 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import { rootReducer } from 'store/reducers'
-import { ubersuggestApi } from './ubersuggest/ubersuggest.api'
+import { userApi, authApi } from './api'
+import { authReducer, recaptchaReducer } from './reducers'
 
 export const store = configureStore({
   reducer: {
-    ...rootReducer,
-    [ubersuggestApi.reducerPath]: ubersuggestApi.reducer,
+    auth: authReducer,
+    recaptcha: recaptchaReducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
+  devTools: process.env.NODE_ENV === 'development',
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([authApi.middleware, userApi.middleware]),
 })
 
 setupListeners(store.dispatch)
 
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>
+export type IAppDispatch = typeof store.dispatch
+export type IRootState = ReturnType<typeof store.getState>
+export type IAppThunk<ReturnType = void> = ThunkAction<ReturnType, IRootState, unknown, Action<string>>

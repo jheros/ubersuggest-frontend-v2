@@ -43,16 +43,16 @@ const BottomMenuWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('tb')]: {
     paddingBottom: 80,
     paddingLeft: 20,
-    borderTop: `1px solid ${theme.palette.lightGray[50]}`,
-    backgroundColor: theme.palette.gray[10],
+    borderTop: `1px solid ${theme.palette.common.lightGray[50]}`,
+    backgroundColor: theme.palette.common.gray[10],
   },
   [theme.breakpoints.down('tb')]: {
     marginBottom: 16,
     marginLeft: 12,
     marginRight: 12,
     paddingBottom: 16,
-    borderTop: `1px solid ${theme.palette.lightGray[50]}`,
-    borderBottom: `1px solid ${theme.palette.lightGray[50]}`,
+    borderTop: `1px solid ${theme.palette.common.lightGray[50]}`,
+    borderBottom: `1px solid ${theme.palette.common.lightGray[50]}`,
   },
   paddingTop: 16,
 }))
@@ -62,7 +62,7 @@ const BottomMenuItem = styled(Stack)(({ theme }) => ({
   cursor: 'pointer',
 
   '&:hover': {
-    fontFamily: theme?.palette.common.medium,
+    fontFamily: theme.palette.common.geomanistMedium,
   },
 }))
 

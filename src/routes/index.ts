@@ -1,3 +1,1 @@
-import UberRouter from './router'
-
-export default UberRouter
+export * from './router'

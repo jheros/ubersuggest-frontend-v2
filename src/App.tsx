@@ -1,10 +1,15 @@
-import { RouterProvider } from 'react-router-dom';
-import UberRouter from 'routes';
+import { RouterProvider } from 'react-router-dom'
+import { UberRouter } from 'routes'
+import { RecaptchaProvider } from 'contexts'
 
-import './App.css';
+import './App.css'
 
 function App() {
-  return <RouterProvider router={UberRouter} fallbackElement={<p>Loading...</p>} />;
+  return (
+    <RecaptchaProvider>
+      <RouterProvider router={UberRouter} fallbackElement={<p>Loading...</p>} />
+    </RecaptchaProvider>
+  )
 }
 
-export default App;
+export default App

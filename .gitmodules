@@ -1,0 +1,5 @@
+[submodule "common-ui"]
+    path = common-ui
+	url = git@github.com:ubersuggest/ubersuggest-ui.git
+    branch = master
+    ignore = dirty

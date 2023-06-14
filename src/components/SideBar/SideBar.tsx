@@ -62,7 +62,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
                 </Typography>
                 {menu.isNew && (
                   <Typography
-                    variant='body3'
+                    variant='text12'
                     color={activeColor}
                     sx={{ mt: 0, textTransform: 'uppercase', marginLeft: 0.75 }}
                   >
@@ -85,7 +85,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
                         <Typography variant='body2'>{t(item.name!)}</Typography>
                         {item.isNew && (
                           <Typography
-                            variant='body3'
+                            variant='text12'
                             color={activeColor}
                             sx={{ textTransform: 'uppercase', marginLeft: 0.75 }}
                           >

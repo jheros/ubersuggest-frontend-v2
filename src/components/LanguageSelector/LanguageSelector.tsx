@@ -63,11 +63,11 @@ export const LanguageSelector = ({ language = 'en' }: ILanguageSelector) => {
               sx={{
                 px: 3.75,
                 py: 1.25,
-                color: (theme) => (lang.code === language ? theme.palette.gray.main : theme.palette.darkGray.main),
+                color: (theme) => (lang.code === language ? theme.palette.common.gray.main : theme.palette.common.darkGray.main),
               }}
               onClick={handleChangeLanguage(lang.code)}
             >
-              <Typography variant='body3' fontWeight={300}>
+              <Typography variant='text12' fontWeight={300}>
                 {lang.label}
               </Typography>
             </MenuItem>
