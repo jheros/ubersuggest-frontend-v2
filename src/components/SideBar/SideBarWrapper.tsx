@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Toolbar, Drawer, useTheme, useMediaQuery } from '@mui/material'
+import { Toolbar, Drawer, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
 import SmoothScrollbar from 'react-perfect-scrollbar'
 
 const SIDEBAR_WIDTH = 221
@@ -13,7 +13,7 @@ interface ISideBarWrapper {
 export const SideBarWrapper = ({ open, toggle, children }: ISideBarWrapper) => {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
-  const isSmallMobile = useMediaQuery(theme.breakpoints.up('tb'))
+  const isSmallMobile = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
 
   return (
     <Drawer

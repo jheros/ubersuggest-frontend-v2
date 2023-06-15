@@ -1,10 +1,10 @@
-import { styled, Theme } from '@mui/material/styles';
-import MuiList, { ListProps } from '@mui/material/List';
-import MuiListItem, { ListItemProps } from '@mui/material/ListItem';
+import { styled, Theme } from '@mui/material/styles'
+import MuiList, { ListProps } from '@mui/material/List'
+import MuiListItem, { ListItemProps } from '@mui/material/ListItem'
+import { fonts } from '@ubersuggest/common-ui'
 
 interface ISideBarMenuItem extends ListItemProps {
-  active: boolean;
-  theme: Theme;
+  active: boolean
 }
 
 export const SideBarMenuItemWrapper = styled((props: ListProps) => <MuiList sx={{ py: 1.5 }} {...props} />)(
@@ -18,9 +18,9 @@ export const SideBarMenuItemWrapper = styled((props: ListProps) => <MuiList sx={
       paddingBottom: 0,
     },
   }),
-);
+)
 
-export const SideBarMenuItem = styled(MuiListItem)(({ active, theme }: ISideBarMenuItem) => ({
+export const SideBarMenuItem = styled(MuiListItem)<ISideBarMenuItem>(({ active, theme }) => ({
   borderRightWidth: active ? 3 : 0,
   borderRightStyle: 'solid',
   borderRightColor: theme.palette.primary.main,
@@ -28,9 +28,9 @@ export const SideBarMenuItem = styled(MuiListItem)(({ active, theme }: ISideBarM
   paddingRight: 20,
   minHeight: 32,
   cursor: 'pointer',
-  fontFamily: active ? theme.palette.common.geomanistMedium : theme.palette.common.geomanist,
+  fontFamily: active ? fonts.primary.medium : fonts.primary.regular,
 
   '&:hover': {
-    fontFamily: theme.palette.common.geomanistMedium,
+    fontFamily: fonts.primary.medium,
   },
-}));
+}))

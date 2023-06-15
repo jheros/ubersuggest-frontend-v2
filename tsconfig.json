@@ -20,15 +20,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@common-ui/*": [
-        "../common-ui/dist/*"
-      ],
-    },
-    "includes": [
-      "../common-ui/dist/**/*.ts"
-    ]
+    "jsx": "react-jsx"
   },
   "include": [
     "src",

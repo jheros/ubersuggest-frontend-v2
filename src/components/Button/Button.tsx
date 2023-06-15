@@ -3,7 +3,7 @@ import { Theme } from '@mui/material/styles'
 import { Box, CircularProgress } from '@mui/material'
 
 interface IButton extends ButtonProps {
-  loading: boolean
+  loading?: boolean
   theme?: Theme
 }
 

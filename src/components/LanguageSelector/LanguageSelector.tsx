@@ -17,7 +17,7 @@ interface ILanguageSelector {
 
 const Menu = styled(MuiMenu)(({ theme }) => ({
   '& .MuiMenu-paper': {
-    boxShadow: theme.palette.common.shadowC,
+    boxShadow: 2,
     width: LANGUAGE_SELECTOR_DROPDOWN_WIDTH,
   },
 }));

@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Paper, Box, FormControlLabel, Checkbox, InputBase, FormHelperText } from '@mui/material'
-import { fonts } from '@common-ui/esm'
+import { fonts } from '@ubersuggest/common-ui'
 import { useSearchParams } from 'react-router-dom'
 
 import { useRegisterUserMutation, useRegisterMultiUsersMutation } from 'store/api'

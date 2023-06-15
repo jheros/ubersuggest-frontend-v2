@@ -1,14 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
 import { Provider } from 'react-redux'
-import { lightTheme } from '@common-ui/esm'
+import { lightTheme, ThemeInheritor } from '@ubersuggest/common-ui'
 
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import 'languages/i18n'
 import 'styles/index.scss'
-import '@common-ui/styles/style.css'
+import '@ubersuggest/common-ui/dist/styles/style.css'
 
 import App from './App'
 import { store } from './store'
@@ -18,10 +16,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
+      <ThemeInheritor theme={lightTheme}>
         <App />
-      </ThemeProvider>
+      </ThemeInheritor>
     </Provider>
   </React.StrictMode>,
 )

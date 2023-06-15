@@ -15,6 +15,7 @@ import {
   Backdrop,
   CircularProgress,
   useMediaQuery,
+  Breakpoint
 } from '@mui/material'
 import { get } from 'lodash'
 import { ExpandMore as ExpandMoreIcon, KeyboardArrowRight as KeyboardArrowRightIcon } from '@mui/icons-material'
@@ -48,7 +49,7 @@ const appType = 'ubersuggest'
 export const AppSwitcher = () => {
   const theme = useTheme()
   const { t } = useTranslation()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
 
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)

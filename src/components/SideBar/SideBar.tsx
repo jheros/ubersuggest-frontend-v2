@@ -1,6 +1,6 @@
 import { useState, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Divider, Stack, useTheme, useMediaQuery } from '@mui/material'
+import { Divider, Stack, useTheme, useMediaQuery, Breakpoint, PaletteColor } from '@mui/material'
 import { Box } from '@mui/material'
 
 import { Button, AppSwitcher, ProjectSelector, Typography } from 'components'
@@ -25,7 +25,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
       primary: { main: activeColor },
     },
   } = theme
-  const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
 
   const [expanded, setExpanded] = useState<string | false>(false)
   const [activeMenuItem, selectMenuItem] = useState('')
@@ -106,7 +106,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
         <Stack
           direction='row'
           alignItems='center'
-          sx={{ borderRadius: 35, backgroundColor: (theme) => theme.palette.primary[10] }}
+          sx={{ borderRadius: 35, backgroundColor: (theme) => theme.palette.common.orange['10'] }}
           px={1.75}
           py={1.25}
           mt={1.5}

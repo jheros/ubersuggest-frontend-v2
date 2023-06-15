@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Breakpoint } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { Typography } from 'components'
@@ -8,6 +8,7 @@ import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg'
 import { ReactComponent as ConsultSvg } from 'assets/svg/consult.svg'
 import { ReactComponent as SupportSvg } from 'assets/svg/support.svg'
 import { ReactComponent as KnowledgeBaseSvg } from 'assets/svg/knowledge-base.svg'
+import { fonts } from '@ubersuggest/common-ui'
 
 interface IBottomMenuItem {
   name: string
@@ -40,13 +41,13 @@ const BOTTOM_MENUS: IBottomMenuItem[] = [
 ]
 
 const BottomMenuWrapper = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.up('tb')]: {
+  [theme.breakpoints.up('tb' as Breakpoint)]: {
     paddingBottom: 80,
     paddingLeft: 20,
     borderTop: `1px solid ${theme.palette.common.lightGray[50]}`,
     backgroundColor: theme.palette.common.gray[10],
   },
-  [theme.breakpoints.down('tb')]: {
+  [theme.breakpoints.down('tb' as Breakpoint)]: {
     marginBottom: 16,
     marginLeft: 12,
     marginRight: 12,
@@ -62,7 +63,7 @@ const BottomMenuItem = styled(Stack)(({ theme }) => ({
   cursor: 'pointer',
 
   '&:hover': {
-    fontFamily: theme.palette.common.geomanistMedium,
+    fontFamily: fonts.primary.medium,
   },
 }))
 

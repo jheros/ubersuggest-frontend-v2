@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { AppBar, Toolbar, Stack, Divider, Button, useTheme, useMediaQuery } from '@mui/material'
+import { AppBar, Toolbar, Stack, Divider, Button, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
 import { Close as CloseIcon, Notifications as NotificationsIcon, Menu as MenuIcon } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -20,7 +20,7 @@ interface ITopBar {
 
 export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('tb'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
   const { t } = useTranslation()
   const navigateWithLang = useNavigateWithLang()
   const isSignedIn = useSelector(isSignedInSelector)

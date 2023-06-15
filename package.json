@@ -17,6 +17,7 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
+    "@ubersuggest/common-ui": "file:common-ui",
     "async-mutex": "^0.4.0",
     "axios": "^1.3.6",
     "cypress": "^12.10.0",
