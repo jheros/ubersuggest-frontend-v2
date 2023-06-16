@@ -72,6 +72,10 @@ export const ROUTES = {
 export const UberRouter = createBrowserRouter([
   {
     path: ROUTES.MAIN,
+    async lazy() {
+      const { EmptyLayout } = await import('components')
+      return { Component: EmptyLayout }
+    },
     children: [
       /* Auth */
       {
@@ -96,8 +100,8 @@ export const UberRouter = createBrowserRouter([
   {
     path: ROUTES.MAIN,
     async lazy() {
-      const { MainTemplate } = await import('components')
-      return { Component: MainTemplate }
+      const { MainLayout } = await import('components')
+      return { Component: MainLayout }
     },
     children: [
       { path: ROUTES.POSITION_TRACKING, element: <div>Rank Tracking Container</div> },

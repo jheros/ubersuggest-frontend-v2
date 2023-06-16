@@ -3,7 +3,7 @@ import { Stack, Box } from '@mui/material'
 import { useLocation, useSearchParams, useParams } from 'react-router-dom'
 import queryString from 'query-string'
 
-import { LogoOrange, Typography, GoogleLogin, RegisterForm, Hr, RouterLink, Container } from 'components'
+import { LogoOrange, Typography, GoogleLogin, RegisterForm, Hr, RouterLink } from 'components'
 import { getLanguageCode } from 'utils/translation'
 import { hasUnloggedUserProject } from 'utils/storage'
 
@@ -65,7 +65,7 @@ export const Register = () => {
   }
 
   return (
-    <Container>
+    <>
       <Stack alignItems='center'>
         <Box sx={{ display: 'flex', mt: '70px', mb: '10px' }}>
           <LogoOrange />
@@ -97,6 +97,6 @@ export const Register = () => {
           </RouterLink>
         </Typography>
       </Stack>
-    </Container>
+    </>
   )
 }

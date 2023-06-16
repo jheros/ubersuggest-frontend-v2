@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Paper, Box, FormControlLabel, Checkbox, InputBase, FormHelperText } from '@mui/material'
+import { useDispatch } from 'react-redux'
 
 import { RouterLink, Button, Typography, PasswordInput } from 'components'
 import { useLoginUserMutation } from 'store/api/authApi'
@@ -11,6 +12,7 @@ import { useNavigateWithLang } from 'hooks'
 import { pushLoginLimitMessage, removeAdblockDetectModalStatus } from 'utils/storage'
 import { ERR_USER_NOT_CONFIRMED, getErrorMessage } from 'utils/error'
 import { useRecaptchaContext } from 'contexts'
+import { showEmailConfirmModal } from 'store/reducers/modal'
 
 const loginSchema = yup
   .object({
@@ -48,6 +50,7 @@ export const LoginForm = ({ redirectUrl }: ILoginForm) => {
   const [loginUser, { isLoading }] = useLoginUserMutation()
   const navigateWithLang = useNavigateWithLang()
   const { executeRecaptchaAsync } = useRecaptchaContext()
+  const dispatch = useDispatch()
 
   const onSubmit = async (data: ILoginInput) => {
     setError('')
@@ -63,10 +66,7 @@ export const LoginForm = ({ redirectUrl }: ILoginForm) => {
       const errMsg: string = getErrorMessage(err)
       setError(errMsg)
       if (errMsg === ERR_USER_NOT_CONFIRMED) {
-        // todo: show confirm modal
-        // sendMessage('SHOW_EMAIL_CONFIRM_MODAL', {
-        //   email: email,
-        // })
+        dispatch(showEmailConfirmModal({ email: data.email }))
       }
     }
   }

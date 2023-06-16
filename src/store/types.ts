@@ -81,3 +81,8 @@ export interface IGetTokenRes {
 export interface ILoginRes {
   fresh_login: string
 }
+
+export interface IResendVerificationEmailInput {
+  email: string
+  lang: string
+}

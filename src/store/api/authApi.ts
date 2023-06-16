@@ -2,7 +2,14 @@ import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit
 import type { ILoginInput } from 'components'
 import { IRootState } from 'store'
 import { setToken } from 'store/reducers/auth'
-import { IGenericResponse, IRegisterUserInput, IRegisterMultiUsersInput, IGetTokenRes, ILoginRes } from '../types'
+import {
+  IGenericResponse,
+  IRegisterUserInput,
+  IRegisterMultiUsersInput,
+  IGetTokenRes,
+  ILoginRes,
+  IResendVerificationEmailInput,
+} from '../types'
 import { userApi } from './userApi'
 
 const disableRecaptcha = process.env.REACT_APP_DISABLE_RECAPTCHA === 'true'
@@ -105,6 +112,15 @@ export const authApi = createApi({
         dispatch(setToken({ token, token_ttl: ttl }))
       },
     }),
+    resendVerificationEmail: builder.mutation<IGenericResponse, IResendVerificationEmailInput>({
+      query(body) {
+        return {
+          url: 'user/resend_verification_email',
+          method: 'POST',
+          body,
+        }
+      },
+    }),
   }),
 })
 
@@ -114,4 +130,5 @@ export const {
   useRegisterMultiUsersMutation,
   useGetTokenQuery,
   useLazyGetTokenQuery,
+  useResendVerificationEmailMutation,
 } = authApi

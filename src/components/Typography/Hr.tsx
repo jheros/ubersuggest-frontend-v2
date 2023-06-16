@@ -13,16 +13,14 @@ export const Line = styled('div')<ILine>(({ width, margin, color, theme }) => ({
   width: width || '100%',
   margin: margin || '0 -10px',
   paddingTop: '20px',
-  [theme.breakpoints.down('md')]: {
-    margin: margin || '0 -10px',
-  },
 }))
 
 interface IHr extends BoxProps {
   text?: string
+  lineColor?: string
 }
 
-export const Hr = ({ text, sx, ...otherProps }: IHr) => {
+export const Hr = ({ text, sx, lineColor, ...otherProps }: IHr) => {
   const theme = useTheme()
 
   return (
@@ -36,21 +34,23 @@ export const Hr = ({ text, sx, ...otherProps }: IHr) => {
       }}
       {...otherProps}
     >
-      <Line sx={{ padding: 0, margin: 0, position: 'absolute', top: '50%' }} />
-      <Typography
-        variant='text14'
-        sx={{
-          width: 'fit-content',
-          padding: '0 12px',
-          left: '50%',
-          top: '1px',
-          background: theme.palette.common.white,
-          transform: 'translateX(-50%)',
-          position: 'absolute',
-        }}
-      >
-        {text}
-      </Typography>
+      <Line color={lineColor} sx={{ padding: 0, margin: 0, position: 'absolute', top: '50%' }} />
+      {text && (
+        <Typography
+          variant='text14'
+          sx={{
+            width: 'fit-content',
+            padding: '0 12px',
+            left: '50%',
+            top: '1px',
+            background: theme.palette.common.white,
+            transform: 'translateX(-50%)',
+            position: 'absolute',
+          }}
+        >
+          {text}
+        </Typography>
+      )}
     </Box>
   )
 }

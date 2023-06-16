@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Stack, Box, Alert } from '@mui/material'
 import { useLocation, useSearchParams, useParams } from 'react-router-dom'
 
-import { LogoOrange, Typography, GoogleLogin, LoginForm, Hr, RouterLink, Container } from 'components'
+import { LogoOrange, Typography, GoogleLogin, LoginForm, Hr, RouterLink } from 'components'
 import { getLanguageCode } from 'utils/translation'
 
 interface IParams {
@@ -50,7 +50,7 @@ export const Login = () => {
   }
 
   return (
-    <Container>
+    <>
       <Stack alignItems='center'>
         <Box sx={{ display: 'flex', mt: '70px', mb: '10px' }}>
           <LogoOrange />
@@ -87,6 +87,6 @@ export const Login = () => {
           </RouterLink>
         </Typography>
       </Stack>
-    </Container>
+    </>
   )
 }

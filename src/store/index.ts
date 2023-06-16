@@ -2,11 +2,12 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { userApi, authApi } from './api'
-import { authReducer, recaptchaReducer } from './reducers'
+import { authReducer, modalReducer, recaptchaReducer } from './reducers'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    modal: modalReducer,
     recaptcha: recaptchaReducer,
     [userApi.reducerPath]: userApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
