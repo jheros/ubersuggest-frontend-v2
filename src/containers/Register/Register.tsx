@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import { Stack, Box } from '@mui/material'
 import { useLocation, useSearchParams, useParams } from 'react-router-dom'
-import queryString from 'query-string'
 
-import { LogoOrange, Typography, GoogleLogin, RegisterForm, Hr, RouterLink } from 'components'
-import { getLanguageCode } from 'utils/translation'
+import { Stack, Box } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
+import { LogoOrange, GoogleLogin, RegisterForm, Hr, RouterLink } from 'components'
+import queryString from 'query-string'
+import { ROUTES } from 'routes/consts'
 import { hasUnloggedUserProject } from 'utils/storage'
+import { getLanguageCode } from 'utils/translation'
 
 interface IParams {
   showPayPlans?: string
@@ -92,7 +94,7 @@ export const Register = () => {
 
         <Typography mt={3} variant='text14'>
           {t('already_have_account')}
-          <RouterLink to='LOGIN' sx={{ ml: '5px' }}>
+          <RouterLink to={ROUTES.LOGIN} sx={{ ml: '5px' }}>
             {t('login_button')}
           </RouterLink>
         </Typography>

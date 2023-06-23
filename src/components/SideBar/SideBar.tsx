@@ -1,16 +1,20 @@
 import { useState, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Divider, Stack, useTheme, useMediaQuery, Breakpoint, PaletteColor } from '@mui/material'
-import { Box } from '@mui/material'
 
-import { Button, AppSwitcher, ProjectSelector, Typography } from 'components'
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
+import { Divider, Stack, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
+import { Box } from '@mui/material'
+import { AppSwitcher, Typography } from '@ubersuggest/common-ui'
 import { ReactComponent as PriceIcon } from 'assets/svg/price.svg'
-import { SIDEBAR_MENUS, ISidebarMenuItem, ISidebarMenu } from './constants'
+import { Button, ProjectSelector } from 'components'
+import { useNavigateWithLang } from 'hooks'
+
+import { BottomMenu } from './BottomMenu'
 import { SideBarMenu, SideBarMenuSummary, SideBarMenuContent } from './SideBarMenu'
 import { SideBarMenuItemWrapper, SideBarMenuItem } from './SideBarMenuItem'
 import { SideBarWrapper } from './SideBarWrapper'
 import { TrialNotification } from './TrialNotification'
-import { BottomMenu } from './BottomMenu'
+import { SIDEBAR_MENUS, ISidebarMenuItem, ISidebarMenu } from './constants'
 
 interface ISideBar {
   mobileOpen: boolean
@@ -26,17 +30,23 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
     },
   } = theme
   const isDesktop = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
+  const navigate = useNavigateWithLang()
 
   const [expanded, setExpanded] = useState<string | false>(false)
-  const [activeMenuItem, selectMenuItem] = useState('')
+  const [activeMenuItem, setActiveMenuItem] = useState('')
 
-  const handleChange = (panel: string, shouldToggle: boolean) => (_: SyntheticEvent, newExpanded: boolean) => {
-    const newPanel = shouldToggle && !newExpanded ? false : panel
+  const handleChange = (menu: ISidebarMenu) => (_: SyntheticEvent, newExpanded: boolean) => {
+    const newPanel = !!menu.subMenus && !newExpanded ? false : menu.name
     setExpanded(newPanel)
+    if (!menu.subMenus) {
+      navigate(menu.path)
+    }
   }
 
-  const handleClickMenuItem = (index: string) => () => {
-    selectMenuItem(index)
+  const handleClickMenuItem = (subMenu: ISidebarMenuItem) => () => {
+    setActiveMenuItem(subMenu.name)
+
+    navigate(subMenu.path)
   }
 
   return (
@@ -44,7 +54,28 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
       <Box sx={{ flex: 1 }}>
         {!isDesktop && (
           <>
-            <AppSwitcher />
+            <Stack sx={{ p: 1.25 }}>
+              <AppSwitcher
+                appOptions={[
+                  {
+                    color: 'orange',
+                    default: true,
+                    description: t('empty_state_kw_overview_desp_1'),
+                    icon: 'UbersuggestThumbSvg',
+                    title: t('ubersuggest'),
+                    url: '/url1',
+                  },
+                  {
+                    color: 'blue',
+                    description: t('switcher_ai_writer_subheading'),
+                    icon: 'AIWriterThumbSvg',
+                    title: t('ai_writer'),
+                    url: '/url2',
+                  },
+                ]}
+                hideSelected
+              />
+            </Stack>
             <Divider />
           </>
         )}
@@ -52,11 +83,13 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
         {SIDEBAR_MENUS.map((menu: ISidebarMenu) => (
           <SideBarMenu
             expanded={!isDesktop || !menu.expanded ? expanded === menu.name : true}
-            onChange={handleChange(menu.name, !!menu.children)}
+            onChange={handleChange(menu)}
             key={menu.name}
           >
             {(!isDesktop || !menu.expanded) && (
-              <SideBarMenuSummary hasChildren={!!menu.children}>
+              <SideBarMenuSummary
+                expandIcon={menu.subMenus ? <ArrowForwardIosSharpIcon sx={{ fontSize: 12 }} /> : null}
+              >
                 <Typography variant='body1' font='medium' color={expanded === menu.name ? activeColor : ''}>
                   {t(menu.name)}
                 </Typography>
@@ -72,17 +105,17 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
               </SideBarMenuSummary>
             )}
             <SideBarMenuContent>
-              {menu.children?.map((content: ISidebarMenuItem[], contentIndex: number) => (
+              {menu.subMenus?.map((content: ISidebarMenuItem[], contentIndex: number) => (
                 <SideBarMenuItemWrapper key={contentIndex}>
                   {content.map((item: ISidebarMenuItem) => {
                     return (
                       <SideBarMenuItem
-                        active={activeMenuItem === menu.name}
+                        active={activeMenuItem === item.name ? true : false}
                         key={item.name}
                         disablePadding
-                        onClick={handleClickMenuItem(item.name)}
+                        onClick={handleClickMenuItem(item)}
                       >
-                        <Typography variant='body2'>{t(item.name!)}</Typography>
+                        <Typography variant='text14'>{t(item.name!)}</Typography>
                         {item.isNew && (
                           <Typography
                             variant='text12'
@@ -116,7 +149,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
           <Stack mr={1.25}>
             <PriceIcon />
           </Stack>
-          <Typography variant='body2' font='book'>
+          <Typography variant='text14' font='book'>
             {t('plans_pricing')}
           </Typography>
         </Stack>
@@ -125,7 +158,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
       {!isDesktop && (
         <Box pb={8} mx={1.5}>
           <Button variant='contained' color='secondary' disableElevation sx={{ borderRadius: '2px', height: 34 }}>
-            <Typography variant='body2' font='medium' sx={{ textTransform: 'none', color: 'white' }}>
+            <Typography variant='text14' font='medium' sx={{ textTransform: 'none', color: 'white' }}>
               {t('sign_in')}
             </Typography>
           </Button>

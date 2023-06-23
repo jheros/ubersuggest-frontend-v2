@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useContext, useRef } from 'react'
-import { GoogleRecaptcha } from 'components'
 import Recaptcha from 'react-google-recaptcha'
-import { IRootState } from 'store'
 import { useSelector } from 'react-redux'
+
+import { GoogleRecaptcha } from 'components'
+import { IRootState } from 'store'
 
 export interface IRecaptchaContext {
   executeRecaptcha: () => void

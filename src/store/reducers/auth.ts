@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-import { TOKEN } from 'utils/constants/local-storage'
-import type { IUserToken, IUserInfo } from 'store/types'
-import { IRootState } from 'store'
 import moment from 'moment'
+import { IRootState } from 'store'
+import type { IUserToken, IUserInfo } from 'store/types'
+import { TOKEN } from 'utils/constants/local-storage'
 
 const userToken: IUserToken | null = JSON.parse(localStorage.getItem(TOKEN) || `null`)
 
@@ -60,6 +59,10 @@ export const isPaidUserSelector = (state: IRootState) => {
     isSignedInSelector(state) &&
     (['active', 'trialing', 'paid', 'canceled'].includes(subscriptionStatus) || isUserInGracePeriodSelector(state))
   )
+}
+
+export const userInfoSelector = (state: IRootState) => {
+  return state.auth.userInfo
 }
 
 export const { logout, setUserInfo, setToken } = authSlice.actions

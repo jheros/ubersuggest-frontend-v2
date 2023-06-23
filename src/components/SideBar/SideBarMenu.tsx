@@ -1,12 +1,7 @@
-import { styled } from '@mui/material/styles';
-import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
-import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-
-interface ISideBarMenuSummary extends AccordionSummaryProps {
-  hasChildren: boolean;
-}
+import MuiAccordion, { AccordionProps } from '@mui/material/Accordion'
+import MuiAccordionDetails from '@mui/material/AccordionDetails'
+import MuiAccordionSummary from '@mui/material/AccordionSummary'
+import { styled } from '@mui/material/styles'
 
 export const SideBarMenu = styled((props: AccordionProps) => <MuiAccordion elevation={0} {...props} />)(() => ({
   marginTop: 8,
@@ -21,14 +16,9 @@ export const SideBarMenu = styled((props: AccordionProps) => <MuiAccordion eleva
   '&:before': {
     display: 'none',
   },
-}));
+}))
 
-export const SideBarMenuSummary = styled((props: ISideBarMenuSummary) => (
-  <MuiAccordionSummary
-    expandIcon={props.hasChildren && <ArrowForwardIosSharpIcon sx={{ fontSize: 12 }} />}
-    {...props}
-  />
-))(({ theme }) => ({
+export const SideBarMenuSummary = styled(MuiAccordionSummary)(({ theme }) => ({
   paddingLeft: 20,
   paddingRight: 20,
   height: 45,
@@ -45,6 +35,6 @@ export const SideBarMenuSummary = styled((props: ISideBarMenuSummary) => (
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
   },
-}));
+}))
 
-export const SideBarMenuContent = styled(MuiAccordionDetails)(() => ({ padding: 0 }));
+export const SideBarMenuContent = styled(MuiAccordionDetails)(() => ({ padding: 0 }))

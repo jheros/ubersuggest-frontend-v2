@@ -1,4 +1,5 @@
 import { get } from 'lodash'
+
 // Constants
 import { LANGUAGE } from './constants/local-storage'
 
@@ -32,7 +33,7 @@ export const getLanguageCode = () => {
     .find((lang) => supportedLangs.includes(lang))
 }
 
-export const pathWithLang = (lang: string) => {
+export const pathWithNewLang = (lang: string) => {
   const { pathname, search } = window.location
   let newPathname
   const isHomePage = supportedLangs.includes(pathname.replaceAll('/', ''))

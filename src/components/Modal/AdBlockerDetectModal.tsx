@@ -1,12 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { useTheme, Dialog, DialogContent } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { useTheme, Dialog, DialogContent } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
+import { Button } from 'components'
 import { IRootState } from 'store'
-import { Button, Typography } from 'components'
-import { ModalTitle } from './ModalTitle'
-import { ModalActions } from './ModalActions'
 import { hideAdBlockerDetectModal } from 'store/reducers/modal'
+
+import { ModalActions } from './ModalActions'
+import { ModalTitle } from './ModalTitle'
 
 export const AdBlockerDetectModal = () => {
   const { t } = useTranslation()

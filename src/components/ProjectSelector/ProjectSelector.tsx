@@ -1,11 +1,11 @@
-import { useTranslation } from 'react-i18next';
-import { Divider, ListItemButton, ListItemIcon, Stack } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useTranslation } from 'react-i18next'
 
-import { Typography } from 'components';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import { Divider, ListItemButton, ListItemIcon, Stack } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
 
 export const ProjectSelector = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <>
@@ -22,5 +22,5 @@ export const ProjectSelector = () => {
 
       <Divider />
     </>
-  );
-};
+  )
+}

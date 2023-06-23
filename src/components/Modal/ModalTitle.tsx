@@ -1,9 +1,10 @@
 import * as React from 'react'
+
 import CloseIcon from '@mui/icons-material/Close'
 import { useTheme, Box, IconButton } from '@mui/material'
-
-import { Typography, Hr } from 'components'
+import { Typography } from '@ubersuggest/common-ui'
 import { ReactComponent as WarningIcon } from 'assets/svg/icons/warning-small.svg'
+import { Hr } from 'components'
 
 export interface IModalTitle {
   children?: React.ReactNode

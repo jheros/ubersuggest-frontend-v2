@@ -1,14 +1,13 @@
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { Box, Stack, Breakpoint } from '@mui/material'
 import { styled } from '@mui/material/styles'
-
-import { Typography } from 'components'
-import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg'
+import { Typography, fonts } from '@ubersuggest/common-ui'
 import { ReactComponent as ConsultSvg } from 'assets/svg/consult.svg'
-import { ReactComponent as SupportSvg } from 'assets/svg/support.svg'
 import { ReactComponent as KnowledgeBaseSvg } from 'assets/svg/knowledge-base.svg'
-import { fonts } from '@ubersuggest/common-ui'
+import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg'
+import { ReactComponent as SupportSvg } from 'assets/svg/support.svg'
 
 interface IBottomMenuItem {
   name: string
@@ -75,7 +74,7 @@ export const BottomMenu = () => {
       {BOTTOM_MENUS.map((subsection) => (
         <BottomMenuItem key={subsection.name} direction='row' alignItems='center' onClick={() => {}}>
           <Stack sx={{ width: 20, marginRight: 1.75 }}>{subsection.icon}</Stack>
-          <Typography variant='body2'>{t(subsection.name)}</Typography>
+          <Typography variant='text14'>{t(subsection.name)}</Typography>
         </BottomMenuItem>
       ))}
     </BottomMenuWrapper>

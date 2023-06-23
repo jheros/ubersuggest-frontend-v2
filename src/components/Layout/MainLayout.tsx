@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { Toolbar, Box, Container } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
+import { Toolbar, Box, Container } from '@mui/material'
 import { TopBar, SideBar } from 'components'
+import { SIDEBAR_WIDTH } from 'components/SideBar/constants'
+
 import { GlobalModalsPartial } from '../Modal/GlobalModalsPartial'
 
 const drawerWidth = 240
@@ -20,7 +22,7 @@ export const MainLayout = () => {
         <TopBar mobileSideBarOpen={mobileSideBarOpen} toggleMobileSideBar={handleMobileSideBarToggle} />
         <SideBar mobileOpen={mobileSideBarOpen} toggleMobile={handleMobileSideBarToggle} />
       </Box>
-      <Box className='content'>
+      <Box sx={{ marginLeft: { sm: 0, lg: `${SIDEBAR_WIDTH}px` } }}>
         <Toolbar />
         <Outlet />
       </Box>

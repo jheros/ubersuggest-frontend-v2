@@ -1,12 +1,14 @@
-import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/system'
-import { useSearchParams } from 'react-router-dom'
-import { useTheme } from '@mui/material'
-
-import { GoogleButton, Typography } from 'components'
-import { getGoogleSignInURL } from 'utils/oauth'
-import { VerifyGoogleAuth } from './VerifyGoogleAuth'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
+
+import { useTheme } from '@mui/material'
+import { Box } from '@mui/system'
+import { Typography } from '@ubersuggest/common-ui'
+import { GoogleButton } from 'components'
+import { getGoogleSignInURL } from 'utils/oauth'
+
+import { VerifyGoogleAuth } from './VerifyGoogleAuth'
 
 interface IGoogleLogin {
   redirectUrl: string

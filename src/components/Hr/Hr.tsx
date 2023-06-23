@@ -1,6 +1,5 @@
 import { Box, BoxProps, styled, useTheme } from '@mui/system'
-
-import { Typography } from 'components'
+import { Typography } from '@ubersuggest/common-ui'
 
 interface ILine {
   width?: string

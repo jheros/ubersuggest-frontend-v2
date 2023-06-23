@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
-import { Toolbar, Drawer, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
 import SmoothScrollbar from 'react-perfect-scrollbar'
 
-const SIDEBAR_WIDTH = 221
+import { Toolbar, Drawer, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
+import { SIDEBAR_WIDTH } from 'components/SideBar/constants'
 
 interface ISideBarWrapper {
   open: boolean

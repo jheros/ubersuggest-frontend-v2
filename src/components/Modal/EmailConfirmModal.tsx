@@ -1,17 +1,19 @@
 import * as React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { useTheme, Box, Dialog, DialogContent } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { useTheme, Box, Dialog, DialogContent } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
+import { ReactComponent as CheckIcon } from 'assets/svg/icons/circle-check-green-fill.svg'
+import { Button } from 'components'
 import { IRootState } from 'store'
-import { Button, Typography } from 'components'
-import { ModalTitle } from './ModalTitle'
-import { ModalActions } from './ModalActions'
-import { hideEmailConfirmModal } from 'store/reducers/modal'
-import { getLanguageCode } from 'utils/translation'
 import { useResendVerificationEmailMutation } from 'store/api'
 import { isSignedInSelector } from 'store/reducers/auth'
-import { ReactComponent as CheckIcon } from 'assets/svg/icons/circle-check-green-fill.svg'
+import { hideEmailConfirmModal } from 'store/reducers/modal'
+import { getLanguageCode } from 'utils/translation'
+
+import { ModalActions } from './ModalActions'
+import { ModalTitle } from './ModalTitle'
 
 export const EmailConfirmModal = () => {
   const { t } = useTranslation()

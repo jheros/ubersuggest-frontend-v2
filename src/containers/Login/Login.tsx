@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next'
-import { Stack, Box, Alert } from '@mui/material'
 import { useLocation, useSearchParams, useParams } from 'react-router-dom'
 
-import { LogoOrange, Typography, GoogleLogin, LoginForm, Hr, RouterLink } from 'components'
+import { Stack, Box, Alert } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
+import { LogoOrange, GoogleLogin, LoginForm, Hr, RouterLink } from 'components'
+import { ROUTES } from 'routes/consts'
 import { getLanguageCode } from 'utils/translation'
 
 interface IParams {
@@ -82,7 +84,7 @@ export const Login = () => {
 
         <Typography mt={3} variant='text14'>
           {t('no_account', { 0: '' })}
-          <RouterLink to='REGISTER' sx={{ ml: '5px' }}>
+          <RouterLink to={ROUTES.REGISTER} sx={{ ml: '5px' }}>
             {t('register_here')}
           </RouterLink>
         </Typography>

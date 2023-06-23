@@ -1,14 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { useTheme, Dialog, DialogContent } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { IRootState } from 'store'
-import { Button, Typography } from 'components'
-import { ModalTitle } from './ModalTitle'
-import { ModalActions } from './ModalActions'
-import { hideLoginLimitModal } from 'store/reducers/modal'
+import { useTheme, Dialog, DialogContent } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
 import { ReactComponent as PeopleIcon } from 'assets/svg/icons/people.svg'
+import { Button } from 'components'
 import { useNavigateWithLang } from 'hooks'
+import { IRootState } from 'store'
+import { hideLoginLimitModal } from 'store/reducers/modal'
+
+import { ModalActions } from './ModalActions'
+import { ModalTitle } from './ModalTitle'
 
 export const LoginLimitModal = () => {
   const { t } = useTranslation()

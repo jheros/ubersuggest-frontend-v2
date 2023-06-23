@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+
 import { pathWithLang } from 'utils/route'
 
 export const useNavigateWithLang = () => {

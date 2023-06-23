@@ -48,6 +48,7 @@
     "start": "craco start",
     "start:staging": "bash ./scripts/devstart.sh staging false",
     "dev:common-ui": "cd ./common-ui && npm run watch",
+    "update-common-ui": "npm uninstall file:common-ui && npm i file:common-ui",
     "build": "craco build",
     "test": "craco test",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
@@ -77,6 +78,7 @@
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "@cypress/code-coverage": "^3.10.4",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/loadable__component": "^5.13.4",
     "@types/lodash": "^4.14.194",
     "@types/material-ui": "^0.21.12",

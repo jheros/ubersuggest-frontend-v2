@@ -1,19 +1,16 @@
-import { Link, LinkProps } from '@mui/material'
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { ROUTES } from 'routes'
+
+import { Link, LinkProps } from '@mui/material'
 import { pathWithLang } from 'utils/route'
 
 interface IRouterLink extends LinkProps {
   to: string
 }
 
-export const RouterLink = ({ to, children, ...otherProps }: IRouterLink) => {
+export const RouterLink = ({ to, type = 'route', children, ...otherProps }: IRouterLink) => {
+  const path = type === 'route' ? pathWithLang(to) : to
   return (
-    <Link
-      component={ReactRouterLink}
-      to={`${pathWithLang(ROUTES[to as keyof typeof ROUTES] as string)}`}
-      {...otherProps}
-    >
+    <Link component={ReactRouterLink} to={path} {...otherProps}>
       {children}
     </Link>
   )

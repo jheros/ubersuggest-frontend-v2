@@ -1,6 +1,6 @@
-import { styled, Theme } from '@mui/material/styles'
 import MuiList, { ListProps } from '@mui/material/List'
 import MuiListItem, { ListItemProps } from '@mui/material/ListItem'
+import { styled } from '@mui/material/styles'
 import { fonts } from '@ubersuggest/common-ui'
 
 interface ISideBarMenuItem extends ListItemProps {

@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next'
+
 import { useTheme } from '@mui/material'
 import { styled } from '@mui/material/styles'
-
-import { Button, Typography } from 'components'
+import { Typography } from '@ubersuggest/common-ui'
 import checkOrangeSvg from 'assets/svg/check-orange.svg'
 import { ReactComponent as UpdateIcon } from 'assets/svg/update-icon.svg'
+import { Button } from 'components'
 
 const TrialNotificationWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -85,7 +86,7 @@ export const TrialNotification = () => {
         <List>
           {bullets.map((text, index) => (
             <Item key={index}>
-              <Typography variant='body2' color={darkGray[50]}>
+              <Typography variant='text14' color={darkGray[50]}>
                 {t(text)}
               </Typography>
             </Item>

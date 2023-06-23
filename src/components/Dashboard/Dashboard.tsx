@@ -1,13 +1,13 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
-import { Typography } from 'components';
+import { Typography } from '@ubersuggest/common-ui'
 
 export const Dashboard = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <>
       <Typography variant='h1'>{t('dashboard')}</Typography>
     </>
-  );
-};
+  )
+}

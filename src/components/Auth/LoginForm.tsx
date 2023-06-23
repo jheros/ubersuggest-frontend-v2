@@ -1,18 +1,20 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useForm, Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { Paper, Box, FormControlLabel, Checkbox, InputBase, FormHelperText } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
-import { RouterLink, Button, Typography, PasswordInput } from 'components'
-import { useLoginUserMutation } from 'store/api/authApi'
-import { useNavigateWithLang } from 'hooks'
-import { pushLoginLimitMessage, removeAdblockDetectModalStatus } from 'utils/storage'
-import { ERR_USER_NOT_CONFIRMED, getErrorMessage } from 'utils/error'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Paper, Box, FormControlLabel, Checkbox, InputBase, FormHelperText } from '@mui/material'
+import { Typography } from '@ubersuggest/common-ui'
+import { RouterLink, Button, PasswordInput } from 'components'
 import { useRecaptchaContext } from 'contexts'
+import { useNavigateWithLang } from 'hooks'
+import { ROUTES } from 'routes/consts'
+import { useLoginUserMutation } from 'store/api/authApi'
 import { showEmailConfirmModal } from 'store/reducers/modal'
+import { ERR_USER_NOT_CONFIRMED, getErrorMessage } from 'utils/error'
+import { pushLoginLimitMessage, removeAdblockDetectModalStatus } from 'utils/storage'
+import * as yup from 'yup'
 
 const loginSchema = yup
   .object({
@@ -134,7 +136,7 @@ export const LoginForm = ({ redirectUrl }: ILoginForm) => {
             )}
           />
 
-          <RouterLink to='FORGOT_PASSWORD'>
+          <RouterLink to={ROUTES.FORGOT_PASSWORD}>
             <Typography variant='text14'>{t('login_forgot_password')}</Typography>
           </RouterLink>
         </Box>

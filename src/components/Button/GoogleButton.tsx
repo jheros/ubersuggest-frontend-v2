@@ -38,7 +38,7 @@ const Container = styled('a')<IContainer>(
     backgroundColor: disabled
       ? theme.palette.common.lightGray[50]
       : variant === 'dark'
-      ? theme.palette.secondary.main
+      ? theme.palette.info.main
       : theme.palette.common.white,
     pointerEvents: disabled
       ? ('none' as React.CSSProperties['pointerEvents'])

@@ -1,5 +1,7 @@
 import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom'
 
+import { ROUTES } from 'routes/consts'
+
 interface IAuthRoute {
   children?: JSX.Element
 }
@@ -12,61 +14,6 @@ const AuthRoute = ({ children }: IAuthRoute) => {
   }
 
   return children ? children : <Outlet />
-}
-
-export const ROUTES = {
-  MAIN: ':languageCode?',
-  LOGIN: 'login',
-  REGISTER: 'register',
-  FORGOT_PASSWORD: 'forgot-password',
-  CHANGE_PASSWORD: 'change-password',
-  VERIFY_EMAIL: 'verify-email',
-
-  POSITION_TRACKING: 'position-tracking/:projectId',
-  WORKSPACE: 'workspace',
-  SEO_OPPORTUNITIES: 'seo-opportunities',
-  SURVEY: 'survey',
-  ONBOARDING: 'onboarding',
-  PRICING: 'pricing',
-  EXTENSION: 'extension',
-  DOC: 'doc/preview/:id',
-
-  DASHBOARD: {
-    MAIN: 'dashboard',
-    COMPETITOR_TRACKING: 'competitor-tracking/:projectId',
-  },
-  UBER: {
-    MAIN: 'ubersuggest',
-    KEYWORD_IDEAS: 'keyword-ideas',
-    KEYWORD_VISUALIZATION: 'keyword-visualization',
-    KEYWORD_LISTS: 'keyword-lists',
-    CONTENT_IDEAS: 'content-ideas',
-    OVERVIEW: 'overview',
-  },
-  SEO_ANALYZER: {
-    MAIN: 'seo-analyzer',
-    SITE_AUDIT: 'site_audit',
-    BACK_LINKS: 'back-links',
-    BACK_LINK_OPPORTUNITY: 'back-link-opportunity',
-  },
-  TRAFFIC_ANALYZER: {
-    MAIN: 'traffic-analyzer',
-    OVERVIEW: 'overview',
-    TOP_PAGES: 'top-pages',
-    KEYWORDS: 'keywords',
-    COMPETITORS: 'competitors',
-  },
-  LABS: {
-    MAIN: 'labs',
-    LANDING: 'landing',
-    AI_WRITER: 'ai-writer',
-    KEYWORDS_GENERATOR: 'keywords-generator',
-  },
-
-  ALERTS: 'alerts',
-  CHECKOUT: 'checkout',
-  SETTINGS: 'settings/:page',
-  ADMIN: 'admin/:page',
 }
 
 export const UberRouter = createBrowserRouter([
@@ -104,7 +51,7 @@ export const UberRouter = createBrowserRouter([
       return { Component: MainLayout }
     },
     children: [
-      { path: ROUTES.POSITION_TRACKING, element: <div>Rank Tracking Container</div> },
+      { path: ROUTES.RANK_TRACKING, element: <div>Rank Tracking Container</div> },
       { path: ROUTES.WORKSPACE, element: <div>Workspace Container</div> },
       { path: ROUTES.SEO_OPPORTUNITIES, element: <div>SEO Opportunities Container</div> },
       /* TODO: should be AuthRoute, if we decide to backup survey flow. */
@@ -139,19 +86,19 @@ export const UberRouter = createBrowserRouter([
       },
       /* Ubersuggest */
       {
-        path: ROUTES.UBER.MAIN,
+        path: ROUTES.KEYWORD_RESEARCH.MAIN,
         children: [
-          { path: ROUTES.UBER.KEYWORD_IDEAS, element: <div>New Keyword Ideas Container</div> },
-          { path: ROUTES.UBER.KEYWORD_VISUALIZATION, element: <div>Keyword Visualization Container</div> },
+          { path: ROUTES.KEYWORD_RESEARCH.KEYWORD_IDEAS, element: <div>New Keyword Ideas Container</div> },
+          { path: ROUTES.KEYWORD_RESEARCH.KEYWORD_VISUALIZATION, element: <div>Keyword Visualization Container</div> },
           {
-            path: ROUTES.UBER.KEYWORD_LISTS,
+            path: ROUTES.KEYWORD_RESEARCH.KEYWORD_LISTS,
             children: [
               { path: ':id', element: <div> Keywords Container</div> },
               { index: true, element: <div> Keyword Lists Container</div> },
             ],
           },
-          { path: ROUTES.UBER.CONTENT_IDEAS, element: <div>Content Ideas Container</div> },
-          { path: ROUTES.UBER.OVERVIEW, element: <div>Keyword Overview Container</div> },
+          { path: ROUTES.KEYWORD_RESEARCH.CONTENT_IDEAS, element: <div>Content Ideas Container</div> },
+          { path: ROUTES.KEYWORD_RESEARCH.KEYWORD_OVERVIEW, element: <div>Keyword Overview Container</div> },
         ],
       },
       /* SEO Analyzer */
@@ -159,8 +106,8 @@ export const UberRouter = createBrowserRouter([
         path: ROUTES.SEO_ANALYZER.MAIN,
         children: [
           { path: ROUTES.SEO_ANALYZER.SITE_AUDIT, element: <div>Site Audit Container</div> },
-          { path: ROUTES.SEO_ANALYZER.BACK_LINKS, element: <div>Back Links Container</div> },
-          { path: ROUTES.SEO_ANALYZER.BACK_LINK_OPPORTUNITY, element: <div>Back Link Opportunity Container</div> },
+          { path: ROUTES.SEO_ANALYZER.BACKLINKS, element: <div>Back Links Container</div> },
+          { path: ROUTES.SEO_ANALYZER.BACKLINK_OPPORTUNITY, element: <div>Back Link Opportunity Container</div> },
         ],
       },
       /* Traffic Analyzer */
@@ -169,7 +116,7 @@ export const UberRouter = createBrowserRouter([
         children: [
           { path: ROUTES.TRAFFIC_ANALYZER.OVERVIEW, element: <div>Traffic Analyzer Overview Container</div> },
           { path: ROUTES.TRAFFIC_ANALYZER.TOP_PAGES, element: <div>Top Pages Container</div> },
-          { path: ROUTES.TRAFFIC_ANALYZER.KEYWORDS, element: <div>Keywords By Traffic Container</div> },
+          { path: ROUTES.TRAFFIC_ANALYZER.KEYWORDS_BY_TRAFFIC, element: <div>Keywords By Traffic Container</div> },
           { path: ROUTES.TRAFFIC_ANALYZER.COMPETITORS, element: <div>Competitor Analysis Container</div> },
         ],
       },
