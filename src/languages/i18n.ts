@@ -1,6 +1,7 @@
 import { initReactI18next } from 'react-i18next'
 
 import i18n from 'i18next'
+import { getLanguageCode } from 'utils/translation'
 
 import deCountry from './country.de.json'
 import esCountry from './country.es.json'
@@ -82,7 +83,8 @@ declare module 'i18next' {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en',
+  lng: getLanguageCode(),
+  fallbackLng: 'en',
   keySeparator: false,
   interpolation: {
     escapeValue: false,

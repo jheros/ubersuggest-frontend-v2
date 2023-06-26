@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import moment from 'moment'
 import { IRootState } from 'store'
+import { lookUpIP } from 'store/api/ipLookUpApi'
 import type { IUserToken, IUserInfo } from 'store/types'
 import { TOKEN } from 'utils/constants/local-storage'
 
@@ -12,7 +13,7 @@ interface IAuthState {
 }
 
 const initialState = {
-  userInfo: null,
+  userInfo: {},
   userToken,
 } as IAuthState
 
@@ -26,12 +27,24 @@ const authSlice = createSlice({
       state.userToken = null
     },
     setUserInfo: (state, action: PayloadAction<IUserInfo>) => {
-      state.userInfo = action.payload
+      state.userInfo = { ...state.userInfo, ...action.payload }
     },
     setToken: (state, action: PayloadAction<IUserToken>) => {
       localStorage.setItem(TOKEN, JSON.stringify(action.payload))
       state.userToken = action.payload
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(lookUpIP.fulfilled, (state, { payload }) => {
+      state.userInfo = {
+        ...state.userInfo,
+        ...payload,
+        preferences: {
+          lang: state.userInfo?.preferences?.lang || payload.preferences.lang,
+          locId: state.userInfo?.preferences?.locId || payload.preferences.locId,
+        },
+      }
+    })
   },
 })
 
@@ -39,6 +52,7 @@ export const isSignedInSelector = (state: IRootState) => {
   return !!state.auth.userToken
 }
 
+// todo: use createSelector
 export const isUserInGracePeriodSelector = (state: IRootState) => {
   const { userInfo } = state.auth
   if (userInfo && userInfo.subscription) {

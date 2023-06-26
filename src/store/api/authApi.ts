@@ -10,7 +10,6 @@ import {
   ILoginRes,
   IResendVerificationEmailInput,
 } from '../types'
-import { userApi } from './userApi'
 
 const disableRecaptcha = process.env.REACT_APP_DISABLE_RECAPTCHA === 'true'
 
@@ -54,10 +53,6 @@ export const authApi = createApi({
           return { error: err as FetchBaseQueryError }
         }
       },
-      async onQueryStarted(args, { dispatch, queryFulfilled, getState }) {
-        await queryFulfilled
-        await dispatch(userApi.endpoints.getMe.initiate(null))
-      },
     }),
     registerMultiUsers: builder.mutation<IGenericResponse, IRegisterMultiUsersInput>({
       query({ code, password, lang = 'en', country = 'United States', city = 'New York' }) {
@@ -91,10 +86,6 @@ export const authApi = createApi({
         } catch (err) {
           return { error: err as FetchBaseQueryError }
         }
-      },
-      async onQueryStarted(args, { dispatch, queryFulfilled, getState }) {
-        await queryFulfilled
-        await dispatch(userApi.endpoints.getMe.initiate(null))
       },
     }),
     getToken: builder.query<IGetTokenRes, string>({

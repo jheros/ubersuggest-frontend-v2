@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
+import type { IRootState } from 'store'
 
-import { retryCondition } from '../utils'
 import { setUserInfo } from '../reducers/auth'
 import type { IUserInfo } from '../types'
-import type { IRootState } from 'store'
+import { retryCondition } from '../utils'
 
 const baseQuery = retry(
   fetchBaseQuery({
@@ -26,7 +26,7 @@ export const userApi = createApi({
   // refetchOnFocus: true,
   tagTypes: ['User'],
   endpoints: (builder) => ({
-    getMe: builder.query<IUserInfo, null>({
+    getMe: builder.query<IUserInfo, void>({
       query() {
         return {
           url: 'user',
@@ -35,11 +35,32 @@ export const userApi = createApi({
       },
       transformResponse: (res) => res as IUserInfo,
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        const { data } = await queryFulfilled
-        await dispatch(setUserInfo(data))
+        try {
+          const { data } = await queryFulfilled
+          await dispatch(setUserInfo({ ...data, is_annonymous: !data }))
+        } catch (err) {
+          await dispatch(setUserInfo({ is_annonymous: true }))
+        }
+        // todo:
+        // setAmplitudeUserId(userResponse.data.id)
+        // setKissmetricsAliasing(userResponse.data.email)
+        // getLocationsInfo([userPreferencesLocId])
+        // identifyKissmetric(user)
+        // identifyHubSpot(user)
+        // updateHotJarSegment(user)
+        // if (user.subscription) {
+        //   kissmetricsRecordingEvent(KISSMETRICS_TRACK_EVENTS.billing_status, {
+        //     [PROPERTY_NAMES.billing_status]: user.subscription.subscriptionStatus,
+        //   })
+        // }
+        // updateMetricsLimits(user.limits)
+        // trackGTMEvent({
+        //   event: 'authentication',
+        //   login_user: user.isAnnonymous ? 'No' : 'Yes',
+        // })
       },
     }),
   }),
 })
 
-export const { useGetMeQuery } = userApi
+export const { useGetMeQuery, useLazyGetMeQuery } = userApi
