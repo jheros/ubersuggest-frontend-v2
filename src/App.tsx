@@ -1,14 +1,16 @@
+import { useTranslation } from 'react-i18next'
 import { RouterProvider } from 'react-router-dom'
-import { UberRouter } from 'routes'
+
+import { EmailConfirmModal, AdBlockerDetectModal, LoginLimitModal, UberLoader } from 'components'
 import { RecaptchaProvider } from 'contexts'
-import { EmailConfirmModal, AdBlockerDetectModal, LoginLimitModal } from 'components'
+import { UberRouter } from 'routes'
 
 import './App.css'
 
 function App() {
   return (
     <RecaptchaProvider>
-      <RouterProvider router={UberRouter} fallbackElement={<p>Loading...</p>} />
+      <RouterProvider router={UberRouter} fallbackElement={<UberLoader />} />
     </RecaptchaProvider>
   )
 }
