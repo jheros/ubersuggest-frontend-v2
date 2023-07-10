@@ -1,5 +1,6 @@
 import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom'
 
+import { ErrorFallback, MainLayout } from 'components'
 import { ROUTES } from 'routes/consts'
 
 interface IAuthRoute {
@@ -51,6 +52,15 @@ export const UberRouter = createBrowserRouter([
       return { Component: MainLayout }
     },
     children: [
+      /* Dashboard */
+      {
+        index: true,
+        async lazy() {
+          const { Dashboard } = await import('components')
+          return { Component: Dashboard }
+        },
+      },
+
       { path: ROUTES.RANK_TRACKING, element: <div>Rank Tracking Container</div> },
       { path: ROUTES.WORKSPACE, element: <div>Workspace Container</div> },
       { path: ROUTES.SEO_OPPORTUNITIES, element: <div>SEO Opportunities Container</div> },
@@ -60,14 +70,6 @@ export const UberRouter = createBrowserRouter([
       { path: ROUTES.PRICING, element: <div>Pricing Container</div> },
       { path: ROUTES.EXTENSION, element: <div>Extension Container</div> },
       { path: ROUTES.DOC, element: <div>Content Integration Container</div> },
-      /* Dashboard */
-      {
-        index: true,
-        async lazy() {
-          const { Dashboard } = await import('components')
-          return { Component: Dashboard }
-        },
-      },
       {
         path: ROUTES.DASHBOARD.MAIN,
         children: [

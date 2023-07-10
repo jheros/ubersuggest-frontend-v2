@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { useDispatch, useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 
 import { Toolbar, Box, Container } from '@mui/material'
-import { TopBar, SideBar } from 'components'
+import { TopBar, SideBar, ErrorFallback } from 'components'
 import { SIDEBAR_WIDTH } from 'components/SideBar/constants'
 import { IAppDispatch } from 'store'
 import { useLazyGetPlansQuery, useLazyGetMeQuery, detectAdBlocker, lookUpIP } from 'store/api'
@@ -12,14 +13,13 @@ import { getLocations } from 'utils/location'
 
 import { GlobalModalsPartial } from '../Modal/GlobalModalsPartial'
 
-const drawerWidth = 240
-
 export const MainLayout = () => {
   const [mobileSideBarOpen, setMobileSideBarOpen] = useState(true)
   const [getPlans] = useLazyGetPlansQuery()
   const dispatch = useDispatch<IAppDispatch>()
   const isSignedIn = useSelector(isSignedInSelector)
   const [getMe] = useLazyGetMeQuery()
+  const [bootstrapDataError, setBootstrapDataError] = useState(null)
 
   const handleMobileSideBarToggle = () => {
     setMobileSideBarOpen(!mobileSideBarOpen)
@@ -73,20 +73,28 @@ export const MainLayout = () => {
             // }
           }
         }),
-      ]).catch((err) => {})
+      ]).catch((err) => {
+        setBootstrapDataError(err)
+      })
     }
     loadBoostrapData()
   }, [])
 
   return (
     <Container>
-      <Box component='nav' sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+      <Box component='nav' sx={{ width: { sm: SIDEBAR_WIDTH }, flexShrink: { sm: 0 } }}>
         <TopBar mobileSideBarOpen={mobileSideBarOpen} toggleMobileSideBar={handleMobileSideBarToggle} />
         <SideBar mobileOpen={mobileSideBarOpen} toggleMobile={handleMobileSideBarToggle} />
       </Box>
       <Box sx={{ marginLeft: { sm: 0, lg: `${SIDEBAR_WIDTH}px` } }}>
         <Toolbar />
-        <Outlet />
+        {bootstrapDataError ? (
+          <ErrorFallback error={bootstrapDataError} />
+        ) : (
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <Outlet />
+          </ErrorBoundary>
+        )}
       </Box>
       <GlobalModalsPartial />
     </Container>

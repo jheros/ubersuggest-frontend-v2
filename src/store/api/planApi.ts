@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { IPlanEntity } from 'store/types'
 
 import { setPlans } from '../reducers/plan'
-import { IPlanEntity } from 'store/types'
 
 export const planApi = createApi({
   reducerPath: 'planApi',

@@ -1,7 +1,6 @@
-import { useTranslation } from 'react-i18next'
 import { RouterProvider } from 'react-router-dom'
 
-import { EmailConfirmModal, AdBlockerDetectModal, LoginLimitModal, UberLoader } from 'components'
+import { UberLoader } from 'components'
 import { RecaptchaProvider } from 'contexts'
 import { UberRouter } from 'routes'
 
