@@ -1,16 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import { lightTheme, ThemeInheritor } from '@ubersuggest/common-ui'
-
 import 'react-perfect-scrollbar/dist/css/styles.css'
+import { Provider } from 'react-redux'
+
+import { lightTheme, ThemeInheritor } from '@ubersuggest/common-ui'
+import '@ubersuggest/common-ui/dist/styles/style.css'
 import 'languages/i18n'
 import 'styles/index.scss'
-import '@ubersuggest/common-ui/dist/styles/style.css'
 
 import App from './App'
-import { store } from './store'
 import reportWebVitals from './reportWebVitals'
+import { store } from './store'
+
+declare global {
+  interface Window {
+    _kmq: any
+    _hsq: any
+  }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
