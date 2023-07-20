@@ -1,13 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import { IPlanEntity } from 'store/types'
+import { baseQueryWithReauth } from 'store/utils'
 
 import { setPlans } from '../reducers/plan'
 
 export const planApi = createApi({
   reducerPath: 'planApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_URL}/`,
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['Plan'],
   endpoints: (builder) => ({
     getPlans: builder.query<IPlanEntity, string | void>({

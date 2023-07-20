@@ -1,28 +1,12 @@
-import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
-import type { IRootState } from 'store'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { setUserInfo } from '../reducers/auth'
 import type { IUserInfo } from '../types'
-import { retryCondition } from '../utils'
-
-const baseQuery = retry(
-  fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_URL}/`,
-    prepareHeaders: (headers: Headers, { getState }) => {
-      const token = (getState() as IRootState).auth.userToken?.token
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
-        return headers
-      }
-    },
-    credentials: 'include',
-  }),
-  { retryCondition },
-)
+import { baseQueryWithReauth } from '../utils'
 
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithReauth,
   // refetchOnFocus: true,
   tagTypes: ['User'],
   endpoints: (builder) => ({
