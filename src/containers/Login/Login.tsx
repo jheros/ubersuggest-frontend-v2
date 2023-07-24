@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 import { useLocation, useSearchParams, useParams } from 'react-router-dom'
 
-import { Stack, Box, Alert } from '@mui/material'
-import { Typography } from '@ubersuggest/common-ui'
+import { Stack, Box, Link } from '@mui/material'
+import { Typography, Alert } from '@ubersuggest/common-ui'
 import { LogoOrange, GoogleLogin, LoginForm, Hr, RouterLink } from 'components'
 import { ROUTES } from 'routes/consts'
+import { showEmailConfirmModal } from 'store/reducers/modal'
 import { getLanguageCode } from 'utils/translation'
 
 interface IParams {
@@ -17,17 +20,27 @@ interface IParams {
   error?: string
   code?: string
   sentResetLink?: string
+  email?: string
+  verificationStatus?: string
 }
 
 export const Login = () => {
   const location = useLocation()
+  const dispatch = useDispatch()
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const pathParams = useParams()
   const params: IParams = { ...Object.fromEntries(searchParams.entries()), ...pathParams } as IParams
   const languageCode = getLanguageCode()
-  const sentResetLink = location.state?.sentResetLink
+  const {
+    sentResetLink = params.sentResetLink,
+    emailVerification: { email = params.email, verificationStatus = params.verificationStatus } = {},
+  } = location.state || {}
+  const [showResetAlert, setShowResetAlert] = useState<boolean>(sentResetLink)
+  const [showEmailVerificationAlert, setShowEmailVerificationAlert] = useState<boolean>(email && verificationStatus)
+
   let redirectUrl = `/${languageCode}/dashboard`
+
   if (params.next) {
     if (params.from === 'ai_writer') {
       redirectUrl = params.next
@@ -70,8 +83,56 @@ export const Login = () => {
           {t('new_login_heading')}
         </Typography>
 
-        {(sentResetLink || params.sentResetLink) && (
-          <Alert severity='info' variant='filled' color='warning' sx={{ mb: '24px' }}>
+        {showEmailVerificationAlert && (
+          <Alert
+            onClose={() => setShowEmailVerificationAlert(false)}
+            severity={verificationStatus === 'confirmed' ? 'success' : 'error'}
+            sx={{ mb: 3, width: '90%', maxWidth: '728px' }}
+          >
+            {verificationStatus === 'confirmed' ? (
+              <Typography
+                variant='text14'
+                lineHeight='24px'
+                boldColor='common.darkGray.main'
+                dangerouslySetInnerHTML={{
+                  __html: t('confirm_email_success_message', { 0: email }),
+                }}
+              />
+            ) : (
+              <>
+                <Typography
+                  variant='text14'
+                  lineHeight='24px'
+                  boldColor='common.darkGray.main'
+                  dangerouslySetInnerHTML={{
+                    __html: t('expired_confirmation_link_message', { 0: email }),
+                  }}
+                  paragraph
+                  m={0}
+                />
+                <Typography
+                  variant='text14Medium'
+                  lineHeight='24px'
+                  color='common.darkGray.main'
+                  boldColor='common.darkGray.main'
+                >
+                  <Link onClick={() => dispatch(showEmailConfirmModal({ email: email }))}>
+                    {t('resend_confirmation_button')}
+                  </Link>
+                </Typography>
+              </>
+            )}
+          </Alert>
+        )}
+
+        {showResetAlert && (
+          <Alert
+            onClose={() => setShowResetAlert(false)}
+            severity='info'
+            variant='filled'
+            color='warning'
+            sx={{ mb: '24px' }}
+          >
             {t('email_sent_google_login')}
           </Alert>
         )}

@@ -8,6 +8,8 @@ import { ReactComponent as ConsultSvg } from 'assets/svg/consult.svg'
 import { ReactComponent as KnowledgeBaseSvg } from 'assets/svg/knowledge-base.svg'
 import { ReactComponent as PaymentSvg } from 'assets/svg/payment.svg'
 import { ReactComponent as SupportSvg } from 'assets/svg/support.svg'
+import { useNavigateWithLang } from 'hooks'
+import { getUrlFromRoutes } from 'utils/route'
 
 interface IBottomMenuItem {
   name: string
@@ -18,7 +20,7 @@ interface IBottomMenuItem {
 const BOTTOM_MENUS: IBottomMenuItem[] = [
   {
     name: 'account_billing_tab',
-    baseUrl: '/settings/account_billing',
+    baseUrl: getUrlFromRoutes('SETTINGS.ACCOUNT_BILLING'),
     icon: <PaymentSvg />,
   },
   {
@@ -68,11 +70,19 @@ const BottomMenuItem = styled(Stack)(({ theme }) => ({
 
 export const BottomMenu = () => {
   const { t } = useTranslation()
+  const navigateWithLang = useNavigateWithLang()
 
   return (
     <BottomMenuWrapper>
       {BOTTOM_MENUS.map((subsection) => (
-        <BottomMenuItem key={subsection.name} direction='row' alignItems='center' onClick={() => {}}>
+        <BottomMenuItem
+          key={subsection.name}
+          direction='row'
+          alignItems='center'
+          onClick={() => {
+            navigateWithLang(subsection.baseUrl)
+          }}
+        >
           <Stack sx={{ width: 20, marginRight: 1.75 }}>{subsection.icon}</Stack>
           <Typography variant='text14'>{t(subsection.name)}</Typography>
         </BottomMenuItem>

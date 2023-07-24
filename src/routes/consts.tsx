@@ -2,9 +2,9 @@ export const ROUTES = {
   MAIN: ':languageCode?',
   LOGIN: 'login',
   REGISTER: 'register',
-  FORGOT_PASSWORD: 'forgot-password',
+  FORGOT_PASSWORD: 'forgot_password',
   CHANGE_PASSWORD: 'change-password',
-  VERIFY_EMAIL: 'verify-email',
+  VERIFY_EMAIL: 'verify_email',
 
   SURVEY: 'survey',
   ONBOARDING: 'onboarding',
@@ -13,7 +13,7 @@ export const ROUTES = {
 
   DASHBOARD: {
     MAIN: 'dashboard',
-    COMPETITOR_TRACKING: 'competitor-tracking/:projectId',
+    COMPETITOR_TRACKING: 'competitor_tracking/:projectId',
   },
 
   RANK_TRACKING: 'position_tracking/:projectId',
@@ -51,6 +51,12 @@ export const ROUTES = {
 
   ALERTS: 'alerts',
   CHECKOUT: 'checkout',
-  SETTINGS: 'settings/:page',
+  SETTINGS: {
+    MAIN: 'settings',
+    ACCOUNT_BILLING: 'account_billing',
+    MANAGE_USERS: 'manage_users',
+    MANAGE_ADDONS: 'manage_addons',
+    NOTIFICATIONS: 'notifications',
+  },
   ADMIN: 'admin/:page',
 }

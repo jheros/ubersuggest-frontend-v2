@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit
 import type { ILoginInput } from 'components'
 import { IRootState } from 'store'
 import { setToken } from 'store/reducers/auth'
+import { setReportLimits } from 'store/reducers/user'
+
 import {
   IGenericResponse,
   IRegisterUserInput,
@@ -9,6 +11,9 @@ import {
   IGetTokenRes,
   ILoginRes,
   IResendVerificationEmailInput,
+  IResetPasswordInput,
+  IChangePasswordInput,
+  IReportLimits,
 } from '../types'
 
 const disableRecaptcha = process.env.REACT_APP_DISABLE_RECAPTCHA === 'true'
@@ -30,13 +35,14 @@ export const authApi = createApi({
           city = 'New York',
         }: IRegisterUserInput,
         { dispatch, getState },
-        extraOptions,
+        _extraOptions,
         fetchWithBQ,
       ) {
         try {
-          await fetchWithBQ({
+          const { error } = await fetchWithBQ({
             url: 'user/signup',
             method: 'POST',
+            credentials: 'include',
             body: {
               email,
               password,
@@ -46,8 +52,9 @@ export const authApi = createApi({
               city,
             },
           })
+          if (error) return { error }
           const recaptchaToken = (getState() as IRootState).recaptcha.token as string
-          await dispatch(authApi.endpoints.getToken.initiate(recaptchaToken))
+          await dispatch(authApi.endpoints.getToken.initiate(recaptchaToken)).unwrap()
           return { data: {} as IGenericResponse }
         } catch (err) {
           return { error: err as FetchBaseQueryError }
@@ -71,18 +78,19 @@ export const authApi = createApi({
       },
     }),
     loginUser: builder.mutation<ILoginRes, ILoginInput>({
-      async queryFn({ rememberMe, ...data }: ILoginInput, { dispatch, getState }, extraOptions, fetchWithBQ) {
+      async queryFn({ rememberMe, ...requestBody }: ILoginInput, { dispatch, getState }, extraOptions, fetchWithBQ) {
         try {
-          const res = await fetchWithBQ({
+          const { data, error } = await fetchWithBQ({
             url: 'user/login',
             method: 'POST',
-            body: data,
+            body: requestBody,
             credentials: 'include',
             params: { remember_me: rememberMe },
           })
+          if (error) return { error }
           const recaptchaToken = (getState() as IRootState).recaptcha.token as string
-          await dispatch(authApi.endpoints.getToken.initiate(recaptchaToken))
-          return { data: res.data as ILoginRes }
+          await dispatch(authApi.endpoints.getToken.initiate(recaptchaToken)).unwrap()
+          return { data: data as ILoginRes }
         } catch (err) {
           return { error: err as FetchBaseQueryError }
         }
@@ -96,17 +104,39 @@ export const authApi = createApi({
           params: disableRecaptcha ? { debug: 'app_norecaptcha' } : { recaptchaToken },
         }
       },
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        const {
-          data: { token, ttl },
-        } = await queryFulfilled
-        dispatch(setToken({ token, token_ttl: ttl }))
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        try {
+          const {
+            data: { token, ttl, ...reportLimits },
+          } = await queryFulfilled
+          dispatch(setToken({ token, token_ttl: ttl }))
+          dispatch(setReportLimits(reportLimits as IReportLimits))
+        } catch (err) {
+          // * we don't need to handle err here
+        }
       },
     }),
     resendVerificationEmail: builder.mutation<IGenericResponse, IResendVerificationEmailInput>({
       query(body) {
         return {
           url: 'user/resend_verification_email',
+          method: 'POST',
+          body,
+        }
+      },
+    }),
+    resetPassword: builder.query<IGenericResponse, IResetPasswordInput>({
+      query({ email, lang }) {
+        return {
+          url: 'user/forgot-password',
+          params: { email, lang },
+        }
+      },
+    }),
+    changePassword: builder.mutation<IGenericResponse, IChangePasswordInput>({
+      query(body) {
+        return {
+          url: 'user/reset-password',
           method: 'POST',
           body,
         }
@@ -122,4 +152,7 @@ export const {
   useGetTokenQuery,
   useLazyGetTokenQuery,
   useResendVerificationEmailMutation,
+  useResetPasswordQuery,
+  useLazyResetPasswordQuery,
+  useChangePasswordMutation,
 } = authApi

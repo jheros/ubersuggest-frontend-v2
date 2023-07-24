@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import { SIGN_OUT_WARNING, LOGIN_LIMIT_REACHED } from '../consts'
+
 interface IGenericModal {
   isOpen: boolean
 }
@@ -7,10 +9,12 @@ interface IGenericModal {
 interface IEmailConfirmModal extends IGenericModal {
   email?: string
   hideRefreshButton?: boolean
+  isEmailSent?: boolean
+  disableClose?: boolean
 }
 
 interface ILoginLimitModal extends IGenericModal {
-  type?: 'SIGN_OUT_WARNING' | 'LOGIN_LIMIT_REACHED'
+  type?: typeof SIGN_OUT_WARNING | typeof LOGIN_LIMIT_REACHED
   title?: string
   message?: string
 }
@@ -24,6 +28,8 @@ interface IModalState {
 const initialState = {
   emailConfirmModal: {
     isOpen: false,
+    isEmailSent: false,
+    disableClose: false,
   },
   adBlockerDetectModal: {
     isOpen: false,
@@ -45,7 +51,14 @@ const modalSlice = createSlice({
     },
     hideEmailConfirmModal: (state) => {
       state.emailConfirmModal = {
+        ...state.emailConfirmModal,
         isOpen: false,
+      }
+    },
+    setConfirmEmailSent: (state) => {
+      state.emailConfirmModal = {
+        ...state.emailConfirmModal,
+        isEmailSent: true,
       }
     },
     showAdBlockerDetectModal: (state, action: PayloadAction<Omit<IGenericModal, 'isOpen'>>) => {
@@ -80,6 +93,7 @@ export const {
   hideAdBlockerDetectModal,
   showLoginLimitModal,
   hideLoginLimitModal,
+  setConfirmEmailSent,
 } = modalSlice.actions
 
 export default modalSlice.reducer

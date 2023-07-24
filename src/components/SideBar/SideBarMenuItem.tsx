@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import { fonts } from '@ubersuggest/common-ui'
 
 interface ISideBarMenuItem extends ListItemProps {
-  active: boolean
+  active?: boolean
 }
 
 export const SideBarMenuItemWrapper = styled((props: ListProps) => <MuiList sx={{ py: 1.5 }} {...props} />)(

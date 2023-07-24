@@ -1,0 +1,176 @@
+{
+  "BR": {
+    "currency": "BRL"
+  },
+  "IN": {
+    "currency": "INR"
+  },
+  "US": {
+    "currency": "USD"
+  },
+  "JP": {
+    "currency": "JPY"
+  },
+  "FR": {
+    "currency": "EUR"
+  },
+  "ID": {
+    "currency": "IDR"
+  },
+  "GB": {
+    "currency": "GBP"
+  },
+  "DE": {
+    "currency": "EUR"
+  },
+  "ES": {
+    "currency": "EUR"
+  },
+  "NL": {
+    "currency": "EUR"
+  },
+  "PK": {
+    "currency": "PKR"
+  },
+  "IT": {
+    "currency": "EUR"
+  },
+  "CA": {
+    "currency": "CAD"
+  },
+  "AU": {
+    "currency": "AUD"
+  },
+  "BD": {
+    "currency": "BDT"
+  },
+  "TR": {
+    "currency": "TRY"
+  },
+  "PL": {
+    "currency": "PLN",
+    "position": "postfix"
+  },
+  "TH": {
+    "currency": "THB"
+  },
+  "MX": {
+    "currency": "MXN"
+  },
+  "MA": {
+    "currency": "MAD"
+  },
+  "PH": {
+    "currency": "PHP"
+  },
+  "CN": {
+    "currency": "CNY"
+  },
+  "PT": {
+    "currency": "EUR"
+  },
+  "EG": {
+    "currency": "EGP"
+  },
+  "MY": {
+    "currency": "MYR"
+  },
+  "NG": {
+    "currency": "NGN"
+  },
+  "TW": {
+    "currency": "TWD"
+  },
+  "AE": {
+    "currency": "AED"
+  },
+  "CO": {
+    "currency": "COP"
+  },
+  "SG": {
+    "currency": "SGD"
+  },
+  "AT": {
+    "currency": "EUR"
+  },
+  "BE": {
+    "currency": "EUR"
+  },
+  "CY": {
+    "currency": "EUR"
+  },
+  "LU": {
+    "currency": "EUR"
+  },
+  "MT": {
+    "currency": "EUR"
+  },
+  "EE": {
+    "currency": "EUR"
+  },
+  "FI": {
+    "currency": "EUR"
+  },
+  "GR": {
+    "currency": "EUR"
+  },
+  "IE": {
+    "currency": "EUR"
+  },
+  "LV": {
+    "currency": "EUR"
+  },
+  "LT": {
+    "currency": "EUR"
+  },
+  "SK": {
+    "currency": "EUR"
+  },
+  "SI": {
+    "currency": "EUR"
+  },
+  "KR": {
+    "currency": "KRW"
+  },
+  "ZA": {
+    "currency": "ZAR"
+  },
+  "DK": {
+    "currency": "DKK"
+  },
+  "IL": {
+    "currency": "ILS"
+  },
+  "SE": {
+    "currency": "SEK",
+    "position": "postfix"
+  },
+  "CH": {
+    "currency": "CHF"
+  },
+  "CL": {
+    "currency": "CLP"
+  },
+  "HK": {
+    "currency": "HKD"
+  },
+  "RU": {
+    "currency": "RUB",
+    "position": "postfix"
+  },
+  "AR": {
+    "currency": "ARS"
+  },
+  "RO": {
+    "currency": "RON"
+  },
+  "PE": {
+    "currency": "PEN"
+  },
+  "NZ": {
+    "currency": "NZD"
+  },
+  "NO": {
+    "currency": "NOK"
+  }
+}

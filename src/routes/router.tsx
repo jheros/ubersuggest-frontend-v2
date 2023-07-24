@@ -1,14 +1,18 @@
+import { useSelector } from 'react-redux'
 import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom'
 
 import { ErrorFallback, MainLayout } from 'components'
 import { ROUTES } from 'routes/consts'
+import { isSignedInSelector } from 'store/reducers/auth'
+
+import { mainLayoutLoader } from './loaders/mainLayoutLoader'
 
 interface IAuthRoute {
   children?: JSX.Element
 }
 
 const AuthRoute = ({ children }: IAuthRoute) => {
-  const isAllowed = true
+  const isAllowed = useSelector(isSignedInSelector)
 
   if (!isAllowed) {
     return <Navigate to={ROUTES.LOGIN} />
@@ -40,13 +44,26 @@ export const UberRouter = createBrowserRouter([
           return { Component: Register }
         },
       },
-      { path: ROUTES.FORGOT_PASSWORD, element: <div>Forgot Password</div> },
-      { path: ROUTES.CHANGE_PASSWORD, element: <div>Change Password</div> },
+      {
+        path: ROUTES.FORGOT_PASSWORD,
+        async lazy() {
+          const { ForgotPassword } = await import('containers')
+          return { Component: ForgotPassword }
+        },
+      },
+      {
+        path: ROUTES.CHANGE_PASSWORD,
+        async lazy() {
+          const { ChangePassword } = await import('containers')
+          return { Component: ChangePassword }
+        },
+      },
       { path: ROUTES.VERIFY_EMAIL, element: <div>Email Verification Page</div> },
     ],
   },
   {
     path: ROUTES.MAIN,
+    loader: mainLayoutLoader,
     async lazy() {
       const { MainLayout } = await import('components')
       return { Component: MainLayout }
@@ -143,7 +160,22 @@ export const UberRouter = createBrowserRouter([
             ],
           },
           { path: ROUTES.CHECKOUT, element: <div>Checkout Container</div> },
-          { path: ROUTES.SETTINGS, element: <div>Settings Container</div> },
+          {
+            path: ROUTES.SETTINGS.MAIN,
+            async lazy() {
+              const { Settings } = await import('containers')
+              return { Component: Settings }
+            },
+            children: [
+              {
+                path: ROUTES.SETTINGS.ACCOUNT_BILLING,
+                async lazy() {
+                  const { AccountBilling } = await import('containers')
+                  return { Component: AccountBilling }
+                },
+              },
+            ],
+          },
           { path: ROUTES.ADMIN, element: <div>Admin Container</div> },
         ],
       },

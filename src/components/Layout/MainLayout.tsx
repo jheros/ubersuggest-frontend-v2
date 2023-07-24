@@ -1,100 +1,49 @@
-import { useEffect, useState } from 'react'
-import { ErrorBoundary } from 'react-error-boundary'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
+import { ErrorBoundary } from 'react-error-boundary'
 
-import { Toolbar, Box, Container } from '@mui/material'
-import { TopBar, SideBar, ErrorFallback } from 'components'
+import { Box, Container, Breakpoint, useTheme, Toolbar } from '@mui/material'
+import { TopBar, SideBar, EmailConfirmAlert, ErrorFallback } from 'components'
 import { SIDEBAR_WIDTH } from 'components/SideBar/constants'
-import { IAppDispatch } from 'store'
-import { useLazyGetPlansQuery, useLazyGetMeQuery, detectAdBlocker, lookUpIP } from 'store/api'
-import { isSignedInSelector } from 'store/reducers/auth'
-import { getLocations } from 'utils/location'
+import { useMediaHelper } from 'hooks'
+import { isEmailVerificationRequiredSelector } from 'store/reducers/auth'
 
 import { GlobalModalsPartial } from '../Modal/GlobalModalsPartial'
 
 export const MainLayout = () => {
+  const theme = useTheme()
+  const { isDesktop } = useMediaHelper()
+
+  const isEmailVerificationRequired = useSelector(isEmailVerificationRequiredSelector)
+
   const [mobileSideBarOpen, setMobileSideBarOpen] = useState(true)
-  const [getPlans] = useLazyGetPlansQuery()
-  const dispatch = useDispatch<IAppDispatch>()
-  const isSignedIn = useSelector(isSignedInSelector)
-  const [getMe] = useLazyGetMeQuery()
-  const [bootstrapDataError, setBootstrapDataError] = useState(null)
 
   const handleMobileSideBarToggle = () => {
     setMobileSideBarOpen(!mobileSideBarOpen)
   }
 
-  useEffect(() => {
-    const loadBoostrapData = () => {
-      Promise.all([
-        getPlans().unwrap(),
-        Promise.resolve().then(() => getLocations(true)), // Preload locations
-        Promise.resolve().then(() => getLocations(false)), // Preload locations
-        dispatch(detectAdBlocker()).unwrap(),
-        dispatch(lookUpIP()).unwrap(),
-        Promise.resolve().then(() => {
-          if (isSignedIn) {
-            getMe().unwrap()
-            // todo:
-            // if (popLoginLimitMessage()) {
-            //   yield put(
-            //     updateLoginLimitModal({
-            //       isOpen: true,
-            //       type: 'LOGIN_LIMIT_REACHED',
-            //       title: translate('login_limit_reached'),
-            //       message: translate('login_limit_reached_text'),
-            //     }),
-            //   )
-            // }
-            // yield put(
-            //   updateLifetimeReminderModal({
-            //     isOpen: user.lifetime_unique_offer,
-            //     tier: user.subscription ? user.subscription.tier : null,
-            //   }),
-            // )
-            // yield put(
-            //   updateNavigationChangeModal({
-            //     isOpen: user.preferences.nav_change_notified === false,
-            //   }),
-            // )
-            // if (
-            //   !skipFetchAfterLoginDataPaths.some((path) =>
-            //     history.location.pathname.endsWith(path),
-            //   )
-            // ) {
-            //   yield put(fetchProjects())
-            //   yield put(fetchAlerts())
-            // }
-            // yield put(fetchSubscription())
-            // yield put(fetchAddons())
-            // if (isSubUser(user)) {
-            //   yield put(fetchMainUser())
-            // }
-          }
-        }),
-      ]).catch((err) => {
-        setBootstrapDataError(err)
-      })
-    }
-    loadBoostrapData()
-  }, [])
-
   return (
-    <Container>
+    <Container maxWidth={false} disableGutters>
       <Box component='nav' sx={{ width: { sm: SIDEBAR_WIDTH }, flexShrink: { sm: 0 } }}>
         <TopBar mobileSideBarOpen={mobileSideBarOpen} toggleMobileSideBar={handleMobileSideBarToggle} />
         <SideBar mobileOpen={mobileSideBarOpen} toggleMobile={handleMobileSideBarToggle} />
       </Box>
-      <Box sx={{ marginLeft: { sm: 0, lg: `${SIDEBAR_WIDTH}px` } }}>
+      <Box
+        sx={{
+          ml: `${SIDEBAR_WIDTH}px`,
+          mt: isEmailVerificationRequired && isDesktop ? '66px' : 0,
+          p: 0,
+          [theme.breakpoints.down('tb' as Breakpoint)]: { ml: 0 },
+        }}
+      >
         <Toolbar />
-        {bootstrapDataError ? (
-          <ErrorFallback error={bootstrapDataError} />
-        ) : (
+        {isEmailVerificationRequired && !isDesktop && <EmailConfirmAlert />}
+        <Box sx={{ p: 5, [theme.breakpoints.down('tb' as Breakpoint)]: { p: '20px 10px' } }}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Outlet />
           </ErrorBoundary>
-        )}
+        </Box>
       </Box>
       <GlobalModalsPartial />
     </Container>

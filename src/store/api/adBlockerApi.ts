@@ -9,6 +9,7 @@ export const fetchHotJar = async () => {
 }
 
 // todo: confirm this logic is correct
+// todo: cache
 export const detectAdBlocker = createAsyncThunk('adBlockApi/detectAdBlocker', async () => {
   try {
     const responses = await Promise.all([fetchGTM(), fetchHotJar()])

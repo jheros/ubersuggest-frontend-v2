@@ -17,7 +17,7 @@ export const storeCurrLang = (langCode: string) => {
   localStorage.setItem(LANGUAGE, langCode)
 }
 
-export const getLanguageCode = () => {
+export const getLanguageCode = (): string => {
   // Priority order:
   // 1. From current pathname
   // 2. From session Storage

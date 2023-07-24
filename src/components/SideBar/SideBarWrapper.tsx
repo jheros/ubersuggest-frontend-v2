@@ -1,8 +1,11 @@
 import { ReactNode } from 'react'
 import SmoothScrollbar from 'react-perfect-scrollbar'
+import { useSelector } from 'react-redux'
 
-import { Toolbar, Drawer, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
+import { Toolbar, Drawer } from '@mui/material'
 import { SIDEBAR_WIDTH } from 'components/SideBar/constants'
+import { useMediaHelper } from 'hooks'
+import { isEmailVerificationRequiredSelector } from 'store/reducers/auth'
 
 interface ISideBarWrapper {
   open: boolean
@@ -11,9 +14,8 @@ interface ISideBarWrapper {
 }
 
 export const SideBarWrapper = ({ open, toggle, children }: ISideBarWrapper) => {
-  const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
-  const isSmallMobile = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
+  const isEmailVerificationRequired = useSelector(isEmailVerificationRequiredSelector)
+  const { isDesktop, isSmallMobile } = useMediaHelper()
 
   return (
     <Drawer
@@ -24,12 +26,12 @@ export const SideBarWrapper = ({ open, toggle, children }: ISideBarWrapper) => {
       sx={{
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
-          width: isDesktop ? SIDEBAR_WIDTH : isSmallMobile ? '80%' : '70%',
+          width: isDesktop ? SIDEBAR_WIDTH : isSmallMobile ? '70%' : '50%',
         },
       }}
     >
       <SmoothScrollbar>
-        <Toolbar />
+        <Toolbar sx={{ mt: isEmailVerificationRequired && isDesktop ? '66px' : 0 }} />
         {children}
       </SmoothScrollbar>
     </Drawer>

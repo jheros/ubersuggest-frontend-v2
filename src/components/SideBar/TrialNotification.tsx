@@ -2,10 +2,9 @@ import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { Typography } from '@ubersuggest/common-ui'
+import { Typography, Button } from '@ubersuggest/common-ui'
 import checkOrangeSvg from 'assets/svg/check-orange.svg'
 import { ReactComponent as UpdateIcon } from 'assets/svg/update-icon.svg'
-import { Button } from 'components'
 
 const TrialNotificationWrapper = styled('div')(({ theme }) => ({
   position: 'relative',

@@ -1,9 +1,10 @@
-import { get, memoize, filter, sortBy } from 'lodash'
-import i18n from 'i18next'
-
-import LOCATIONS from 'constants/locations.json'
-import LANGUAGES from 'constants/languages.json'
+import { UNSUPPORTED_CURRENCIES } from 'configs/currency'
 import CONFIG_LOC_LANGS from 'constants/configLocLangs.json'
+import CURRENCIES from 'constants/currencies.json'
+import LANGUAGES from 'constants/languages.json'
+import LOCATIONS from 'constants/locations.json'
+import i18n from 'i18next'
+import { get, memoize, filter, sortBy } from 'lodash'
 
 type ILanguageKey = keyof typeof LANGUAGES
 type ILocation = {
@@ -26,6 +27,8 @@ interface ILangLoc extends ILocation {
 interface ILangLocCombinations {
   [key: string]: ILangLoc
 }
+
+export type ICountryCode = keyof typeof CURRENCIES
 
 export const { DEFAULT_BAN_COUNTRIES, DFS_NOT_AVAILABLE_LOC_LANGS, DEFAULT_BAN_LANGS, COMPETITOR_LOC_LANGS } =
   CONFIG_LOC_LANGS
@@ -116,4 +119,37 @@ export const getCountryInfo = memoize(
     }
   },
   (...args) => JSON.stringify(args),
+)
+
+export const isCurrencySupported = memoize(
+  (currency) => currency && !UNSUPPORTED_CURRENCIES.some((c) => c === currency),
+  (currency) => currency,
+)
+
+export const getSupportedCurrency = memoize(
+  (currency = 'USD') => (isCurrencySupported(currency) ? currency : 'USD'),
+  (currency) => currency,
+)
+
+export const getCurrencyAndRegion = memoize(
+  (countryCode: ICountryCode) => {
+    const currency = CURRENCIES[countryCode]?.currency
+    if (!isCurrencySupported(currency)) {
+      return {
+        currency: 'USD',
+        region: { lang: 'en', locId: 2840 },
+        planCode: 'other',
+        isCurrencySupported: false,
+      }
+    } else {
+      const { languageCode, locationId } = getCountryInfo(countryCode)
+      return {
+        currency,
+        region: { lang: languageCode, locId: locationId },
+        planCode: currency.toLowerCase(),
+        isCurrencySupported: true,
+      }
+    }
+  },
+  (countryCode) => countryCode,
 )

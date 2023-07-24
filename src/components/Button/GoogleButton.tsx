@@ -1,10 +1,9 @@
 // todo: refactor
 import React from 'react'
+
 import { styled } from '@mui/system'
-
-import { setOpacity } from 'utils/colors'
-
 import { ReactComponent as GoogleIcon } from 'assets/svg/icons/google.svg'
+import { setOpacity } from 'utils/colors'
 
 interface IContainer {
   height?: string
@@ -38,7 +37,7 @@ const Container = styled('a')<IContainer>(
     backgroundColor: disabled
       ? theme.palette.common.lightGray[50]
       : variant === 'dark'
-      ? theme.palette.info.main
+      ? theme.palette.secondary.main  
       : theme.palette.common.white,
     pointerEvents: disabled
       ? ('none' as React.CSSProperties['pointerEvents'])

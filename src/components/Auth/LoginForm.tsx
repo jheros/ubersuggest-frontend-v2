@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Paper, Box, FormControlLabel, Checkbox, InputBase, FormHelperText } from '@mui/material'
-import { Typography } from '@ubersuggest/common-ui'
-import { RouterLink, Button, PasswordInput } from 'components'
+import { Typography, Button } from '@ubersuggest/common-ui'
+import { RouterLink, PasswordInput } from 'components'
 import { useRecaptchaContext } from 'contexts'
 import { useNavigateWithLang } from 'hooks'
 import { ROUTES } from 'routes/consts'
@@ -128,10 +128,10 @@ export const LoginForm = ({ redirectUrl }: ILoginForm) => {
             control={control}
             render={({ field }) => (
               <FormControlLabel
-                control={<Checkbox {...field} color='primary' />}
+                control={<Checkbox {...field} size='small' color='primary' />}
                 label={t('remember_login')}
                 componentsProps={{ typography: { variant: 'text14', sx: { lineHeight: 1 } } }}
-                sx={{ margin: 0 }}
+                sx={{ margin: 0, '& .MuiTypography-root': { mt: '5px' } }}
               />
             )}
           />

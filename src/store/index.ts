@@ -1,23 +1,45 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import { userApi, authApi, planApi } from './api'
-import { adBlockerReducer, authReducer, modalReducer, recaptchaReducer, planReducer } from './reducers'
+import { addonApi, authApi, planApi, projectApi, userApi } from './api'
+import {
+  adBlockerReducer,
+  addonReducer,
+  authReducer,
+  modalReducer,
+  planReducer,
+  projectReducer,
+  recaptchaReducer,
+  subUserReducer,
+  userReducer,
+} from './reducers'
 
 export const store = configureStore({
   reducer: {
     adBlocker: adBlockerReducer,
+    addon: addonReducer,
     auth: authReducer,
     modal: modalReducer,
-    recaptcha: recaptchaReducer,
     plan: planReducer,
+    project: projectReducer,
+    recaptcha: recaptchaReducer,
+    subUser: subUserReducer,
+    user: userReducer,
+    [addonApi.reducerPath]: addonApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [planApi.reducerPath]: planApi.reducer,
+    [projectApi.reducerPath]: projectApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([authApi.middleware, planApi.middleware, userApi.middleware]),
+    getDefaultMiddleware().concat([
+      addonApi.middleware,
+      authApi.middleware,
+      planApi.middleware,
+      projectApi.middleware,
+      userApi.middleware,
+    ]),
 })
 
 setupListeners(store.dispatch)

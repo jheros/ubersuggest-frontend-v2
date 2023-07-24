@@ -5,8 +5,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Paper, Box, FormControlLabel, Checkbox, InputBase, FormHelperText } from '@mui/material'
-import { Typography, fonts } from '@ubersuggest/common-ui'
-import { Button, PasswordInput } from 'components'
+import { Typography, fonts, Button } from '@ubersuggest/common-ui'
+import { PasswordInput } from 'components'
 import { useRecaptchaContext } from 'contexts'
 import { useNavigateWithLang } from 'hooks'
 import { useRegisterUserMutation, useRegisterMultiUsersMutation } from 'store/api'
@@ -132,8 +132,8 @@ export const RegisterForm = ({ redirectUrl }: IRegisterForm) => {
           control={control}
           render={({ field }) => (
             <FormControlLabel
-              control={<Checkbox {...field} color='primary' sx={{ alignSelf: 'flex-start', mt: '4px' }} />}
-              disableTypography={false}
+              control={<Checkbox {...field} size='small' color='primary' sx={{ alignSelf: 'flex-start' }} />}
+              disableTypography={true}
               label={
                 <Typography
                   variant='text12'
@@ -148,9 +148,9 @@ export const RegisterForm = ({ redirectUrl }: IRegisterForm) => {
                       )}</a>`,
                     })}${errors.agreeToTerms ? `<b style="margin-left: 4px">${t('text_required')}</b>` : ''}`,
                   }}
+                  sx={{ mt: '4px' }}
                 />
               }
-              componentsProps={{ typography: { variant: 'text14', sx: { lineHeight: 1 } } }}
               sx={{ mx: 0, mt: '4px', mb: '24px' }}
             />
           )}

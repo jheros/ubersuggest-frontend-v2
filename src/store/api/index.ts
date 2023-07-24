@@ -1,5 +1,7 @@
 export * from './adBlockerApi'
+export * from './addonApi'
 export * from './authApi'
 export * from './ipLookUpApi'
 export * from './planApi'
+export * from './projectApi'
 export * from './userApi'

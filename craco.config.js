@@ -9,6 +9,12 @@ module.exports = {
       )
 
       webpackConfig.resolve.plugins.splice(scopePluginIndex, 1)
+      webpackConfig.module.rules.push({
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      })
 
       return webpackConfig
     },

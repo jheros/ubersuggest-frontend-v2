@@ -1,4 +1,5 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import i18next from 'i18next'
 
 export const ERR_UNKNOWN_ERROR = 'unknown_error'
 export const ERR_WRONG_COUPON = 'wrong_coupon'
@@ -20,8 +21,13 @@ export function isErrorWithMessage(error: unknown): error is { message: string }
 
 export function getErrorMessage(error: unknown) {
   if (isFetchBaseQueryError(error)) {
-    return (error.data as any)?.description?.error || ERR_UNKNOWN_ERROR
+    const data = error.data as any
+    if (typeof data?.description === 'object') {
+      return data?.description?.error || i18next.t(ERR_UNKNOWN_ERROR)
+    } else {
+      return data?.description || i18next.t(ERR_UNKNOWN_ERROR)
+    }
   } else if (isErrorWithMessage(error)) {
-    return ERR_UNKNOWN_ERROR
+    return i18next.t(ERR_UNKNOWN_ERROR)
   }
 }

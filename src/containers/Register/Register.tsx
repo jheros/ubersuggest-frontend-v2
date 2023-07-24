@@ -94,7 +94,7 @@ export const Register = () => {
 
         <Typography mt={3} variant='text14'>
           {t('already_have_account')}
-          <RouterLink to={ROUTES.LOGIN} sx={{ ml: '5px' }}>
+          <RouterLink to={`/${ROUTES.LOGIN}`} sx={{ ml: '5px' }}>
             {t('login_button')}
           </RouterLink>
         </Typography>

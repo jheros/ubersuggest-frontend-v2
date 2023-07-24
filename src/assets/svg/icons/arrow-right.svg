@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="10px" viewBox="0 0 15 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>arrow greater</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Alerts---DD---V1" transform="translate(-936.000000, -549.000000)">
+            <g id="Group-3-Copy" transform="translate(732.000000, 52.000000)">
+                <g id="Group-2-Copy-5" transform="translate(115.000000, 493.000000)">
+                    <g id="Group" transform="translate(88.000000, 1.000000)">
+                        <g transform="translate(1.000000, 3.000000)">
+                            <polygon id="Rectangle" fill="#F16334" points="5.68295411e-14 4.23709477 13 4.23709477 13 5.73709477 5.68295411e-14 5.73709477"></polygon>
+                            <polyline id="Path" stroke="#F16334" stroke-width="1.5" transform="translate(8.918581, 5.000000) rotate(-45.000000) translate(-8.918581, -5.000000) " points="11.9185809 2 11.9185809 8 5.91858095 8"></polyline>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

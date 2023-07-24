@@ -9,14 +9,16 @@ import {
   AccountBalance as AccountBalanceIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material'
-import { AppBar, Toolbar, Stack, Divider, Button, useTheme, useMediaQuery, Breakpoint, Box } from '@mui/material'
-import { AppSwitcher, LanguageSelector, Typography, UserProfile } from '@ubersuggest/common-ui'
+import { AppBar, Toolbar, Stack, Divider, useTheme, Box } from '@mui/material'
+import { AppSwitcher, LanguageSelector, Typography, UserProfile, Button } from '@ubersuggest/common-ui'
 import UberLogo from 'assets/svg/logos/logo-orange.svg'
-import { RouterLink } from 'components'
-import { useNavigateWithLang } from 'hooks'
+import { EmailConfirmAlert, RouterLink } from 'components'
+import { useMediaHelper, useNavigateWithLang } from 'hooks'
 import { ROUTES } from 'routes/consts'
-import { isPaidUserSelector, isSignedInSelector, logout, userInfoSelector } from 'store/reducers/auth'
-import { getLanguageCode, pathWithNewLang } from 'utils/translation'
+import { isEmailVerificationRequiredSelector, isSignedInSelector, logout } from 'store/reducers/auth'
+import { isPaidUserSelector, userInfoSelector } from 'store/reducers/user'
+import { getUrlFromRoutes, pathWithLang } from 'utils/route'
+import { getLanguageCode, pathWithNewLang, storeCurrLang } from 'utils/translation'
 
 import { getConsultingLink, languageOptions } from './consts'
 
@@ -27,14 +29,16 @@ interface ITopBar {
 
 export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
+  const { isDesktop } = useMediaHelper()
   const { t, i18n } = useTranslation()
   const navigateWithLang = useNavigateWithLang()
   const user = useSelector(userInfoSelector)
   const isSignedIn = useSelector(isSignedInSelector)
   const isPaidUser = useSelector(isPaidUserSelector)
+  const isEmailVerificationRequired = useSelector(isEmailVerificationRequiredSelector)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const langCode = getLanguageCode()
 
   const handleLogout = () => {
     dispatch(logout())
@@ -43,6 +47,7 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
 
   const handleChangeLanguage = (newLang: string) => {
     i18n.changeLanguage(newLang)
+    storeCurrLang(newLang)
     navigate(pathWithNewLang(newLang))
   }
 
@@ -52,15 +57,12 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
     }
   }
 
-  const langCode = getLanguageCode()
-
   return (
     <AppBar
       position='fixed'
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         backgroundColor: 'white',
-        height: 59,
         borderBottomWidth: 1,
         borderBottomStyle: 'solid',
         borderBottomColor: (theme) => theme.palette.common.lightGray[70],
@@ -68,6 +70,7 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
       }}
       elevation={0}
     >
+      {isEmailVerificationRequired && isDesktop && <EmailConfirmAlert />}
       <Toolbar disableGutters>
         <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ px: 2.5, width: '100%' }}>
           <Stack direction='row' alignItems='center' spacing={3}>
@@ -143,17 +146,17 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
                     avatar={user?.picture ?? undefined}
                     menuItems={[
                       {
-                        label: 'Account & Billing',
-                        url: '/settings/account_billing',
+                        label: t('account_billing_tab'),
+                        url: pathWithLang(getUrlFromRoutes('SETTINGS.ACCOUNT_BILLING')),
                         icon: <AccountBalanceIcon />,
                       },
                       {
-                        label: 'Notification',
-                        url: '/settings/notification',
+                        label: t('notification'),
+                        url: pathWithLang(getUrlFromRoutes('SETTINGS.NOTIFICATIONS')),
                         icon: <NotificationsIcon />,
                       },
                       {
-                        label: 'Sing Out',
+                        label: t('sign_out'),
                         url: '#',
                         icon: <LogoutIcon />,
                       },

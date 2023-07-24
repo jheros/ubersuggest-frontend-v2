@@ -2,12 +2,12 @@ import { useState, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
-import { Divider, Stack, useTheme, useMediaQuery, Breakpoint } from '@mui/material'
+import { Divider, Stack, useTheme } from '@mui/material'
 import { Box } from '@mui/material'
-import { AppSwitcher, Typography } from '@ubersuggest/common-ui'
+import { AppSwitcher, Typography, Button } from '@ubersuggest/common-ui'
 import { ReactComponent as PriceIcon } from 'assets/svg/price.svg'
-import { Button, ProjectSelector } from 'components'
-import { useNavigateWithLang } from 'hooks'
+import { ProjectSelector } from 'components'
+import { useMediaHelper, useNavigateWithLang } from 'hooks'
 
 import { BottomMenu } from './BottomMenu'
 import { SideBarMenu, SideBarMenuSummary, SideBarMenuContent } from './SideBarMenu'
@@ -29,7 +29,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
       primary: { main: activeColor },
     },
   } = theme
-  const isDesktop = useMediaQuery(theme.breakpoints.up('tb' as Breakpoint))
+  const { isDesktop } = useMediaHelper()
   const navigate = useNavigateWithLang()
 
   const [expanded, setExpanded] = useState<string | false>(false)
@@ -45,7 +45,6 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
 
   const handleClickMenuItem = (subMenu: ISidebarMenuItem) => () => {
     setActiveMenuItem(subMenu.name)
-
     navigate(subMenu.path)
   }
 
@@ -110,7 +109,7 @@ export const SideBar = ({ mobileOpen, toggleMobile }: ISideBar) => {
                   {content.map((item: ISidebarMenuItem) => {
                     return (
                       <SideBarMenuItem
-                        active={activeMenuItem === item.name ? true : false}
+                        active={activeMenuItem === item.name ? true : undefined}
                         key={item.name}
                         disablePadding
                         onClick={handleClickMenuItem(item)}

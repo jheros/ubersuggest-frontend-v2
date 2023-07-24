@@ -3,10 +3,9 @@ import { useRouteError } from 'react-router-dom'
 import reactStringReplace from 'react-string-replace'
 
 import { Box } from '@mui/material'
-import { Typography } from '@ubersuggest/common-ui'
+import { Typography, Button } from '@ubersuggest/common-ui'
 import { ReactComponent as ReloadIcon } from 'assets/svg/icons/reload.svg'
 import { ReactComponent as AlertIcon } from 'assets/svg/icons/white_screen_alert.svg'
-import { Button } from 'components/Button'
 
 export const ErrorFallback = (props: any) => {
   const routerError = useRouteError()

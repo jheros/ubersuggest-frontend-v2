@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-import { isPaidUserSelector } from './auth'
+import { createDraftSafeSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IRootState } from 'store'
+
+import { isPaidUserSelector } from './user'
 
 interface IRecaptchaState {
   token: string | null
@@ -31,9 +31,10 @@ const recaptchaSlice = createSlice({
   },
 })
 
-export const enableRecaptchaSelector = (state: IRootState): boolean => {
-  return !isPaidUserSelector(state) && process.env.REACT_APP_DISABLE_RECAPTCHA !== 'true'
-}
+export const enableRecaptchaSelector = createDraftSafeSelector(
+  (state: IRootState) => isPaidUserSelector(state),
+  (isPaidUser) => !isPaidUser && process.env.REACT_APP_DISABLE_RECAPTCHA !== 'true',
+)
 
 export const { changeToken, setScriptLoaded } = recaptchaSlice.actions
 

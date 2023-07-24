@@ -1,10 +1,11 @@
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
+import { useRecaptchaContext } from 'contexts'
+import { useNavigateWithLang } from 'hooks'
 import { IRootState } from 'store'
 import { useLazyGetTokenQuery } from 'store/api'
-import { useNavigateWithLang } from 'hooks'
-import { useEffect } from 'react'
-import { useRecaptchaContext } from 'contexts'
+import { enableRecaptchaSelector } from 'store/reducers/recaptcha'
 
 interface IVerifyGoogleAuth {
   redirectUrl: string
@@ -18,6 +19,7 @@ export const VerifyGoogleAuth = ({ redirectUrl, onLoad, onSuccess, onError }: IV
   const [getToken] = useLazyGetTokenQuery()
   const navigate = useNavigateWithLang()
   const { executeRecaptcha } = useRecaptchaContext()
+  const enableRecaptcha = useSelector(enableRecaptchaSelector)
 
   useEffect(() => {
     if (isLoaded) {
@@ -27,9 +29,9 @@ export const VerifyGoogleAuth = ({ redirectUrl, onLoad, onSuccess, onError }: IV
   }, [isLoaded])
 
   useEffect(() => {
-    if (token) {
+    if (token || !enableRecaptcha) {
       onSuccess()
-      getToken(token)
+      getToken(token || '')
         .unwrap()
         .then(() => {
           navigate(redirectUrl)
@@ -39,7 +41,7 @@ export const VerifyGoogleAuth = ({ redirectUrl, onLoad, onSuccess, onError }: IV
           onError(err)
         })
     }
-  }, [token])
+  }, [token, enableRecaptcha])
 
   return null
 }

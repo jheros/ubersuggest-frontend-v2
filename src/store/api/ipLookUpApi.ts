@@ -8,24 +8,26 @@ const IP_API_KEY = process.env.REACT_APP_IP_API_KEY || 'chjtnjQB8SbJ67z'
 
 export const fetchIp = async () => {
   try {
-    if (window.location.protocol === 'https:') {
+    // * comment out https check as http request keep failing
+    // if (window.location.protocol === 'https:') {
       return await axios({
         method: 'get',
         url: 'https://pro.ip-api.com/json',
         params: { key: IP_API_KEY },
       })
-    } else {
-      return await axios({
-        method: 'get',
-        url: 'http://ip-api.com/json',
-      })
-    }
+    // } else {
+    //   return await axios({
+    //     method: 'get',
+    //     url: 'http://ip-api.com/json',
+    //   })
+    // }
   } catch (err) {
     console.error(err)
     return null
   }
 }
 
+// todo: cache
 export const lookUpIP = createAsyncThunk('ipLookUpApi/lookUpIP', async () => {
   const { data } = (await fetchIp()) || {}
   const countryCode = data
