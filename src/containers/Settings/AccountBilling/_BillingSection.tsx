@@ -57,7 +57,6 @@ export const BillingSection = () => {
   const theme = useTheme()
   const [cancelSubscription] = useCancelSubscriptionMutation()
   const [sendCancelationFeedback] = useSendCancelationFeedbackMutation()
-
   const tier = useSelector(userTierSelector)
   const paymentMethod = useSelector(userPaymentMethodSelector)
   const isSubscriptionCanceled = useSelector(isSubscriptionCanceledSelector)

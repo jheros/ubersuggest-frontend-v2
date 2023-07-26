@@ -6,6 +6,7 @@ import { Box, List, ListItem, ListItemIcon, Stack, useTheme } from '@mui/materia
 import { Dialog, Alert, Typography, Button } from '@ubersuggest/common-ui'
 import { ReactComponent as CheckIcon } from 'assets/svg/icons/check.svg'
 import { PLAN_INTERVALS, TIERS } from 'configs'
+import { useFormatNumber } from 'hooks/useFormatNumber'
 import { IRootState } from 'store'
 import { useUpdatePlanMutation } from 'store/api'
 import { planByTierAndIntervalSelector } from 'store/reducers/plan'
@@ -32,6 +33,7 @@ export const SpecialLifetimeOfferModal: React.FC<{
   const theme = useTheme()
   const { t } = useTranslation()
   const [updatePlan, { isLoading: isUpdatingPlan }] = useUpdatePlanMutation()
+  const { formatCurrency } = useFormatNumber()
 
   const tier = useSelector(userTierSelector)
   const { planCode: lifetimePlanCode, planPrice: lifetimePlanPrice } = useSelector((state: IRootState) =>
@@ -146,7 +148,7 @@ export const SpecialLifetimeOfferModal: React.FC<{
             mb={0}
             dangerouslySetInnerHTML={{
               __html: t(tier === TIERS.TIER0 ? 'special_lifetime_modal_heading' : 'lifetime_offer_heading', {
-                0: lifetimePlanPrice, // todo: format currency
+                0: formatCurrency(lifetimePlanPrice),
               }),
             }}
             paragraph

@@ -10,6 +10,7 @@ import { RouterLink } from 'components'
 import { PLAN_INTERVALS, PLAN_PRICE_BY_INTERVAL, TIER_INFO, TIERS } from 'configs'
 import { useAlertContext } from 'contexts'
 import { useNavigateWithLang } from 'hooks'
+import { useFormatNumber } from 'hooks/useFormatNumber'
 import { ROUTES } from 'routes'
 import { IRootState } from 'store'
 import { useRenewSubscriptionMutation } from 'store/api'
@@ -66,6 +67,7 @@ export const PlanSection = () => {
   const { addAlert } = useAlertContext()
   const navigateWithLang = useNavigateWithLang()
   const [renewSubscription, { isLoading: isRenewing }] = useRenewSubscriptionMutation()
+  const { formatCurrency } = useFormatNumber()
 
   const isSubUser = useSelector(isSubUserSelector)
   const tier = useSelector(userTierSelector)
@@ -79,7 +81,7 @@ export const PlanSection = () => {
 
   const { currency } = getCurrencyAndRegion(countryCode)
   const currencyAtSymbol = t('currency_at_symbol', {
-    0: planPrice + (planInterval === PLAN_INTERVALS.MONTHLY ? addonsPrice : 0), // todo: formatNumber
+    0: formatCurrency(planPrice + (planInterval === PLAN_INTERVALS.MONTHLY ? addonsPrice : 0)),
     1: '', // * from v1: As we are determined to hide currency code, put empty string instead of `currency` variable.
   })
   const planPriceContent = t(PLAN_PRICE_BY_INTERVAL[planInterval], {
@@ -143,10 +145,10 @@ export const PlanSection = () => {
               __html:
                 planInterval === PLAN_INTERVALS.LIFETIME
                   ? t('value_addon_package', {
-                      0: t('currency_at_symbol', { 0: addonsPrice, 1: currency }), // todo: formatNumber(addonsPrice, true, 0, region, false)
+                      0: t('currency_at_symbol', { 0: formatCurrency(addonsPrice), 1: currency }),
                       1: addonCount,
                     })
-                  : t('plan_plus_addon', { 0: planPrice, 1: addonCount }), // todo: formatNumber(subscriptionPrice,true,2,region,false)
+                  : t('plan_plus_addon', { 0: formatCurrency(planPrice), 1: addonCount }),
             }}
           />
         )}

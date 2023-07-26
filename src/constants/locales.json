@@ -1,0 +1,392 @@
+{
+  "ar_AE": {
+    "currency": "د.إ",
+    "decimalSeparator": "٫",
+    "thousandSeparator": "٬"
+  },
+  "ar_EG": {
+    "currency": "£",
+    "decimalSeparator": "٫",
+    "thousandSeparator": "٬"
+  },
+  "ar_IL": {
+    "currency": "₪",
+    "decimalSeparator": "٫",
+    "thousandSeparator": "٬"
+  },
+  "ar_LY": {
+    "currency": "LD",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "ar_PS": {
+    "currency": "JD",
+    "decimalSeparator": "٫",
+    "thousandSeparator": "٬"
+  },
+  "ar_QA": {
+    "currency": "﷼",
+    "decimalSeparator": "٫",
+    "thousandSeparator": "٬"
+  },
+  "ar_SA": {
+    "currency": "﷼",
+    "decimalSeparator": "٫",
+    "thousandSeparator": "٬"
+  },
+  "ar_TN": {
+    "currency": "د.ت",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "bg_BG": {
+    "currency": "лв",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "ca_AD": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "ca_ES": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "cs_CZ": {
+    "currency": "Kč",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "da_DK": {
+    "currency": "kr",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "de_AT": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "de_CH": {
+    "currency": "CHF",
+    "decimalSeparator": ".",
+    "thousandSeparator": "’"
+  },
+  "de_DE": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "el_GR": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "en_AU": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_CA": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_GB": {
+    "currency": "£",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_IE": {
+    "currency": "€",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_IN": {
+    "currency": "₹",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_LK": {
+    "currency": "₨",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_MT": {
+    "currency": "€",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_MY": {
+    "currency": "RM",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_NZ": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_SG": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_US": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "en_ZA": {
+    "currency": "R",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "es_AR": {
+    "currency": "$",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_BO": {
+    "currency": "Bs",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_CL": {
+    "currency": "$",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_CO": {
+    "currency": "$",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_CR": {
+    "currency": "₡",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "es_DO": {
+    "currency": "RD$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_EC": {
+    "currency": "$",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_ES": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_GT": {
+    "currency": "Q",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_MX": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_NI": {
+    "currency": "C$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_PE": {
+    "currency": "S/",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_PR": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_PY": {
+    "currency": "Gs",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_SV": {
+    "currency": "$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "es_UY": {
+    "currency": "$U",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "es_VE": {
+    "currency": "Bs",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "et_EE": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "fi_FI": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "fr_CA": {
+    "currency": "$",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "fr_DZ": {
+    "currency": "دج",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "fr_FR": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "hr_HR": {
+    "currency": "kn",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "hu_HU": {
+    "currency": "Ft",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "id_ID": {
+    "currency": "Rp",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "is_IS": {
+    "currency": "kr",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "it_IT": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "iw_IL": {
+    "currency": "₪",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "ja_JP": {
+    "currency": "¥",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "ko_KR": {
+    "currency": "₩",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "ms_MY": {
+    "currency": "RM",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "nl_BE": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "nl_NL": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "no_NO": {
+    "currency": "kr",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "pl_PL": {
+    "currency": "zł",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "pt_BR": {
+    "currency": "R$",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "pt_PT": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "ro_RO": {
+    "currency": "Lei",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "ru_RU": {
+    "currency": "₽",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "sk_SK": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "sl_SI": {
+    "currency": "€",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "sr_RS": {
+    "currency": "Дин.",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "sv_SE": {
+    "currency": "kr",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "th_TH": {
+    "currency": "฿",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "tl_PH": {
+    "currency": "₱",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "tr_TR": {
+    "currency": "₺",
+    "decimalSeparator": ",",
+    "thousandSeparator": "."
+  },
+  "uk_UA": {
+    "currency": "₴",
+    "decimalSeparator": ",",
+    "thousandSeparator": " "
+  },
+  "zh_CN": {
+    "currency": "¥",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  },
+  "zh_TW": {
+    "currency": "NT$",
+    "decimalSeparator": ".",
+    "thousandSeparator": ","
+  }
+}

@@ -8,6 +8,7 @@ import { ProjectSelect } from 'components/Select'
 import { PLAN_INTERVALS, PLAN_INTERVAL_TRANSLATIONS } from 'configs'
 import { ADDON_LINE_ITEMS, ADDON_MAIN_LIMIT_NAMES, ADDON_TYPES } from 'configs/addon'
 import { useAlertContext } from 'contexts'
+import { useFormatNumber } from 'hooks/useFormatNumber'
 import { IRootState } from 'store'
 import { useMigrateDeprecatedLifetimeMutation } from 'store/api'
 import { usePurchaseAddonMutation } from 'store/api/addonApi'
@@ -35,6 +36,7 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
   const { addAlert } = useAlertContext()
   const [migrateDeprecatedLifetime] = useMigrateDeprecatedLifetimeMutation()
   const [purchaseAddon] = usePurchaseAddonMutation()
+  const { formatCurrency } = useFormatNumber()
 
   const countryCode = useSelector(userCountryCodeSelector)
   const isLifetimePlanDeprecated = useSelector(isLifetimePlanDeprecatedSelector)
@@ -56,15 +58,15 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
     0: '+' + addon.limits[ADDON_MAIN_LIMIT_NAMES[addonType]],
   })
   const addonPriceText = t('value_per_plan', {
-    0: addonPrice, // todo: formatNumber(addonPrice, true, 2, region, false)
+    0: formatCurrency(addonPrice),
     1: t(PLAN_INTERVAL_TRANSLATIONS[planInterval as `${PLAN_INTERVALS}`]),
   })
   const newTotalPrice = t('new_total', {
-    0: (planInterval === PLAN_INTERVALS.LIFETIME ? 0 : planPrice) + addonsPrice + addonPrice, // todo: formatNumber(totalPrice, true, 2, region, false)
+    0: formatCurrency((planInterval === PLAN_INTERVALS.LIFETIME ? 0 : planPrice) + addonsPrice + addonPrice),
     1: t(`${planInterval === PLAN_INTERVALS.LIFETIME ? 'monthly' : planInterval}_total`),
   })
   const billingChangeSummary = t('billing_changes_summary_addon_purchase', {
-    0: addonPrice, // todo: formatNumber(addonPrice, true, 2, region, false)
+    0: formatCurrency(addonPrice),
     1: planInterval,
   })
 

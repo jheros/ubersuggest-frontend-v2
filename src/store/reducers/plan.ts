@@ -54,7 +54,7 @@ export const plansByTierSelector = createDraftSafeSelector(
   () => isLifetimeValidSelector(),
   (_state: IRootState, tier: ITier) => tier,
   (countryCode, plan, isLifetimeValid, tier) => {
-    const { currency, region, isCurrencySupported } = getCurrencyAndRegion(countryCode)
+    const { currency, isCurrencySupported } = getCurrencyAndRegion(countryCode)
     return Object.keys(plan)
       .filter((planInterval) => {
         if (tier === TIERS.TIER0 || tier === TIERS.RESTART) return true
@@ -67,12 +67,9 @@ export const plansByTierSelector = createDraftSafeSelector(
       .map((planInterval) => {
         const planInfo = plan?.[planInterval as IPlanInterval]?.[getPlanCode(isCurrencySupported, tier)]
         return {
-          planCode: planInfo?.plan_code,
-          planPrice: planInfo?.currencies?.[currency],
+          planCode: planInfo?.plan_code || '',
+          planPrice: planInfo?.currencies?.[currency] || 0,
           planInterval,
-          currency,
-          region,
-          tier,
         }
       })
   },

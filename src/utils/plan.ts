@@ -7,3 +7,4 @@ export const getPlanCode = (isCurrencySupported: boolean, tier: ITier) => {
     return PLAN_CODES.LOCAL
   }
 }
+

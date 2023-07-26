@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux'
 
 import { Box, Divider, Radio, Stack, useTheme } from '@mui/material'
 import { Alert, Dialog, DialogButton, Typography } from '@ubersuggest/common-ui'
-import { IPlanInterval, ITier, PLAN_INTERVALS, YEARLY_PLAN_SAVING_PERCENTAGE } from 'configs'
+import { IPlanInterval, PLAN_INTERVALS, YEARLY_PLAN_SAVING_PERCENTAGE } from 'configs'
 import { useMediaHelper } from 'hooks'
-import { useLazyGetMeQuery, useLazyGetSubscriptionQuery, useUpdatePlanMutation } from 'store/api'
+import { useFormatNumber } from 'hooks/useFormatNumber'
+import { useUpdatePlanMutation } from 'store/api'
 import {
   userPlanExpiryDateSelector,
   userPlanIntervalSelector,
@@ -15,15 +16,9 @@ import {
 
 interface ISubscriptionOption {
   subscriptionOption: {
-    planCode?: string
-    planPrice?: number
+    planCode: string
+    planPrice: number
     planInterval: string
-    currency: string
-    region: {
-      lang: any
-      locId: number
-    }
-    tier: ITier
   }
   onSelect: () => void
   isActive: boolean
@@ -37,20 +32,24 @@ const SubscriptionOption = ({
   const theme = useTheme()
   const { t } = useTranslation()
   const { isDesktop } = useMediaHelper()
+  const { formatCurrency } = useFormatNumber()
+
+  const planPriceWithCurrency = formatCurrency(planPrice)
+  const yearlyPlanPriceWithCurrency = formatCurrency(planPrice * 12)
 
   const planDetails = {
     [PLAN_INTERVALS.MONTHLY]: {
       label: t('billed_monthly'),
       description: t('ubersuggest_pro_is', {
-        0: planPrice, // todo: format currency
-        1: planPrice * 12, // todo: format currency
+        0: planPriceWithCurrency,
+        1: yearlyPlanPriceWithCurrency,
       }),
       period: t('nper_month'),
     },
     [PLAN_INTERVALS.YEARLY]: {
       label: t('billed_yearly'),
       description: t('ubersuggest_pro_save', {
-        0: planPrice, // todo: format currency
+        0: planPriceWithCurrency,
         1: YEARLY_PLAN_SAVING_PERCENTAGE,
       }),
       period: t('nper_year'),
@@ -58,7 +57,7 @@ const SubscriptionOption = ({
     [PLAN_INTERVALS.LIFETIME]: {
       label: t('lifetime_membership'),
       description: t('free_then_lifetime', {
-        0: planPrice, // todo: format currency
+        0: planPriceWithCurrency,
       }),
       period: t('onetime_fee'),
     },
@@ -99,7 +98,7 @@ const SubscriptionOption = ({
 
       <Stack direction='column' mt={!isDesktop ? 1 : 0}>
         <Typography color={theme.palette.common.orange.main} variant='text20Medium' lineHeight='20px'>
-          {`${planPrice}`}
+          {`${formatCurrency(planPrice)}`}
         </Typography>
 
         <Typography color={theme.palette.common.darkGray[50]} variant='text14Light' lineHeight='15px'>
@@ -119,6 +118,7 @@ export const UpdateBillingPeriodModal = ({ open = false, onClose }: IUpdateBilli
   const { t } = useTranslation()
   const theme = useTheme()
   const [updatePlan, { isLoading }] = useUpdatePlanMutation()
+  const { formatCurrency } = useFormatNumber()
 
   const subscriptionOptions = useSelector(userSubscriptionOptionsSelector)
   const planInterval = useSelector(userPlanIntervalSelector)
@@ -132,17 +132,18 @@ export const UpdateBillingPeriodModal = ({ open = false, onClose }: IUpdateBilli
   const getDescription = () => {
     if (selectedPlan) {
       const { planInterval: selectedPlanInterval, planPrice } = selectedPlan
+      const formattedPlanPrice = formatCurrency(planPrice)
 
       if (planInterval === PLAN_INTERVALS.MONTHLY && selectedPlanInterval === PLAN_INTERVALS.MONTHLY) {
-        return t('your_ubersuggest_pro_renew_monthly', { 0: renewDate, 1: planPrice })
+        return t('your_ubersuggest_pro_renew_monthly', { 0: renewDate, 1: formattedPlanPrice })
       } else if (planInterval === PLAN_INTERVALS.MONTHLY && selectedPlanInterval === PLAN_INTERVALS.YEARLY) {
-        return t('starting_on_ubersuggest_pro_yearly', { 0: renewDate, 1: planPrice })
+        return t('starting_on_ubersuggest_pro_yearly', { 0: renewDate, 1: formattedPlanPrice })
       } else if (planInterval === PLAN_INTERVALS.YEARLY && selectedPlanInterval === PLAN_INTERVALS.MONTHLY) {
-        return t('starting_on_ubersuggest_pro_monthly', { 0: renewDate, 1: planPrice })
+        return t('starting_on_ubersuggest_pro_monthly', { 0: renewDate, 1: formattedPlanPrice })
       } else if (planInterval === PLAN_INTERVALS.YEARLY && selectedPlanInterval === PLAN_INTERVALS.YEARLY) {
-        return t('your_ubersuggest_pro_renew_yearly', { 0: renewDate, 1: planPrice })
+        return t('your_ubersuggest_pro_renew_yearly', { 0: renewDate, 1: formattedPlanPrice })
       } else if (planInterval === PLAN_INTERVALS.MONTHLY && selectedPlanInterval === PLAN_INTERVALS.LIFETIME) {
-        return t('price_a_lifetime', { 0: planPrice })
+        return t('price_a_lifetime', { 0: formattedPlanPrice })
       }
     }
     return ''

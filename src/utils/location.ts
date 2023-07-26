@@ -1,12 +1,17 @@
 import { UNSUPPORTED_CURRENCIES } from 'configs/currency'
 import CONFIG_LOC_LANGS from 'constants/configLocLangs.json'
+import COUNTRIES from 'constants/countriesConfig.json'
 import CURRENCIES from 'constants/currencies.json'
 import LANGUAGES from 'constants/languages.json'
+import LOCALES from 'constants/locales.json'
 import LOCATIONS from 'constants/locations.json'
 import i18n from 'i18next'
-import { get, memoize, filter, sortBy } from 'lodash'
+import { get, memoize, filter, sortBy, findKey } from 'lodash'
 
 type ILanguageKey = keyof typeof LANGUAGES
+type ICountryKey = keyof typeof COUNTRIES
+type ILocationKey = keyof typeof LOCATIONS
+type ILocaleKey = keyof typeof LOCALES
 type ILocation = {
   id: number | string
   parentId: null | number
@@ -24,8 +29,43 @@ interface ILangLoc extends ILocation {
   languageName?: string
   languageCode: string
 }
+
+interface ICurrency {
+  currency: string
+  position?: string
+}
+
+interface INumbro {
+  languageTag: string
+  delimiters: {
+    thousands: string
+    decimal: string
+  }
+  currency: {
+    symbol: string
+    code: string
+    position: string
+  }
+  abbreviations: {
+    thousand: string
+    million: string
+    billion: string
+    trillion: string
+  }
+  ordinal: () => string
+}
+
 interface ILangLocCombinations {
   [key: string]: ILangLoc
+}
+
+interface INumbroCountries {
+  [key: string]: INumbro
+}
+
+export interface IRegion {
+  lang: string
+  locId: ILocationKey
 }
 
 export type ICountryCode = keyof typeof CURRENCIES
@@ -137,19 +177,88 @@ export const getCurrencyAndRegion = memoize(
     if (!isCurrencySupported(currency)) {
       return {
         currency: 'USD',
-        region: { lang: 'en', locId: 2840 },
-        planCode: 'other',
+        region: { lang: 'en', locId: '2840' as ILocationKey },
+        planCode: 'other', // todo: deprecated. remove later
         isCurrencySupported: false,
       }
     } else {
       const { languageCode, locationId } = getCountryInfo(countryCode)
       return {
         currency,
-        region: { lang: languageCode, locId: locationId },
-        planCode: currency.toLowerCase(),
+        region: { lang: languageCode, locId: locationId.toString() as ILocationKey },
+        planCode: currency.toLowerCase(), // todo: deprecated. remove later
         isCurrencySupported: true,
       }
     }
   },
   (countryCode) => countryCode,
 )
+
+export const getRegionFromCurrency = (currency: string) => {
+  const countryCode = findKey(CURRENCIES, (o) => o.currency === currency.toUpperCase()) || 'US'
+  const { region } = getCurrencyAndRegion(countryCode as ICountryCode)
+  return region
+}
+
+export const getCountryIsoCode = (locId: ILocationKey) => {
+  const country = LOCATIONS[locId as ILocationKey]
+  return country ? country.countryIsoCode : 'US'
+}
+
+export const getLocale = (lang: string, locId: ILocationKey) => {
+  const isoCode = getCountryIsoCode(locId)
+  const countryInfo = COUNTRIES[isoCode.toLowerCase() as ICountryKey]
+
+  const defaultCountryLocale = {
+    currency: countryInfo.currency,
+    decimalSeparator: countryInfo.decimalSeparator,
+    thousandSeparator: countryInfo.thousandSeparator,
+  }
+  return LOCALES[getLanguageCode(lang, locId)] || defaultCountryLocale
+}
+
+export const getLanguageCode = (lang: string, locId: ILocationKey): ILocaleKey => {
+  return `${lang.slice(0, 2)}-${getCountryIsoCode(locId)}` as ILocaleKey
+}
+
+export const getNewLangs = memoize(() => {
+  const numbroCountries: INumbroCountries = {}
+
+  Object.values(COUNTRIES).forEach((countryInfo) => {
+    const locId = countryInfo.locationId as ILocationKey
+    const countryIsoCode = getCountryIsoCode(locId)
+
+    if (countryIsoCode in LANGUAGES) {
+      const locationLanguages = LANGUAGES[countryIsoCode as ILanguageKey]
+      locationLanguages.forEach((language) => {
+        const languageTag = getLanguageCode(language.code, locId)
+        const locale = getLocale(language.code, locId)
+        const currency = CURRENCIES[countryIsoCode as ICountryCode] as ICurrency
+
+        numbroCountries[`${languageTag}`] = {
+          languageTag,
+          delimiters: {
+            thousands: locale?.thousandSeparator,
+            decimal: locale?.decimalSeparator,
+          },
+          currency: {
+            symbol: locale?.currency,
+            code: currency?.currency || '',
+            position: currency?.position || 'prefix',
+          },
+          abbreviations: {
+            thousand: 'k',
+            million: 'm',
+            billion: 'b',
+            trillion: 't',
+          },
+          ordinal: function () {
+            return '.'
+          },
+        }
+      })
+    }
+  })
+
+  return numbroCountries
+})

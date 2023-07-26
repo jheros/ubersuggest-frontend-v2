@@ -14,7 +14,8 @@ import { lookUpIP } from 'store/api/ipLookUpApi'
 import { plansByTierSelector } from 'store/reducers/plan'
 import type { IInvoicingSettings, IReportLimits, ISubscription, IUserInfo, IUserLocation } from 'store/types'
 import { formatDate } from 'utils/dateTime'
-import { getCurrencyAndRegion, ICountryCode } from 'utils/location'
+import { getCurrencyAndRegion, getRegionFromCurrency, ICountryCode } from 'utils/location'
+import { formatNumber } from 'utils/numbro'
 import { getPlanCode } from 'utils/plan'
 
 import { isSignedInSelector } from './auth'
@@ -227,30 +228,33 @@ export const userPaymentMethodSelector = (state: IRootState) => state.user.subsc
 export const userLastPaymentInfoSelector = createDraftSafeSelector(
   (state: IRootState) => state.user.subscription.latestInvoiceData?.created,
   (state: IRootState) => state.user.subscription.latestInvoiceData?.total,
-  (created, total) =>
-    created && isNumber(total) ? `${formatDate(created, 'YYYY-MM-DD', 'MMMM DD, YYYY')} - ${total}` : ``, // todo: format number
-  // formatNumber(
-  //   latestInvoiceData.total,
-  //   true,
-  //   2,
-  //   getRegionFromCurrency(latestInvoiceData.currency), // use actual invoice currency region
-  // )
+  (state: IRootState) => state.user.subscription.latestInvoiceData?.currency,
+  (created, total, currency) => {
+    if (created && isNumber(total) && currency) {
+      const region = getRegionFromCurrency(currency)
+      return `${formatDate(created, 'YYYY-MM-DD', 'MMMM DD, YYYY')} - ${formatNumber(total, {
+        region,
+        withCurrency: true,
+        useAbbreviation: false,
+      })}`
+    }
+    return ''
+  },
 )
 
 export const userNextPaymentInfoSelector = createDraftSafeSelector(
   (state: IRootState) => state.user.subscription.nextInvoiceData?.nextInvoiceAt,
   (state: IRootState) => state.user.subscription.nextInvoiceData?.total,
+  (state: IRootState) => state.user.subscription.nextInvoiceData?.currency,
   (state: IRootState) => userPlanIntervalSelector(state),
-  (nextInvoiceAt, total, planInterval) =>
-    nextInvoiceAt && isNumber(total) && planInterval !== PLAN_INTERVALS.LIFETIME
-      ? `${formatDate(nextInvoiceAt, 'YYYY-MM-DD', 'MMMM DD, YYYY')} - ${total}`
-      : ``, // todo: format number
-  // formatNumber(
-  //   nextInvoiceData.total,
-  //   true,
-  //   2,
-  //   getRegionFromCurrency(nextInvoiceData.currency), // use actual invoice currency region
-  // )
+  (nextInvoiceAt, total, currency, planInterval) =>
+    nextInvoiceAt && isNumber(total) && planInterval !== PLAN_INTERVALS.LIFETIME && currency
+      ? `${formatDate(nextInvoiceAt, 'YYYY-MM-DD', 'MMMM DD, YYYY')} - ${formatNumber(total, {
+          region: getRegionFromCurrency(currency),
+          withCurrency: true,
+          useAbbreviation: false,
+        })}`
+      : ``,
 )
 
 export const userNextInvoiceDataSelector = (state: IRootState) => state.user.subscription.nextInvoiceData
