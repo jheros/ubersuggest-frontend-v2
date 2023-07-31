@@ -259,7 +259,7 @@ export const AddonSection = () => {
 
         <Grid item md={4} sm={6} xs={12}>
           <AddonCard
-            title={t('kw_metrics_credits')}
+            title={t('kw_metrics_credits', { 0: '' }).trim()}
             infoText={`${keywordMetricsUsed}/${keywordMetricsLimit}`}
             progress={
               !keywordMetricsUsed || !keywordMetricsLimit ? 0 : (keywordMetricsUsed / keywordMetricsLimit) * 100

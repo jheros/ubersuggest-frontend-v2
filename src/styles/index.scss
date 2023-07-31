@@ -5,10 +5,11 @@
   outline: none;
 }
 
-
 .MuiButton-root {
   @include cropLineHeight(2);
 }
 
 // Hide google recaptcha badge
-.grecaptcha-badge { visibility: hidden; }
+.grecaptcha-badge {
+  visibility: hidden;
+}

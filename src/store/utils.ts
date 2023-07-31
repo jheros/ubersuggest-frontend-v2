@@ -54,7 +54,6 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock()
   let result = await baseQuery(args, api, extraOptions)
-  console.log('______________', result)
   if (result.error) {
     const status = result.error.status
     const error = (result.error.data as any)?.error

@@ -35,7 +35,7 @@ export const isSignedInSelector = (state: IRootState) => {
 export const isEmailVerificationRequiredSelector = createDraftSafeSelector(
   (state: IRootState) => isSignedInSelector(state),
   (state: IRootState) => state.user.userInfo.confirmed,
-  (isSignedIn, confirmed) => isSignedIn && !confirmed,
+  (isSignedIn, confirmed) => isSignedIn && confirmed === false,
 )
 
 export const { logout, setToken } = authSlice.actions

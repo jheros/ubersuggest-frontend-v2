@@ -82,7 +82,7 @@ export const isPaidUserSelector = createDraftSafeSelector(
   (state: IRootState) => isSignedInSelector(state),
   (state: IRootState) => isUserInGracePeriodSelector(state),
   (state: IRootState) => state.user.subscription.subscriptionStatus as string,
-  (isSignedIn, isUserInGracePeriod, subscriptionStatus) =>
+  (isSignedIn, isUserInGracePeriod, subscriptionStatus): boolean =>
     isSignedIn && (['active', 'trialing', 'paid', 'canceled'].includes(subscriptionStatus) || isUserInGracePeriod),
 )
 

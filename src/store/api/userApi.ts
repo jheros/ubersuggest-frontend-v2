@@ -12,6 +12,7 @@ import type {
   IUserInfo,
 } from '../types'
 import { baseQueryWithReauth } from '../utils'
+import { planApi } from './planApi'
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -121,6 +122,14 @@ export const userApi = createApi({
             paymentMethod: tokenId,
             threeDSecureToken,
           },
+        }
+      },
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+          dispatch(planApi.endpoints.getSubscription.initiate(undefined, { forceRefetch: true }))
+        } catch (err) {
+          // * no need to handle error
         }
       },
     }),

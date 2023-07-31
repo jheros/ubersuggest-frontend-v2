@@ -7,7 +7,9 @@ interface IImageButton extends ButtonBaseProps {
   active?: boolean
 }
 
-const ImageButton = styled(ButtonBase)<IImageButton>(({ theme, active }) => ({
+const ImageButton = styled(ButtonBase, {
+  shouldForwardProp: (prop) => prop !== 'active',
+})<IImageButton>(({ theme, active = false }) => ({
   position: 'relative',
   width: '91px',
   height: '55px',

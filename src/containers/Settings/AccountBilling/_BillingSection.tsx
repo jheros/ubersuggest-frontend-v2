@@ -92,13 +92,17 @@ export const BillingSection = () => {
                   <Typography variant='text16' lineHeight='28px'>
                     {paymentMethod === PAYMENT_METHODS.PAYPAL
                       ? t('paypal_account')
-                      : t('credit_card_ending_in', paymentMethod)}
+                      : t('credit_card_ending_in', { 0: paymentMethod })}
                   </Typography>
                 )}
 
                 {paymentMethod && <VerticalDivider />}
 
-                <ButtonLink disabled={isSubscriptionCanceled} onClick={() => setIsUpdatePaymentMethodModalOpen(true)}>
+                <ButtonLink
+                  disabled={isSubscriptionCanceled}
+                  onClick={() => setIsUpdatePaymentMethodModalOpen(true)}
+                  sx={{ alignSelf: 'flex-start' }}
+                >
                   {paymentMethod ? t('update') : t('add_payment')}
                 </ButtonLink>
 
