@@ -8,7 +8,7 @@ import { Typography, Alert } from '@ubersuggest/common-ui'
 import { LogoOrange, GoogleLogin, LoginForm, Hr, RouterLink } from 'components'
 import { ROUTES } from 'routes/consts'
 import { showEmailConfirmModal } from 'store/reducers/modal'
-import { getLanguageCode } from 'utils/translation'
+import { pathWithLang } from 'utils/route'
 
 interface IParams {
   showPayPlans?: string
@@ -22,6 +22,7 @@ interface IParams {
   sentResetLink?: string
   email?: string
   verificationStatus?: string
+  aiwAddon?: string
 }
 
 export const Login = () => {
@@ -31,7 +32,6 @@ export const Login = () => {
   const [searchParams] = useSearchParams()
   const pathParams = useParams()
   const params: IParams = { ...Object.fromEntries(searchParams.entries()), ...pathParams } as IParams
-  const languageCode = getLanguageCode()
   const {
     sentResetLink = params.sentResetLink,
     emailVerification: { email = params.email, verificationStatus = params.verificationStatus } = {},
@@ -39,13 +39,12 @@ export const Login = () => {
   const [showResetAlert, setShowResetAlert] = useState<boolean>(sentResetLink)
   const [showEmailVerificationAlert, setShowEmailVerificationAlert] = useState<boolean>(email && verificationStatus)
 
-  let redirectUrl = `/${languageCode}/dashboard`
-
+  let redirectUrl = `/${ROUTES.DASHBOARD.MAIN}`
   if (params.next) {
     if (params.from === 'ai_writer') {
       redirectUrl = params.next
     } else if (params.coupon) {
-      redirectUrl = `/${languageCode}/checkout?next=/${languageCode}/dashboard&plan=${
+      redirectUrl = `/checkout?next=${pathWithLang(redirectUrl)}&plan=${
         params.plan ? params.plan : 'monthly'
       }&tier=${params.tier ? params.tier : 'tier1'}&coupon=${params.coupon}`
     } else if (
@@ -54,15 +53,27 @@ export const Login = () => {
       params.tier === 'restart' &&
       params.plan === 'monthly'
     ) {
-      redirectUrl = `/${languageCode}/checkout?next=/${languageCode}/dashboard&plan=monthly&tier=restart`
+      redirectUrl = `/checkout?next=${pathWithLang(redirectUrl)}&plan=monthly&tier=restart`
+    } else if (
+      params.next === '/checkout' &&
+      params.showPayPlans === 'true' &&
+      params.plan === 'monthly' &&
+      !!params.aiwAddon
+    ) {
+      redirectUrl = `/checkout?next=${pathWithLang(redirectUrl)}&plan=monthly&tier=${
+        params.tier
+      }&aiwAddon=${params.aiwAddon}`
     } else {
       redirectUrl = params.next
     }
   } else if (params.showPayPlans === 'true' && params.tier && params.plan) {
-    redirectUrl = `/${languageCode}/checkout?next=/${languageCode}/dashboard&plan=${params.plan}&tier=${params.tier}`
+    redirectUrl = `/checkout?next=${pathWithLang(redirectUrl)}&plan=${params.plan}&tier=${params.tier}${
+      params.aiwAddon ? `&aiwAddon=${params.aiwAddon}` : ''
+    }`
   } else if (location.state?.next) {
     redirectUrl = location.state?.next
   }
+  redirectUrl = pathWithLang(redirectUrl)
 
   return (
     <>

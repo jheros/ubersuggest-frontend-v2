@@ -217,6 +217,15 @@ export const userKeywordMetricsSelector = createDraftSafeSelector(
   }),
 )
 
+export const userAiwWordsLimitSelector = createDraftSafeSelector(
+  (state: IRootState) => state.user.userInfo.limits.aiw_words_limits || 0,
+  (state: IRootState) => state.user.userInfo.limits.aiw_words_used || 0,
+  (aiwWordsLimit, aiwWordsUsed) => ({
+    aiwWordsLimit,
+    aiwWordsUsed,
+  }),
+)
+
 export const userDailyReportLimitSelector = createDraftSafeSelector(
   (state: IRootState) => state.user.reportLimits.reports_limits,
   (state: IRootState) => state.user.reportLimits.reports_used,

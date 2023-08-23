@@ -6,7 +6,7 @@ import { getLanguageCode } from './translation'
 export const pathWithLang = (path: string) => {
   const languageCode = getLanguageCode()
   const { pathname } = window.location
-  
+
   if (path.startsWith(`/${languageCode}/`) || path.startsWith(`${languageCode}/`)) {
     return path
   } else if (pathname.match(/^(\/en|\/pt|\/de|\/es|\/it|\/fr|\/nl|\/ja|\/zh)\/(.+)/gi)) {

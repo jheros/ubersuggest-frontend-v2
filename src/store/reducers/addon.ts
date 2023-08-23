@@ -29,6 +29,8 @@ export const isAddonsAvailableSelector = createDraftSafeSelector(
   (count) => count > 0,
 )
 
+export const availableAddonsSelector = (state: IRootState) => state.addon.entities
+
 export const addonByTypeSelector = createDraftSafeSelector(
   (state: IRootState) => state.addon.entities,
   (_: IRootState, type: string) => type,

@@ -6,6 +6,7 @@ import { Typography } from '@ubersuggest/common-ui'
 import { LogoOrange, GoogleLogin, RegisterForm, Hr, RouterLink } from 'components'
 import queryString from 'query-string'
 import { ROUTES } from 'routes/consts'
+import { pathWithLang } from 'utils/route'
 import { hasUnloggedUserProject } from 'utils/storage'
 import { getLanguageCode } from 'utils/translation'
 
@@ -18,6 +19,7 @@ interface IParams {
   next?: string
   error?: string
   code?: string
+  aiwAddon?: string
 }
 
 // todo: kissmetrics integration
@@ -31,21 +33,30 @@ export const Register = () => {
   const addProjectAction = hasUnloggedUserProject()
     ? ''
     : `?action=${params.code ? 'join_account_success' : 'add_project'}`
-  let redirectUrl = `/${languageCode}/dashboard${addProjectAction}`
+  let redirectUrl = `/${ROUTES.DASHBOARD.MAIN}${addProjectAction}`
   if (params.next) {
     if (params.from === 'ai_writer') {
       redirectUrl = params.next
     } else if (params.coupon) {
-      redirectUrl = `/${languageCode}/checkout?plan=${params.plan ? params.plan : 'monthly'}&tier=${
+      redirectUrl = `/checkout?plan=${params.plan ? params.plan : 'monthly'}&tier=${
         params.tier ? params.tier : 'tier1'
-      }&coupon=${params.coupon}&next=/${languageCode}/dashboard${addProjectAction}`
+      }&coupon=${params.coupon}&next=${pathWithLang(redirectUrl)}`
     } else if (
       params.next === '/checkout' &&
       params.showPayPlans === 'true' &&
       params.tier === 'restart' &&
       params.plan === 'monthly'
     ) {
-      redirectUrl = `/${languageCode}/checkout?plan=monthly&tier=restart&next=/${languageCode}/dashboard${addProjectAction}`
+      redirectUrl = `/checkout?plan=monthly&tier=restart&next=${pathWithLang(redirectUrl)}`
+    } else if (
+      params.next === '/checkout' &&
+      params.showPayPlans === 'true' &&
+      params.plan === 'monthly' &&
+      !!params.aiwAddon
+    ) {
+      redirectUrl = `/checkout?plan=monthly&tier=${params.tier}&aiwAddon=${params.aiwAddon}&next=${pathWithLang(
+        redirectUrl,
+      )}`
     } else {
       const queries = queryString.parse(params.next)
       if (
@@ -56,15 +67,19 @@ export const Register = () => {
         params.next.includes('ai_writer?draft=1')
       ) {
         redirectUrl = params.next
-      } else {
-        redirectUrl = `/${languageCode}/dashboard${addProjectAction}`
       }
     }
   } else if (params.showPayPlans === 'true' && params.tier && params.plan) {
-    redirectUrl = `/${languageCode}/checkout?plan=${params.plan}&tier=${params.tier}&next=/${languageCode}/dashboard${addProjectAction}`
+    redirectUrl = `/checkout?plan=${params.plan}&tier=${params.tier}${
+      params.aiwAddon ? `&aiwAddon=${params.aiwAddon}` : ''
+    }&next=${pathWithLang(redirectUrl)}`
   } else if (location.state?.next) {
-    redirectUrl = location.state?.next
+    const nextUrl = location.state?.next?.startsWith('/') ? location.state?.next : `/${location.state?.next}`
+    if (nextUrl !== `/${languageCode}/dashboard` && nextUrl !== `/dashboard`) {
+      redirectUrl = location.state?.next
+    }
   }
+  redirectUrl = pathWithLang(redirectUrl)
 
   return (
     <>

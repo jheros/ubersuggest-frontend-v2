@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { Navigate, Outlet, createBrowserRouter } from 'react-router-dom'
+import { Navigate, Outlet, createBrowserRouter, useSearchParams, useLocation } from 'react-router-dom'
 
 import { ErrorFallback, MainLayout } from 'components'
 import { ROUTES } from 'routes/consts'
@@ -12,10 +12,19 @@ interface IAuthRoute {
 }
 
 const AuthRoute = ({ children }: IAuthRoute) => {
+  const [searchParams] = useSearchParams()
+  const location = useLocation()
   const isAllowed = useSelector(isSignedInSelector)
+  const hasAiwAddon = !!searchParams.get('aiwAddon')
 
   if (!isAllowed) {
-    return <Navigate to={ROUTES.LOGIN} />
+    return (
+      <Navigate
+        to={`${hasAiwAddon ? ROUTES.REGISTER : ROUTES.LOGIN}?next=${location.pathname}${
+          location.search ? `&${location.search.slice(1)}` : ''
+        }`}
+      />
+    )
   }
 
   return children ? children : <Outlet />

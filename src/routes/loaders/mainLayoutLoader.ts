@@ -25,7 +25,17 @@ export const mainLayoutLoader = async ({ request }: LoaderFunctionArgs) => {
     store.dispatch(lookUpIP()).unwrap(),
     Promise.resolve().then(async () => {
       if (isSignedIn) {
-        const userInfo = await store.dispatch(userApi.endpoints.getMe.initiate()).unwrap()
+        const promises = []
+        promises.push(
+          store
+            .dispatch(userApi.endpoints.getMe.initiate())
+            .unwrap()
+            .then((userInfo) => {
+              if (userInfo.subscription) {
+                return store.dispatch(planApi.endpoints.getSubscription.initiate()).unwrap()
+              }
+            }),
+        )
         // todo:
         // if (popLoginLimitMessage()) {
         //   yield put(
@@ -53,19 +63,15 @@ export const mainLayoutLoader = async ({ request }: LoaderFunctionArgs) => {
         //     history.location.pathname.endsWith(path),
         //   )
         // ) {
-        store.dispatch(projectApi.endpoints.getProjects.initiate())
+        promises.push(store.dispatch(projectApi.endpoints.getProjects.initiate()).unwrap())
         //   yield put(fetchProjects())
         //   yield put(fetchAlerts())
         // }
-        if (userInfo.subscription) {
-          await Promise.all([
-            store.dispatch(addonApi.endpoints.getAddons.initiate()).unwrap(),
-            store.dispatch(planApi.endpoints.getSubscription.initiate()).unwrap(),
-          ])
-        }
+        promises.push(store.dispatch(addonApi.endpoints.getAddons.initiate()).unwrap())
         // if (isSubUser(user)) {
         //   yield put(fetchMainUser())
         // }
+        await Promise.all(promises)
       }
     }),
   ])

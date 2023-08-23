@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
 import { Box, Grid, Paper, SvgIcon, Tooltip, LinearProgress } from '@mui/material'
 import { Button, Typography } from '@ubersuggest/common-ui'
@@ -18,6 +19,7 @@ import {
   isFreeUserSelector,
   isInviteAllowedSelector,
   isSubUserSelector,
+  userAiwWordsLimitSelector,
   userDailyReportLimitSelector,
   userKeywordMetricsSelector,
   userMaxCompetitorLimitSelector,
@@ -123,6 +125,7 @@ const AddonCard = ({
 export const AddonSection = () => {
   const { t } = useTranslation()
   const navigateWithLang = useNavigateWithLang()
+  const [searchParams] = useSearchParams()
 
   const isAddonsAvailable = useSelector(isAddonsAvailableSelector)
   const isSubUser = useSelector(isSubUserSelector)
@@ -137,11 +140,19 @@ export const AddonSection = () => {
   const projectCount = useSelector(projectCountSelector)
   const subUserCount = useSelector(subUserCountSelector)
   const { keywordMetricsUsed, keywordMetricsLimit } = useSelector(userKeywordMetricsSelector)
+  const { aiwWordsLimit, aiwWordsUsed } = useSelector(userAiwWordsLimitSelector)
   const tier = useSelector(userTierSelector)
   const { reportUsed, reportLimit } = useSelector(userDailyReportLimitSelector)
 
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false)
   const [purchaseAddonType, setPurchaseAddonType] = useState(ADDON_TYPES.ADDON_DOMAIN)
+  const isAiwAddon = !!searchParams.get('aiwAddon')
+
+  useEffect(() => {
+    if (isAiwAddon && !isSubUser) {
+      showPurchaseModal(ADDON_TYPES.ADDON_AIW_BLOGGER)
+    }
+  }, [])
 
   const showPurchaseModal = (addonType: string) => {
     if (tier === TIERS.FREE_TIER) {
@@ -152,8 +163,10 @@ export const AddonSection = () => {
       // })
       navigateWithLang(ROUTES.PRICING)
     } else {
-      setPurchaseAddonType(addonType)
-      setPurchaseModalOpen(true)
+      setPurchaseAddonType(() => {
+        setPurchaseModalOpen(true)
+        return addonType
+      })
     }
   }
 
@@ -268,13 +281,31 @@ export const AddonSection = () => {
             noButton={isSubUser}
           ></AddonCard>
         </Grid>
+
+        <Grid item md={4} sm={6} xs={12}>
+          <AddonCard
+            title={t('aiw_word_count')}
+            tooltip={t('aiw_word_count_tooltip')}
+            infoText={`${aiwWordsUsed}/${aiwWordsLimit}`}
+            progress={!aiwWordsUsed || !aiwWordsLimit ? 0 : (aiwWordsUsed / aiwWordsLimit) * 100}
+            onBuyClick={() => showPurchaseModal(ADDON_TYPES.ADDON_AIW_BLOGGER)}
+            noButton={isSubUser}
+          ></AddonCard>
+        </Grid>
       </Grid>
 
-      <PurchaseAddonModal
-        open={purchaseModalOpen}
-        addonType={purchaseAddonType}
-        onClose={() => setPurchaseModalOpen(false)}
-      />
+      {purchaseModalOpen && (
+        <PurchaseAddonModal
+          open={purchaseModalOpen}
+          addonType={purchaseAddonType}
+          onClose={(isPurchased) => {
+            setPurchaseModalOpen(false)
+            if (isPurchased && isAiwAddon && process.env.REACT_APP_AIWRITER_BASE_URL) {
+              window.location.href = process.env.REACT_APP_AIWRITER_BASE_URL
+            }
+          }}
+        />
+      )}
     </>
   )
 }

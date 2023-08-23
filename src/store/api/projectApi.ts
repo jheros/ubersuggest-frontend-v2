@@ -1,11 +1,11 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { setProject, setProjects } from 'store/reducers/project'
 import { IProjectEntity } from 'store/types'
-import { baseQuery } from 'store/utils'
+import { baseQueryWithReauth } from 'store/utils'
 
 export const projectApi = createApi({
   reducerPath: 'projectApi',
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['Project'],
   endpoints: (builder) => ({
     getProjects: builder.query<Array<IProjectEntity>, void>({

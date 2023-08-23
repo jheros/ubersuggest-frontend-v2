@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import { ADDON_TYPES } from 'configs/addon'
 import { setAddons } from 'store/reducers/addon'
 import { IAddonEntity, IGenericResponse, IPurchaseAddonInput } from 'store/types'
-import { baseQuery } from 'store/utils'
+import { baseQueryWithReauth } from 'store/utils'
 
 import { planApi } from './planApi'
 import { projectApi } from './projectApi'
@@ -10,7 +10,7 @@ import { userApi } from './userApi'
 
 export const addonApi = createApi({
   reducerPath: 'addonApi',
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['Addon'],
   endpoints: (builder) => ({
     getAddons: builder.query<IAddonEntity, void>({

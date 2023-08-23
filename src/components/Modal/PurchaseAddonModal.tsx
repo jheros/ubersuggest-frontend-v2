@@ -6,13 +6,14 @@ import { Box, Divider, Paper, SvgIcon, useTheme } from '@mui/material'
 import { Typography, Dialog } from '@ubersuggest/common-ui'
 import { ProjectSelect } from 'components/Select'
 import { PLAN_INTERVALS, PLAN_INTERVAL_TRANSLATIONS } from 'configs'
-import { ADDON_LINE_ITEMS, ADDON_MAIN_LIMIT_NAMES, ADDON_TYPES } from 'configs/addon'
+import { ADDON_LINE_ITEMS, ADDON_MAIN_LIMIT_NAMES, ADDON_TYPES, AIW_ADDONS, IAddonType } from 'configs/addon'
 import { useAlertContext } from 'contexts'
 import { useFormatNumber } from 'hooks/useFormatNumber'
+import { findKey } from 'lodash'
 import { IRootState } from 'store'
 import { useMigrateDeprecatedLifetimeMutation } from 'store/api'
 import { usePurchaseAddonMutation } from 'store/api/addonApi'
-import { addonByTypeSelector } from 'store/reducers/addon'
+import { addonByTypeSelector, availableAddonsSelector } from 'store/reducers/addon'
 import {
   isLifetimePlanDeprecatedSelector,
   userAddonsPriceSelector,
@@ -26,11 +27,11 @@ import { getCurrencyAndRegion } from 'utils/location'
 interface IPurchaseAddonModal {
   open: boolean
   addonType: string
-  onClose: () => void
+  onClose: (isPurchased?: boolean) => void
   projectId?: string
 }
 
-export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPurchaseAddonModal) => {
+export const PurchaseAddonModal = ({ open, addonType: defaultAddonType, onClose, projectId }: IPurchaseAddonModal) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const { addAlert } = useAlertContext()
@@ -38,29 +39,27 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
   const [purchaseAddon] = usePurchaseAddonMutation()
   const { formatCurrency } = useFormatNumber()
 
+  const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(projectId)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [addonType, setAddonType] = useState<IAddonType>(defaultAddonType)
+
   const countryCode = useSelector(userCountryCodeSelector)
   const isLifetimePlanDeprecated = useSelector(isLifetimePlanDeprecatedSelector)
   const planInterval = useSelector(userPlanIntervalSelector)
   const planPrice = useSelector(userPlanPriceSelector)
   const addonsPrice = useSelector(userAddonsPriceSelector)
   const domainAddon = useSelector((state: IRootState) => addonByTypeSelector(state, ADDON_TYPES.ADDON_DOMAIN))
-  const addon = useSelector((state: IRootState) => addonByTypeSelector(state, addonType))
+  const availableAddons = useSelector(availableAddonsSelector)
 
-  const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(projectId)
-  const [isLoading, setIsLoading] = useState(false)
+  const getAddonCode = (addon: IAddonType) => findKey(availableAddons, (_, key) => key.includes(addon)) ?? addon
+  const getAddonPrice = (addon: IAddonType) => availableAddons[getAddonCode(addon)]?.prices?.[currency] || 0
 
+  if (!availableAddons[getAddonCode(addonType)]) return null
+
+  const isAiwAddon = AIW_ADDONS.includes(defaultAddonType)
+  const addons = isAiwAddon ? AIW_ADDONS : [defaultAddonType]
   const { currency } = getCurrencyAndRegion(countryCode)
-
-  if (!addon) return null
-
-  const addonPrice = addon.prices[currency] || 0
-  const addonDescription = t(ADDON_LINE_ITEMS[addonType].text, {
-    0: '+' + addon.limits[ADDON_MAIN_LIMIT_NAMES[addonType]],
-  })
-  const addonPriceText = t('value_per_plan', {
-    0: formatCurrency(addonPrice),
-    1: t(PLAN_INTERVAL_TRANSLATIONS[planInterval as `${PLAN_INTERVALS}`]),
-  })
+  const addonPrice = getAddonPrice(addonType)
   const newTotalPrice = t('new_total', {
     0: formatCurrency((planInterval === PLAN_INTERVALS.LIFETIME ? 0 : planPrice) + addonsPrice + addonPrice),
     1: t(`${planInterval === PLAN_INTERVALS.LIFETIME ? 'monthly' : planInterval}_total`),
@@ -70,10 +69,21 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
     1: planInterval,
   })
 
+  const getAddonDescription = (addon: IAddonType) =>
+    t(ADDON_LINE_ITEMS[addon].text, {
+      0: '+' + availableAddons[getAddonCode(addon)]?.limits?.[ADDON_MAIN_LIMIT_NAMES[addon]],
+    })
+
+  const getAddonPriceText = (addon: IAddonType) =>
+    t('value_per_plan', {
+      0: formatCurrency(getAddonPrice(addon)),
+      1: t(PLAN_INTERVAL_TRANSLATIONS[planInterval as `${PLAN_INTERVALS}`]),
+    })
+
   const buyAddon = async () => {
     await purchaseAddon({
       addonType,
-      addonCode: addon.code,
+      addonCode: getAddonCode(addonType),
       projectId:
         addonType === ADDON_TYPES.ADDON_COMPETITOR || addonType === ADDON_TYPES.ADDON_TRACKEDKEYWORDS
           ? selectedProjectId
@@ -93,12 +103,12 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
         if (res.status === '204') {
           setTimeout(async () => {
             await buyAddon()
-            onClose && onClose()
+            onClose && onClose(true)
           }, 5000)
         }
       } else {
         await buyAddon()
-        onClose && onClose()
+        onClose && onClose(true)
       }
     } catch (err) {
       addAlert({ severity: 'error', message: getErrorMessage(err) })
@@ -109,7 +119,7 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
 
   return (
     <Dialog
-      onClose={onClose}
+      onClose={() => onClose?.()}
       onSubmit={handleSubmit}
       open={open}
       title={t('buy_addon_modal_heading')}
@@ -136,6 +146,12 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
         </Typography>
       )}
 
+      {isAiwAddon && (
+        <Typography variant='text16' color={theme.palette.common.black} textAlign='center' margin='5px 0 25px'>
+          {t('aiw_addon_modal_subheading')}
+        </Typography>
+      )}
+
       <Typography
         variant='text14Medium'
         lineHeight='16px'
@@ -147,48 +163,53 @@ export const PurchaseAddonModal = ({ open, addonType, onClose, projectId }: IPur
         {t('addon_label')}
       </Typography>
 
-      <Paper
-        variant='outlined'
-        square
-        sx={{
-          p: '10px 20px',
-          mb: '10px',
-          borderColor: 'common.lightGray.main',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          width: 'auto !important',
-        }}
-      >
-        <Box display='flex' alignItems='center'>
-          <Box
-            sx={{
-              backgroundColor: ADDON_LINE_ITEMS[addonType].bgColor,
-              borderRadius: '19px',
-              width: '38px',
-              height: '38px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mr: '15px',
-            }}
-          >
-            <SvgIcon
-              component={ADDON_LINE_ITEMS[addonType].icon}
-              inheritViewBox
-              sx={{ color: 'transparent', fontSize: '16px' }}
-            />
+      {addons.map((addon) => (
+        <Paper
+          key={`addon-option-${addon}`}
+          variant='outlined'
+          square
+          sx={{
+            p: '10px 20px',
+            mb: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: 'auto !important',
+            cursor: isAiwAddon ? 'pointer' : 'inherit',
+            borderColor: isAiwAddon && addon === addonType ? theme.palette.primary.main : 'common.lightGray.main',
+          }}
+          onClick={() => isAiwAddon && setAddonType(addon)}
+        >
+          <Box display='flex' alignItems='center'>
+            <Box
+              sx={{
+                backgroundColor: ADDON_LINE_ITEMS[addon].bgColor,
+                borderRadius: '19px',
+                width: '38px',
+                height: '38px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mr: '15px',
+              }}
+            >
+              <SvgIcon
+                component={ADDON_LINE_ITEMS[addon].icon}
+                inheritViewBox
+                sx={{ color: 'transparent', fontSize: '16px' }}
+              />
+            </Box>
+            <Typography variant='text14Book' lineHeight='22px'>
+              {getAddonDescription(addon)}
+            </Typography>
           </Box>
-          <Typography variant='text14Book' lineHeight='22px'>
-            {addonDescription}
-          </Typography>
-        </Box>
-        <Box pl='15px'>
-          <Typography variant='text14Book' lineHeight='22px' color={theme.palette.common.blue.main}>
-            {addonPriceText}
-          </Typography>
-        </Box>
-      </Paper>
+          <Box pl='15px'>
+            <Typography variant='text14Book' lineHeight='22px' color={theme.palette.common.blue.main}>
+              {getAddonPriceText(addon)}
+            </Typography>
+          </Box>
+        </Paper>
+      ))}
 
       <Typography
         variant='text14Medium'
