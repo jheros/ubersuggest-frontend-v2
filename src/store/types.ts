@@ -90,7 +90,7 @@ export interface IUserInfo {
   workspace_banner_closed: boolean
   opportunities_thumbs_banner_closed: boolean
   is_in_salesforce: boolean
-  lifetime_offer_until: null // todo
+  lifetime_offer_until?: string // DateTime
   lifetime_unique_offer: boolean
   subscription: ISubscription // todo
   preferences: {

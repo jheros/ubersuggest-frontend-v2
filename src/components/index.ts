@@ -1,6 +1,7 @@
 export * from './Alert'
 export * from './Auth'
 export * from './Button'
+export * from './Card'
 export * from './Dashboard'
 export * from './ErrorFallback'
 export * from './Hr'

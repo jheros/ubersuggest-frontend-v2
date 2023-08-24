@@ -1,19 +1,11 @@
 import { createDraftSafeSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IPlanInterval, ITier, PLAN_INTERVALS, TIERS } from 'configs'
-import moment from 'moment'
 import { IRootState } from 'store'
 import type { IPlanEntity } from 'store/types'
-import { formatDate } from 'utils/dateTime'
 import { getCurrencyAndRegion } from 'utils/location'
 import { getPlanCode } from 'utils/plan'
 
-import {
-  isLifetimeValidSelector,
-  userCountryCodeSelector,
-  userPlanEndDateSelector,
-  userPlanIntervalSelector,
-  userSubscriptionStatusSelector,
-} from './user'
+import { isLifetimeValidSelector, userCountryCodeSelector } from './user'
 
 interface IPlanState {
   entities: IPlanEntity

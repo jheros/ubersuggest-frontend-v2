@@ -9,7 +9,7 @@ export const useFormatNumber = () => {
   const countryCode = useSelector(userCountryCodeSelector)
   const { region } = getCurrencyAndRegion(countryCode)
 
-  const format = (x: number, args: IFormatNumberOptions) => {
+  const format = (x: number, args?: IFormatNumberOptions) => {
     return formatNumber(x, { ...args, region })
   }
 

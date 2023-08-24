@@ -109,7 +109,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
         const release = await mutex.acquire()
         try {
           const recaptchaToken = (api.getState() as IRootState).recaptcha.token as string
-          await api.dispatch(authApi.endpoints.getToken.initiate(recaptchaToken)).unwrap()
+          await api.dispatch(authApi.endpoints.getToken.initiate(recaptchaToken, { forceRefetch: true })).unwrap()
           result = await baseQuery(args, api, extraOptions)
         } finally {
           // release must be called once the mutex should be released again.

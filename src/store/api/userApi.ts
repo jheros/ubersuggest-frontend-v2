@@ -30,10 +30,11 @@ export const userApi = createApi({
       transformResponse: (res) => res as IUserInfo,
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled
+          const { data, meta } = await queryFulfilled
           dispatch(setUserInfo({ ...data, is_annonymous: !data }))
-        } catch (err) {
-          dispatch(setUserInfo({ is_annonymous: true } as IUserInfo))
+        } catch (err: any) {
+          const xLifetimeOfferUntil = err.response.headers['x-lifetime-offer-until']
+          dispatch(setUserInfo({ is_annonymous: true, lifetime_offer_until: xLifetimeOfferUntil } as IUserInfo))
         }
         // todo:
         // setAmplitudeUserId(userResponse.data.id)

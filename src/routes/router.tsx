@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet, createBrowserRouter, useSearchParams, useLocation } from 'react-router-dom'
 
-import { ErrorFallback, MainLayout } from 'components'
 import { ROUTES } from 'routes/consts'
 import { isSignedInSelector } from 'store/reducers/auth'
 
@@ -93,7 +92,6 @@ export const UberRouter = createBrowserRouter([
       /* TODO: should be AuthRoute, if we decide to backup survey flow. */
       { path: ROUTES.SURVEY, element: <div>Survey Container</div> },
       { path: ROUTES.ONBOARDING, element: <div>Onboarding Container</div> },
-      { path: ROUTES.PRICING, element: <div>Pricing Container</div> },
       { path: ROUTES.EXTENSION, element: <div>Extension Container</div> },
       { path: ROUTES.DOC, element: <div>Content Integration Container</div> },
       {
@@ -190,6 +188,23 @@ export const UberRouter = createBrowserRouter([
       },
 
       { path: '*', element: <div>Not Found</div> },
+    ],
+  },
+  {
+    path: ROUTES.MAIN,
+    loader: mainLayoutLoader,
+    async lazy() {
+      const { MainLayout } = await import('components')
+      return { element: <MainLayout hideSideBar /> }
+    },
+    children: [
+      {
+        path: ROUTES.PRICING,
+        async lazy() {
+          const { Pricing } = await import('containers')
+          return { Component: Pricing }
+        },
+      },
     ],
   },
 ])

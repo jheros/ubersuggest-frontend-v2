@@ -1,4 +1,4 @@
-import { createDraftSafeSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createDraftSafeSelector, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PLAN_INTERVALS, TIERS } from 'configs'
 import {
   DEFAULT_MAX_COMPETITOR_LIMIT,
@@ -130,6 +130,8 @@ export const is30DaysPeriodSelector = (state: IRootState) => {
 }
 
 export const userInfoSelector = (state: IRootState) => state.user.userInfo
+
+export const userTrialDaysSelector = (state: IRootState) => state.user.userInfo.free_trial_days || 7
 
 export const userTierSelector = createDraftSafeSelector(
   (state: IRootState) => isSignedInSelector(state),
@@ -290,6 +292,24 @@ export const userPlanExpiryDateSelector = createDraftSafeSelector(
     }
     return formatDate(new Date(trialEnd.format('YYYY-MM-DD')))
   },
+)
+
+export const userLifetimeOfferTimeLeft = createSelector(
+  (state: IRootState) => isPaidUserSelector(state),
+  (state: IRootState) => state.user.userInfo.lifetime_offer_until,
+  (state: IRootState) => isLifetimeValidSelector(),
+  (state: IRootState) => isLifetimePlanSelector(state),
+  (isPaidUser, lifeTimeOfferUntil, isLifetimeValid, isLifetimePlan) => {
+    if (isLifetimePlan || !isLifetimeValid) return 0
+    if (isPaidUser && !lifeTimeOfferUntil) {
+      return 0
+    }
+    if (!isPaidUser && !lifeTimeOfferUntil) {
+      return (3 * 60 + 42) * 60 * 1000 // 3 hours and 42 mins
+    }
+    const timeLeft = moment(lifeTimeOfferUntil).diff(moment())
+    return Math.max(timeLeft, 0)
+  }
 )
 
 export const { setUserInfo, setSubscription, setReportLimits, setInvoicingSettings } = userSlice.actions

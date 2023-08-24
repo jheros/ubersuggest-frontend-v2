@@ -24,10 +24,19 @@ import { getConsultingLink, languageOptions } from './consts'
 
 interface ITopBar {
   mobileSideBarOpen: boolean
+  hideAppSwitcher?: boolean
+  hideNavLink?: boolean
+  hideToggle?: boolean
   toggleMobileSideBar: () => void
 }
 
-export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
+export const TopBar = ({
+  mobileSideBarOpen,
+  toggleMobileSideBar,
+  hideAppSwitcher = false,
+  hideNavLink = false,
+  hideToggle = false,
+}: ITopBar) => {
   const theme = useTheme()
   const { isDesktop } = useMediaHelper()
   const { t, i18n } = useTranslation()
@@ -74,59 +83,65 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
       <Toolbar disableGutters>
         <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ px: 2.5, width: '100%' }}>
           <Stack direction='row' alignItems='center' spacing={3}>
-            <RouterLink to={ROUTES.DASHBOARD.MAIN} sx={{ ml: '5px' }}>
+            <RouterLink to={ROUTES.DASHBOARD.MAIN} sx={{ ml: '5px', display: 'flex', alignItems: 'center' }}>
               <img src={UberLogo} height='38' alt='uber-logo' />
             </RouterLink>
             <Divider orientation='vertical' flexItem />
             <LanguageSelector active={langCode} langOptions={languageOptions} onChange={handleChangeLanguage} />
             {isDesktop && (
               <Box width={228}>
-                <AppSwitcher
-                  appOptions={[
-                    {
-                      color: 'orange',
-                      default: true,
-                      description: t('empty_state_kw_overview_desp_1'),
-                      icon: 'UbersuggestThumbSvg',
-                      title: t('ubersuggest'),
-                      url: '/url1',
-                    },
-                    {
-                      color: 'blue',
-                      description: t('switcher_ai_writer_subheading'),
-                      icon: 'AIWriterThumbSvg',
-                      title: t('ai_writer'),
-                      url: '/url2',
-                    },
-                  ]}
-                  hideSelected
-                />
+                {!hideAppSwitcher && (
+                  <AppSwitcher
+                    appOptions={[
+                      {
+                        color: 'orange',
+                        default: true,
+                        description: t('empty_state_kw_overview_desp_1'),
+                        icon: 'UbersuggestThumbSvg',
+                        title: t('ubersuggest'),
+                        url: '/url1',
+                      },
+                      {
+                        color: 'blue',
+                        description: t('switcher_ai_writer_subheading'),
+                        icon: 'AIWriterThumbSvg',
+                        title: t('ai_writer'),
+                        url: '/url2',
+                      },
+                    ]}
+                    hideSelected
+                  />
+                )}
               </Box>
             )}
           </Stack>
           <Stack direction='row' alignItems='center' spacing={3.75} mr={2.5}>
             {isDesktop && (
               <>
-                <RouterLink type='direct' to={getConsultingLink(langCode)} underline='none'>
-                  <Typography
-                    font='book'
-                    variant='text14'
-                    sx={{ textTransform: 'uppercase' }}
-                    color={theme.palette.common.darkGray.main}
-                  >
-                    {t('consluting')}
-                  </Typography>
-                </RouterLink>
-                <RouterLink to={ROUTES.PRICING} underline='none'>
-                  <Typography
-                    font='book'
-                    variant='text14'
-                    sx={{ textTransform: 'uppercase' }}
-                    color={theme.palette.common.darkGray.main}
-                  >
-                    {t('plans_pricing')}
-                  </Typography>
-                </RouterLink>
+                {!hideNavLink && (
+                  <>
+                    <RouterLink type='direct' to={getConsultingLink(langCode)} underline='none'>
+                      <Typography
+                        font='book'
+                        variant='text14'
+                        sx={{ textTransform: 'uppercase' }}
+                        color={theme.palette.common.darkGray.main}
+                      >
+                        {t('consluting')}
+                      </Typography>
+                    </RouterLink>
+                    <RouterLink to={ROUTES.PRICING} underline='none'>
+                      <Typography
+                        font='book'
+                        variant='text14'
+                        sx={{ textTransform: 'uppercase' }}
+                        color={theme.palette.common.darkGray.main}
+                      >
+                        {t('plans_pricing')}
+                      </Typography>
+                    </RouterLink>
+                  </>
+                )}
                 {!isSignedIn && (
                   <Button
                     variant='contained'
@@ -169,10 +184,12 @@ export const TopBar = ({ mobileSideBarOpen, toggleMobileSideBar }: ITopBar) => {
             {!isDesktop && (
               <Stack direction='row' sx={{ color: (theme) => theme.palette.common.darkGray[30] }} mr={-2.5}>
                 <NotificationsIcon sx={{ fontSize: 38 }} />
-                <Stack onClick={toggleMobileSideBar} sx={{ cursor: 'pointer' }}>
-                  {mobileSideBarOpen && <CloseIcon sx={{ fontSize: 38 }} />}
-                  {!mobileSideBarOpen && <MenuIcon sx={{ fontSize: 38 }} />}
-                </Stack>
+                {!hideToggle && (
+                  <Stack onClick={toggleMobileSideBar} sx={{ cursor: 'pointer' }}>
+                    {mobileSideBarOpen && <CloseIcon sx={{ fontSize: 38 }} />}
+                    {!mobileSideBarOpen && <MenuIcon sx={{ fontSize: 38 }} />}
+                  </Stack>
+                )}
               </Stack>
             )}
           </Stack>
